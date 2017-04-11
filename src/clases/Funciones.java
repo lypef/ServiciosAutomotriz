@@ -5,12 +5,17 @@
  */
 package clases;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -23,8 +28,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Funciones {
        
-    ReturnProperties p = new ReturnProperties();
+    public ReturnProperties p = new ReturnProperties();
     
+    public static int idClient = 0;
+    
+    public final ArrayList ListClients = new ArrayList();
     Conexion coneccion;
     
     //IdGlobal username
@@ -96,8 +104,15 @@ public class Funciones {
     
     public boolean AddClient (JTextField nombre, JTextField direccion, JTextField telefono, JTextField rfc, JTextField mail) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException
     {
-        coneccion = new Conexion();
-        return coneccion.ejecutar("insert into clients (nombre, direccion, telefono, rfc, mail) values ('"+nombre.getText().toUpperCase()+"', '"+direccion.getText().toUpperCase()+"', '"+telefono.getText().toUpperCase()+"', '"+rfc.getText().toUpperCase()+"', '"+mail.getText().toUpperCase()+"')");
+        if (nombre.getText().replace(" ", "").length() > 0)
+        {
+            coneccion = new Conexion();
+            return coneccion.ejecutar("insert into clients (nombre, direccion, telefono, rfc, mail) values ('"+nombre.getText().toUpperCase()+"', '"+direccion.getText().toUpperCase()+"', '"+telefono.getText().toUpperCase()+"', '"+rfc.getText().toUpperCase()+"', '"+mail.getText().toUpperCase()+"')");
+        }else
+        {
+            return false;
+        }
+        
     }
     
     private void StyleJtable(JTable t) {
@@ -219,23 +234,177 @@ public class Funciones {
         }
     }
     
-    public String Detalles_TableClient(JTable t)
+    public String Detalles_TableClient(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
     {
         String r = "";
-        try {
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT * FROM clients where id = "+Integer.parseInt((String) t.getValueAt(t.getSelectedRow(), 0))+" ");
+
+        if (rs.next())
+        {
+            r = "NOMBRE:" + "\n" + rs.getString(2) + "\n" + "\n";
+            r += "DIRECCION:" + "\n" + rs.getString(3) + "\n" + "\n";
+            r += "TELEFONO:" + "\n" + rs.getString(4) + "\n" + "\n";
+            r += "RFC:" + "\n" + rs.getString(5) + "\n" + "\n";
+            r += "MAIL:" + "\n" + rs.getString(6) + "\n" + "\n";
+        }
+        return r;
+    }
+    
+    public void SetImagenJLabel (String ruta, JLabel label)
+    {
+        File f = new File(ruta);
+        
+        if (f.exists())
+        {
+            ImageIcon RutaImage = new ImageIcon(ruta);
+            ImageIcon icono = new ImageIcon(RutaImage.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
+            label.setText("");
+            label.setIcon(icono);
+        }else
+        {
+            //ImageIcon RutaImage = new ImageIcon(RutaPathClientes()+"/default.png");
+            //ImageIcon icono = new ImageIcon(RutaImage.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
+            label.setText("=0");
+            //label.setIcon(icono);
+        }
+    }
+    
+    public boolean Clients_EditLoad (JTable t,JTextField nombre, JTextField direccion, JTextField telefono, JTextField rfc, JTextField mail ) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        boolean r = false;
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT * FROM clients where id = "+Integer.parseInt((String) t.getValueAt(t.getSelectedRow(), 0))+" ");
+
+        if (rs.next())
+        {
+            r = true;
+            idClient = rs.getInt(1);
+            nombre.setText(rs.getString(2));
+            direccion.setText(rs.getString(3));
+            telefono.setText(rs.getString(4));
+            rfc.setText(rs.getString(5));
+            mail.setText(rs.getString(6));
+        }
+        return r;
+    }
+    
+    public boolean Client_Update (JTextField nombre, JTextField direccion, JTextField telefono, JTextField rfc, JTextField mail ) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        coneccion = new Conexion();
+        return coneccion.ejecutar("update clients set nombre = '"+nombre.getText().toUpperCase()+"', direccion = '"+direccion.getText().toUpperCase()+"', telefono = '"+telefono.getText().toUpperCase()+"', rfc = '"+rfc.getText().toUpperCase()+"', mail = '"+mail.getText().toUpperCase()+"' where id = "+idClient+" ");
+    }
+    
+    public void Combo_LoadCients (JComboBox combo) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        combo.removeAllItems();
+        ListClients.clear();
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT id, nombre FROM clients order by nombre asc");
+        
+        combo.addItem("CLIENTES");
+        ListClients.add("0");
+        
+        while (rs.next())
+        {
+            ListClients.add(rs.getString(1));
+            combo.addItem(rs.getString(2));
+        }
+        
+    }
+    
+    public boolean Vehiculo_Agregar (JTextField placas, JTextField color, JTextField departamento, JTextField mtp, JTextField kilometros, JComboBox c) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException
+    {
+        if (placas.getText().replace(" ", "").length() > 0 && c.getSelectedIndex() > 0)
+        {
             coneccion = new Conexion();
-            ResultSet rs = coneccion.Consulta("SELECT * FROM clients where id = "+Integer.parseInt((String) t.getValueAt(t.getSelectedRow(), 0))+" ");
+            return coneccion.ejecutar("insert into vehiculos (placas, color, departamento, mtp, kilometros, id_client) values ('"+placas.getText().toUpperCase()+"', '"+placas.getText().toUpperCase()+"', '"+departamento.getText().toUpperCase()+"', '"+mtp.getText().toUpperCase()+"', '"+kilometros.getText().toUpperCase()+"', '"+ListClients.get(c.getSelectedIndex())+"')");
+        }else
+        {
+            return false;
+        }
+        
+    }
+    
+    public void Table_LoadVehiculos(JTable t)
+    {
+        try {
+            DefaultTableModel modelo;
+            modelo = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+            };
+            t.setModel(modelo);
             
-            if (rs.next())
+            modelo.addColumn("PROPIETARIO");
+            modelo.addColumn("M-T-P");
+            modelo.addColumn("COLOR");
+            modelo.addColumn("PLACAS");
+            
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT c.nombre, v.mtp, v.color, v.placas from vehiculos v, clients c where v.id_client = c.id order by c.nombre asc");
+            Object [] file = new Object[4];
+
+            while (rs.next())
             {
-                r = "NOMBRE:" + "\n" + rs.getString(2) + "\n" + "\n";
-                r += "DIRECCION:" + "\n" + rs.getString(3) + "\n" + "\n";
-                r += "TELEFONO:" + "\n" + rs.getString(4) + "\n" + "\n";
-                r += "RFC:" + "\n" + rs.getString(5) + "\n" + "\n";
-                r += "MAIL:" + "\n" + rs.getString(6) + "\n" + "\n";
+                file[0] = rs.getString(1);
+                file[1] = rs.getString(2);
+                file[2] = rs.getString(3);
+                file[3] = rs.getString(4);
+                
+                modelo.addRow(file);
             }
+            StyleJtable(t);
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             Alert(ex.getMessage());
+        }
+    }
+    
+    public void Table_LoadVehiculos_Search(JTable t, JTextField s) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        DefaultTableModel modelo;
+        modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+        };
+        t.setModel(modelo);
+
+        modelo.addColumn("PROPIETARIO");
+        modelo.addColumn("M-T-P");
+        modelo.addColumn("COLOR");
+        modelo.addColumn("PLACAS");
+
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT c.nombre, v.mtp, v.color, v.placas from vehiculos v, clients c where v.id_client = c.id and v.placas like '%"+s.getText()+"%' or v.id_client = c.id and v.mtp like '%"+s.getText()+"%' or v.id_client = c.id and v.color like '%"+s.getText()+"%' or v.id_client = c.id and c.nombre like '%"+s.getText()+"%' order by c.nombre asc");
+        Object [] file = new Object[4];
+
+        while (rs.next())
+        {
+            file[0] = rs.getString(1);
+            file[1] = rs.getString(2);
+            file[2] = rs.getString(3);
+            file[3] = rs.getString(4);
+            modelo.addRow(file);
+        }
+        StyleJtable(t);
+        JtextField_SetEmpty(s);
+    }
+    
+    public String Detalles_TableVehiculos(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        String r = "";
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT c.nombre, v.mtp, v.color, v.placas from vehiculos v, clients c where v.id_client = c.id and v.placas = '"+(String) t.getValueAt(t.getSelectedRow(), 3)+"' ");
+
+        if (rs.next())
+        {
+            r = "PROPIETARIO:" + "\n" + rs.getString(1) + "\n" + "\n";
+            r += "MARCA, TIPO & MODELO:" + "\n" + rs.getString(2) + "\n" + "\n";
+            r += "COLOR:" + "\n" + rs.getString(3) + "\n" + "\n";
+            r += "PLACAS:" + "\n" + rs.getString(4) + "\n" + "\n";
         }
         return r;
     }

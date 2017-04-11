@@ -6,6 +6,9 @@
 package forms;
 import clases.Funciones;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 
 /**
@@ -21,10 +24,13 @@ public class Login extends javax.swing.JFrame {
     Funciones f = new Funciones();
      
     public Login() {
-        initComponents();
-        f.SetModelForm(this);
-        f.Jtext_SetModel(TxtUser);
-        f.Jtext_SetModel(TxtPass);
+        
+            initComponents();
+            f.SetImagenJLabel(f.p.ReturnPropiedad(f.p.Ruta_logo), Logo);
+            f.SetModelForm(this);
+            f.Jtext_SetModel(TxtUser);
+            f.Jtext_SetModel(TxtPass);
+        
     }
 
     /**
@@ -36,6 +42,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Logo = new javax.swing.JLabel();
         TxtUser = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         TxtPass = new javax.swing.JPasswordField();
@@ -45,6 +52,9 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Logo.setText("logo");
+        getContentPane().add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 500, 210));
 
         TxtUser.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         TxtUser.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -131,6 +141,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
+    private javax.swing.JLabel Logo;
     private javax.swing.JPasswordField TxtPass;
     private javax.swing.JTextField TxtUser;
     private javax.swing.JButton jButton1;

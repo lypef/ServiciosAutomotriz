@@ -2,6 +2,10 @@ package panels;
 
 import clases.Funciones;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -27,6 +31,11 @@ public class Vehiculos_Agregar extends javax.swing.JPanel {
         f.JtextField_SetEmpty(TxtColor);
         f.JtextField_SetEmpty(TxtDepartamento);
         f.JtextField_SetEmpty(TxtModelo);
+        try {
+            f.Combo_LoadCients(jComboBox1);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            f.Alert(ex.getMessage());
+        }
     }
 
     /**
@@ -157,20 +166,25 @@ public class Vehiculos_Agregar extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TxtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jComboBox1)
                     .addComponent(TxtKm, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         jButton3.setText("AGREGAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -231,6 +245,23 @@ public class Vehiculos_Agregar extends javax.swing.JPanel {
             AddVehiculo();
         }
     }//GEN-LAST:event_TxtKmKeyPressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            if (f.Vehiculo_Agregar(TxtPlacas, TxtColor, TxtDepartamento, TxtModelo ,TxtKm, jComboBox1))
+            {
+                f.JtextField_SetEmpty(TxtPlacas);
+                f.JtextField_SetEmpty(TxtColor);
+                f.JtextField_SetEmpty(TxtDepartamento);
+                f.JtextField_SetEmpty(TxtModelo);
+                f.JtextField_SetEmpty(TxtKm);
+                f.Combo_LoadCients(jComboBox1);
+                f.Alert("Vehiculo agregado con exito");
+            }
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            f.Alert(ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

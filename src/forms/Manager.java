@@ -68,8 +68,6 @@ public class Manager extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("GESTOR"));
-
         Desktop.setBackground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout DesktopLayout = new javax.swing.GroupLayout(Desktop);
@@ -432,7 +430,7 @@ public class Manager extends javax.swing.JFrame {
     {
         Funciones.idBack = tmp;
         ClearDesktop();
-        Clientes_Agregar form = new Clientes_Agregar();
+        Vehiculos_Agregar form = new Vehiculos_Agregar();
         Desktop.add(form);
         form.setSize(Desktop.getWidth(), Desktop.getHeight());
         form.show();
@@ -454,7 +452,7 @@ public class Manager extends javax.swing.JFrame {
     {
         Funciones.idBack = tmp;
         ClearDesktop();
-        Clientes_Consultar form = new Clientes_Consultar();
+        Clientes_Consultar form = new Clientes_Consultar(Desktop);
         Desktop.add(form);
         form.setSize(Desktop.getWidth(), Desktop.getHeight());
         form.show();

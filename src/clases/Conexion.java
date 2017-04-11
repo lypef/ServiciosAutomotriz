@@ -26,15 +26,9 @@ public class Conexion {
 
     public void conectar() throws SQLException{
     
-        try {
-            String URL_bd ="jdbc:mysql://"+p.ReturnPropiedad(p.ruta_db)+":"+p.ReturnPropiedad(p.puerto_db)+"/" + p.ReturnPropiedad(p.nombre_db);
-            
-            con = DriverManager.getConnection(URL_bd, p.ReturnPropiedad(p.usuario_db), p.ReturnPropiedad(p.passwors_db));
-            sentSQL = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String URL_bd ="jdbc:mysql://"+p.ReturnPropiedad(p.ruta_db)+":"+p.ReturnPropiedad(p.puerto_db)+"/" + p.ReturnPropiedad(p.nombre_db);
+        con = DriverManager.getConnection(URL_bd, p.ReturnPropiedad(p.usuario_db), p.ReturnPropiedad(p.passwors_db));
+        sentSQL = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
     
     }
 

@@ -30,7 +30,7 @@ public class ReturnProperties {
                     
                     
                     
-    public String ReturnPropiedad (String propiedad) throws FileNotFoundException, IOException
+    public String ReturnPropiedad (String propiedad)
     {
         Properties propiedades = new Properties();
         
