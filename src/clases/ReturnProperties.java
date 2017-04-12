@@ -23,11 +23,8 @@ public class ReturnProperties {
     public String Table_BodyBold = "TableFondBodyBold";
     public String Table_FondBody = "TableFondBody";
     public String Table_FondZiseBody = "TableFondZiseBody";
+    public String Ruta_SaveReports = "ruta_savereports";
     
-    
-            
-            
-                    
                     
                     
     public String ReturnPropiedad (String propiedad)

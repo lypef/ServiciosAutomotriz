@@ -234,10 +234,20 @@ public class Manager extends javax.swing.JFrame {
 
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
         jMenuItem7.setText("Nuevo");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem7);
 
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
         jMenuItem8.setText("Consultar");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem8);
 
         jMenuBar1.add(jMenu5);
@@ -332,6 +342,14 @@ public class Manager extends javax.swing.JFrame {
         ShowClientes_Consultar();
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        ShowProvedores_Agregar();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        ShowProvedores_Consultar();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -390,7 +408,6 @@ public class Manager extends javax.swing.JFrame {
 
     public void back ()
     {
-        
         if (Funciones.idBack == Funciones.BackVehiculos_consultar)
         {
             ShowVehiculos_Consultar();
@@ -406,6 +423,14 @@ public class Manager extends javax.swing.JFrame {
         else if (Funciones.idBack == Funciones.BackClientes_consultar)
         {
             ShowClientes_Consultar();
+        }
+        else if (Funciones.idBack == Funciones.BackProvedores_Agregar)
+        {
+            ShowProvedores_Agregar();
+        }
+        else if (Funciones.idBack == Funciones.BackProvedores_Consultar)
+        {
+            ShowProvedores_Consultar();
         }
     }
     
@@ -452,10 +477,32 @@ public class Manager extends javax.swing.JFrame {
     {
         Funciones.idBack = tmp;
         ClearDesktop();
-        Clientes_Consultar form = new Clientes_Consultar(Desktop);
+        Clientes_Consultar form = new Clientes_Consultar();
         Desktop.add(form);
         form.setSize(Desktop.getWidth(), Desktop.getHeight());
         form.show();
         tmp = Funciones.BackClientes_consultar;
+    }
+    
+    public void ShowProvedores_Agregar()
+    {
+        Funciones.idBack = tmp;
+        ClearDesktop();
+        Provedores_Agregar form = new Provedores_Agregar();
+        Desktop.add(form);
+        form.setSize(Desktop.getWidth(), Desktop.getHeight());
+        form.show();
+        tmp = Funciones.BackProvedores_Agregar;
+    }
+    
+    public void ShowProvedores_Consultar()
+    {
+        Funciones.idBack = tmp;
+        ClearDesktop();
+        Provedores_Consultar form = new Provedores_Consultar();
+        Desktop.add(form);
+        form.setSize(Desktop.getWidth(), Desktop.getHeight());
+        form.show();
+        tmp = Funciones.BackProvedores_Consultar;
     }
 }

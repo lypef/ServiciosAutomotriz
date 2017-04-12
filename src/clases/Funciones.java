@@ -4,23 +4,42 @@
  * and open the template in the editor.
  */
 package clases;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
 /**
  *
@@ -31,6 +50,12 @@ public class Funciones {
     public ReturnProperties p = new ReturnProperties();
     
     public static int idClient = 0;
+    
+    public static String Placas = "";
+    public String Datos_Nombre = "nombre";
+    public String Datos_Direccion = "direccion";
+    public String Datos_Rfc = "rfc";
+    public String Datos_Telefono = "telefono";
     
     public final ArrayList ListClients = new ArrayList();
     Conexion coneccion;
@@ -46,6 +71,8 @@ public class Funciones {
     public static int BackVehiculos_agregar = 2;
     public static int BackClientes_agregar = 3;
     public static int BackClientes_consultar = 4;
+    public static int BackProvedores_Agregar = 5;
+    public static int BackProvedores_Consultar = 6;
     
     
     
@@ -407,5 +434,270 @@ public class Funciones {
             r += "PLACAS:" + "\n" + rs.getString(4) + "\n" + "\n";
         }
         return r;
+    }
+    
+    public boolean Vehiculos_LoadValuesEdit(JTable t, JTextField placas, JTextField color, JTextField departamento, JTextField mtp, JTextField kilometros, JComboBox c) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        boolean r = false;
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT * from vehiculos where placas = '"+(String)t.getValueAt(t.getSelectedRow(), 3)+"' ");
+
+        if (rs.next())
+        {
+            r= true;
+            Placas = rs.getString(1);
+            placas.setText(Placas); 
+            color.setText(rs.getString(2)); 
+            departamento.setText(rs.getString(3)); 
+            mtp.setText(rs.getString(4)); 
+            kilometros.setText(rs.getString(5));
+            Combo_LoadCients(c);
+            for (Object item : ListClients) 
+            {
+                if (rs.getInt(6) == Integer.parseInt((String) item))
+                {
+                    c.setSelectedIndex(ListClients.indexOf(item));
+                    break;
+                }
+            }
+        }
+        return r;
+    }
+    
+    public boolean Vehiculo_Update (JTextField placas, JTextField color, JTextField departamento, JTextField mtp, JTextField kilometros, JComboBox c) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (!"".equals(Placas.replace(" ", "")) && c.getSelectedIndex() > 0)
+        {
+            coneccion = new Conexion();
+            return coneccion.ejecutar("update vehiculos set placas = '"+placas.getText().toUpperCase()+"', color = '"+color.getText().toUpperCase()+"', departamento = '"+departamento.getText().toUpperCase()+"', mtp = '"+mtp.getText().toUpperCase()+"', kilometros = '"+kilometros.getText().toUpperCase()+"', id_client = "+Integer.parseInt((String) ListClients.get(c.getSelectedIndex()))+" where placas = '"+Placas+"' ");
+        }else
+        {
+            return false;
+        }
+    }
+    
+    public String GenerateReport (JTable t, String title, int open)
+    {
+        String rs = null;
+        Object[] options = { "PDF", "EXCEL", "NINGUNO" };
+        
+        int r = JOptionPane.showOptionDialog(null, 
+        "Seleccione el tipo de formato a generar.", 
+        "Generar reporte?", 
+        JOptionPane.YES_NO_OPTION, 
+        JOptionPane.QUESTION_MESSAGE, 
+        null, 
+        options, 
+        options[0]);
+        
+        if (r == 0)
+        {
+            rs = GenerateReporte_pdf(t, title, open);
+        }
+        else if (r == 1)
+        {
+            rs = GenerateReporte_xls(t, open);
+        }
+        return rs;
+    }
+    
+    private String GenerateReporte_pdf (JTable t, String title, int open)
+    {
+        Document documento = new Document(PageSize.LETTER.rotate(),10,10,10,10);  
+        FileOutputStream ficheroPdf;
+        File ruta = null;
+        com.itextpdf.text.Image imagen = null;
+        try {
+            imagen = com.itextpdf.text.Image.getInstance(p.ReturnPropiedad(p.Ruta_logo));
+            
+            char rt = p.ReturnPropiedad(p.Ruta_SaveReports).charAt(p.ReturnPropiedad(p.Ruta_SaveReports).length() -1 );
+            
+            if ("/".equalsIgnoreCase(String.valueOf(rt)))
+            {
+                ruta = new File (p.ReturnPropiedad(p.Ruta_SaveReports)+ReturnNombreUsuario().replace(" ","_")+"_"+GetFechaAndHourActual().replace(" ", "_").replace(":", "_").replace("-", "_")+".pdf");
+            }else
+            {
+                ruta = new File (p.ReturnPropiedad(p.Ruta_SaveReports)+"/"+ReturnNombreUsuario().replace(" ","_")+"_"+GetFechaAndHourActual().replace(" ", "_").replace(":", "_").replace("-", "_")+".pdf");
+            }
+            
+            ficheroPdf = new FileOutputStream(ruta);
+            PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(20);
+        } catch (DocumentException | IOException ex) {
+            Alert("Verifique las rutas de guardado de reportes y logo.");
+        }
+        
+        
+        try{
+            documento.open();
+            
+            title += "\nGENERÓ: "+ReturnNombreUsuario();
+            
+            Paragraph Title = new Paragraph(title.toUpperCase());
+            Title.setAlignment(1);
+            documento.add(Title);
+            imagen.setAlignment(Element.ALIGN_CENTER);
+            imagen.scaleToFit(200, 100);
+            
+            String membrete = ReturnDatosFisicos(this.Datos_Nombre) + "\n";
+            membrete += "DIRECCION: " + ReturnDatosFisicos(this.Datos_Direccion) + "\n";
+            membrete += "RFC: " + ReturnDatosFisicos(this.Datos_Rfc)+"\n";
+            membrete += "TELEFONO: " + ReturnDatosFisicos(this.Datos_Telefono) + "\n";
+            membrete += "GENERO DOCUMENTO: " + ReturnNombreUsuario()+ "\n";
+            membrete += "FECHA Y HORA DE GENERACION: " + GetFechaAndHourActual()+ "\n";
+            
+            /////////
+            PdfPTable HeaderDatos = new PdfPTable(2);
+            HeaderDatos.setWidthPercentage(100);
+            
+            documento.add(new Paragraph("\n"));
+            
+            PdfPCell cell = new PdfPCell(new Phrase(membrete));
+            cell.setBorder(0);
+            HeaderDatos.addCell(cell);
+            cell = new PdfPCell(imagen);
+            cell.setBorder(0);
+            cell.setHorizontalAlignment(1);
+            HeaderDatos.addCell(cell);
+        
+            documento.add(HeaderDatos);
+            documento.add(new Paragraph("\n"));
+            /////////
+            
+            PdfPTable tabla = new PdfPTable(t.getColumnCount());
+            
+            tabla.setWidthPercentage(100);
+            
+            for (int i = 0; i < t.getColumnCount(); i++)
+            {
+                Paragraph header = new Paragraph(t.getColumnName(i));
+                header.setAlignment(1);
+                tabla.addCell(header);
+            }
+            
+            for (int i = 0; i < t.getRowCount(); i++)
+            {
+                for (int a = 0; a < t.getColumnCount(); a++)
+                {
+                    
+                    Paragraph campo = new Paragraph(String.valueOf(t.getValueAt(i, a)));
+                    campo.setAlignment(1);
+                    tabla.addCell(campo);
+                }
+            }
+            
+            documento.add(tabla);
+            documento.add(new Paragraph(" "));
+            
+            Paragraph footer = new Paragraph("SOFTWARE Y MAS!"+"\n"+"WWW.CYBERCHOAPAS.COM");
+            footer.setAlignment(1);
+            documento.add(footer);
+            
+            documento.close();
+            if (open > 0)
+            {
+                Desktop.getDesktop().open(ruta);
+            }
+        }catch(IOException | DocumentException ex){
+            Alert(ex.getMessage());
+        }
+        return ruta.getAbsolutePath();
+    }
+    
+    private String GenerateReporte_xls (JTable t, int open)
+    {
+        String rutaArchivo = "";
+        try {
+            
+            char rt = p.ReturnPropiedad(p.Ruta_SaveReports).charAt(p.ReturnPropiedad(p.Ruta_SaveReports).length() -1 );
+            
+            if ("/".equalsIgnoreCase(String.valueOf(rt)))
+            {
+                rutaArchivo = p.ReturnPropiedad(p.Ruta_SaveReports)+ReturnNombreUsuario().replace(" ","_") + rutaArchivo+"_"+GetFechaAndHourActual().replace(":","_").replace(" ","_").replace("-","_")+".xls";
+            }else
+            {
+                rutaArchivo = p.ReturnPropiedad(p.Ruta_SaveReports)+"/"+ReturnNombreUsuario().replace(" ","_") + rutaArchivo+"_"+GetFechaAndHourActual().replace(":","_").replace(" ","_").replace("-","_")+".xls";
+            }
+            File archivoXLS = new File(rutaArchivo);
+            
+            if(archivoXLS.exists()) archivoXLS.delete();
+                archivoXLS.createNewFile();
+            
+            Workbook libro = new HSSFWorkbook();
+            FileOutputStream archivo = new FileOutputStream(archivoXLS);
+
+            Sheet hoja = libro.createSheet(ReturnDatosFisicos(this.Datos_Nombre));
+
+            for(int f=0;f <t.getRowCount() + 1; f++)
+            {
+                Row fila = hoja.createRow(f);
+                for(int c=0;c<t.getColumnCount();c++)
+                {
+                
+                    Cell celda = fila.createCell(c);
+                    
+                    if(f==0){
+                        celda.setCellValue(String.valueOf(t.getColumnName(c)));
+                    }else{
+                        celda.setCellValue(String.valueOf(t.getValueAt(f-1, c)));
+                    }
+                    hoja.autoSizeColumn(c);
+                }
+            }
+
+            libro.write(archivo);
+            archivo.close();
+            if (open > 0)
+            {
+                Desktop.getDesktop().open(archivoXLS);
+            }
+        } catch (IOException ex) {
+            Alert(ex.getMessage());
+        }
+        return rutaArchivo;
+    }
+    
+    public String ReturnNombreUsuario() {
+        
+        String Cadena = null;
+        try {
+            Conexion c = new Conexion();
+            ResultSet rs =  c.Consulta("SELECT nombre FROM users where id = "+idUsername+" ");
+             
+            if (rs.next())
+            {
+                Cadena = rs.getString(1);
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) 
+        {
+            Alert(ex.getMessage());
+        }
+        return Cadena.toUpperCase();
+    }
+    
+    public String GetFechaAndHourActual ()
+    {
+        java.util.Date fecha = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+        return formato.format(fecha);
+    }
+    
+    public String ReturnDatosFisicos(String campo) 
+    {
+        String Cadena = null;
+        try {
+            Conexion c = new Conexion();
+            ResultSet rs =  c.Consulta("SELECT "+campo+" FROM datos where id = 1 ");
+             
+            if (rs.next())
+            {
+                Cadena = rs.getString(1);
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) 
+        {
+            Alert(ex.getMessage());
+        }
+        return Cadena.toUpperCase();
     }
 }

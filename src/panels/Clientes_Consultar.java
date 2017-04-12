@@ -3,9 +3,6 @@ package panels;
 import clases.Funciones;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 
 /*
@@ -25,7 +22,7 @@ public class Clientes_Consultar extends javax.swing.JPanel {
      */
     Funciones f = new Funciones ();
     
-    public Clientes_Consultar(JDesktopPane j) 
+    public Clientes_Consultar() 
     {
         initComponents();
         f.Jtext_SetModel(TxtSearch);
@@ -91,7 +88,12 @@ public class Clientes_Consultar extends javax.swing.JPanel {
         });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setText("VEHICULOS");
+        jButton3.setText("REPORTE");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton6.setText("RECARGAR");
@@ -442,6 +444,10 @@ public class Clientes_Consultar extends javax.swing.JPanel {
             f.Alert(ex.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        f.GenerateReport(Tabla, "reporte de clientes", 1);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

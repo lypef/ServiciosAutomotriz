@@ -12,14 +12,14 @@ import clases.Funciones;
  *
  * @author Cybercafe
  */
-public class boceto extends javax.swing.JPanel {
+public class Provedores_Agregar extends javax.swing.JPanel {
 
     /**
      * Creates new form boceto
      */
     Funciones f = new Funciones ();
     
-    public boceto() {
+    public Provedores_Agregar() {
         initComponents();
     }
 
