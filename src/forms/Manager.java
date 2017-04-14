@@ -108,6 +108,11 @@ public class Manager extends javax.swing.JFrame {
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Proveedores.jpg"))); // NOI18N
         jButton9.setBorder(null);
         jButton9.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/ProveedoresEFC.jpg"))); // NOI18N
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/ordenDeServicio.jpg"))); // NOI18N
         jButton10.setBorder(null);
@@ -146,7 +151,7 @@ public class Manager extends javax.swing.JFrame {
         jMenu1.setText("Archivo");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Customers.png"))); // NOI18N
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/clients.png"))); // NOI18N
         jMenu2.setText("Clientes");
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
@@ -168,7 +173,9 @@ public class Manager extends javax.swing.JFrame {
         jMenu2.add(jMenuItem2);
         jMenu2.add(jSeparator2);
 
-        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
+        jMenuBar1.add(jMenu2);
+
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/car.png"))); // NOI18N
         jMenu6.setText("Vehiculos");
 
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
@@ -189,9 +196,7 @@ public class Manager extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem12);
 
-        jMenu2.add(jMenu6);
-
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu6);
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/service.png"))); // NOI18N
         jMenu3.setText("Servicios");
@@ -212,19 +217,29 @@ public class Manager extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/inventory.png"))); // NOI18N
-        jMenu4.setText("Inventario");
+        jMenu4.setText("Inventario & Stock");
 
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
         jMenuItem5.setText("Nuevo");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem5);
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
         jMenuItem6.setText("Consultar");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem6);
         jMenu4.add(jSeparator1);
 
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
-        jMenuItem9.setText("Verificar Stock");
+        jMenuItem9.setText("Inventario");
         jMenu4.add(jMenuItem9);
 
         jMenuBar1.add(jMenu4);
@@ -350,6 +365,18 @@ public class Manager extends javax.swing.JFrame {
         ShowProvedores_Consultar();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        ShowProvedores_Consultar();
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        ShowStock_Agregar();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        ShowStock_Consultar();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -432,6 +459,14 @@ public class Manager extends javax.swing.JFrame {
         {
             ShowProvedores_Consultar();
         }
+        else if (Funciones.idBack == Funciones.BackStock_Agregar)
+        {
+            ShowStock_Agregar();
+        }
+        else if (Funciones.idBack == Funciones.BackStock_Consultar)
+        {
+            ShowStock_Consultar();
+        }
     }
     
     private void ClearDesktop ()
@@ -442,67 +477,111 @@ public class Manager extends javax.swing.JFrame {
     
     public void ShowVehiculos_Consultar()
     {
-        Funciones.idBack = tmp;
-        ClearDesktop();
-        Vehiculos_Consultar form = new Vehiculos_Consultar();
-        Desktop.add(form);
-        form.setSize(Desktop.getWidth(), Desktop.getHeight());
-        form.show();
-        tmp = Funciones.BackVehiculos_consultar;
+        if (f.Get_Permiso(Funciones.PermisoVehiculos))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            Vehiculos_Consultar form = new Vehiculos_Consultar();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackVehiculos_consultar;
+        }
     }
     
     public void ShowVehiculos_Agregar()
     {
-        Funciones.idBack = tmp;
-        ClearDesktop();
-        Vehiculos_Agregar form = new Vehiculos_Agregar();
-        Desktop.add(form);
-        form.setSize(Desktop.getWidth(), Desktop.getHeight());
-        form.show();
-        tmp = Funciones.BackVehiculos_agregar;
+        if (f.Get_Permiso(Funciones.PermisoVehiculos_add))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            Vehiculos_Agregar form = new Vehiculos_Agregar();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackVehiculos_agregar;
+        }
     }
     
     public void ShowClientes_Agregar()
     {
-        Funciones.idBack = tmp;
-        ClearDesktop();
-        Clientes_Agregar form = new Clientes_Agregar();
-        Desktop.add(form);
-        form.setSize(Desktop.getWidth(), Desktop.getHeight());
-        form.show();
-        tmp = Funciones.BackClientes_agregar;
+        if (f.Get_Permiso(Funciones.PermisoClients_add))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            Clientes_Agregar form = new Clientes_Agregar();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackClientes_agregar;
+        }
     }
     
     public void ShowClientes_Consultar()
     {
-        Funciones.idBack = tmp;
-        ClearDesktop();
-        Clientes_Consultar form = new Clientes_Consultar();
-        Desktop.add(form);
-        form.setSize(Desktop.getWidth(), Desktop.getHeight());
-        form.show();
-        tmp = Funciones.BackClientes_consultar;
+        if (f.Get_Permiso(Funciones.PermisoClients))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            Clientes_Consultar form = new Clientes_Consultar();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackClientes_consultar;
+        }
     }
     
     public void ShowProvedores_Agregar()
     {
-        Funciones.idBack = tmp;
-        ClearDesktop();
-        Provedores_Agregar form = new Provedores_Agregar();
-        Desktop.add(form);
-        form.setSize(Desktop.getWidth(), Desktop.getHeight());
-        form.show();
-        tmp = Funciones.BackProvedores_Agregar;
+        if (f.Get_Permiso(Funciones.PermisoProvedores_add))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            Provedores_Agregar form = new Provedores_Agregar();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackProvedores_Agregar;
+        }
     }
     
     public void ShowProvedores_Consultar()
     {
-        Funciones.idBack = tmp;
-        ClearDesktop();
-        Provedores_Consultar form = new Provedores_Consultar();
-        Desktop.add(form);
-        form.setSize(Desktop.getWidth(), Desktop.getHeight());
-        form.show();
-        tmp = Funciones.BackProvedores_Consultar;
+        if (f.Get_Permiso(Funciones.PermisoProvedores))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            Provedores_Consultar form = new Provedores_Consultar();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackProvedores_Consultar;
+        }
+    }
+
+    private void ShowStock_Agregar() {
+        if (f.Get_Permiso(Funciones.PermisoStocks_add))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            StockAdd form = new StockAdd();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackStock_Agregar;
+        }
+    }
+    
+    private void ShowStock_Consultar() {
+        if (f.Get_Permiso(Funciones.PermisoStock))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            StockConsultar form = new StockConsultar();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackStock_Consultar;
+        }
     }
 }
