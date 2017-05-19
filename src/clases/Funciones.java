@@ -58,6 +58,7 @@ public class Funciones {
     public String Datos_Telefono = "telefono";
     
     public final ArrayList ListClients = new ArrayList();
+    public final ArrayList ListProvedores = new ArrayList();
     Conexion coneccion;
     
     //IdGlobal username
@@ -93,6 +94,7 @@ public class Funciones {
     public static final String PermisoStocks_add = "stock_agregar";
     public static final String PermisoStock_edit = "stock_editar";
     public static final String PermisoStock_delete = "stock_eliminar";
+    public static final String PermisoInventory = "inventario";
     
     
     public void SetModelForm (JFrame f)
@@ -298,6 +300,50 @@ public class Funciones {
         return r;
     }
     
+    public boolean Delete_TableClient(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (Get_Permiso(Funciones.PermisoClients_delete))
+        {
+            return coneccion.ejecutar("delete from clients where id = "+Integer.parseInt((String) t.getValueAt(t.getSelectedRow(), 0))+" ");
+        }else
+        {
+            return false;
+        }
+    }
+    
+    public boolean Delete_ItemVehiculo(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (Get_Permiso(Funciones.PermisoVehiculos_delete))
+        {
+            return coneccion.ejecutar("delete from vehiculos where placas = '"+(String) t.getValueAt(t.getSelectedRow(), 3)+"' ");
+        }else
+        {
+            return false;
+        }
+    }
+    
+    public boolean Delete_ItemProvedores(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (Get_Permiso(Funciones.PermisoProvedores_delete))
+        {
+            return coneccion.ejecutar("delete from provedores where id = "+Integer.parseInt((String) t.getValueAt(t.getSelectedRow(), 0))+" ");
+        }else
+        {
+            return false;
+        }
+    }
+    
+    public boolean Delete_ItemProducts(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (Get_Permiso(Funciones.PermisoStock_delete))
+        {
+            return coneccion.ejecutar("delete from products where codebar = '"+(String) t.getValueAt(t.getSelectedRow(), 0)+"' ");
+        }else
+        {
+            return false;
+        }
+    }
+    
     public void SetImagenJLabel (String ruta, JLabel label)
     {
         File f = new File(ruta);
@@ -367,6 +413,25 @@ public class Funciones {
         
     }
     
+    public void Combo_LoadProvedores (JComboBox combo) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        combo.removeAllItems();
+        ListProvedores.clear();
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT id, empresa FROM provedores order by empresa asc");
+        
+        combo.addItem("PROVEDORES");
+        ListProvedores.add("0");
+        
+        while (rs.next())
+        {
+            ListProvedores.add(rs.getString(1));
+            combo.addItem(rs.getString(2));
+        }
+        
+    }
+    
     public boolean Vehiculo_Agregar (JTextField placas, JTextField color, JTextField departamento, JTextField mtp, JTextField kilometros, JComboBox c) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException
     {
         if (placas.getText().replace(" ", "").length() > 0 && c.getSelectedIndex() > 0)
@@ -378,6 +443,18 @@ public class Funciones {
             return false;
         }
         
+    }
+    
+    public boolean Product_Add (JTextField CodeBar, JTextField nombre, JTextField descripcion, JTextField precio, JTextField existencia, JComboBox c) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException
+    {
+        if (CodeBar.getText().replace(" ", "").length() > 0 && c.getSelectedIndex() > 0 && Get_Permiso(Funciones.PermisoStocks_add))
+        {
+            coneccion = new Conexion();
+            return coneccion.ejecutar("insert into products (codebar, nombre, descripcion, precio, existencia, vendidos, id_provedor) values ('"+CodeBar.getText().toUpperCase()+"', '"+nombre.getText().toUpperCase()+"', '"+descripcion.getText().toUpperCase()+"', '"+precio.getText().toUpperCase()+"', '"+existencia.getText().toUpperCase()+"', 0,'"+ListProvedores.get(c.getSelectedIndex())+"')");
+        }else
+        {
+            return false;
+        }
     }
     
     public void Table_LoadVehiculos(JTable t)
@@ -405,6 +482,82 @@ public class Funciones {
                 file[1] = rs.getString(2);
                 file[2] = rs.getString(3);
                 file[3] = rs.getString(4);
+                
+                modelo.addRow(file);
+            }
+            StyleJtable(t);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Alert(ex.getMessage());
+        }
+    }
+    
+    public void Table_LoadProducts(JTable t)
+    {
+        try {
+            DefaultTableModel modelo;
+            modelo = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+            };
+            t.setModel(modelo);
+            
+            modelo.addColumn("CODIGO DE BARRA");
+            modelo.addColumn("PRODUCTO");
+            modelo.addColumn("PRECIO");
+            modelo.addColumn("STOCK");
+            modelo.addColumn("PROVEDOR");
+            
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT p.codebar, p.nombre, p.precio, p.existencia, p.vendidos, pp.empresa from provedores pp, products p where pp.id = p.id_provedor order by p.nombre asc");
+            Object [] file = new Object[5];
+
+            while (rs.next())
+            {
+                file[0] = rs.getString(1);
+                file[1] = rs.getString(2);
+                file[2] = rs.getString(3);
+                file[3] = rs.getString(4);
+                file[4] = rs.getString(6);
+                
+                modelo.addRow(file);
+            }
+            StyleJtable(t);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Alert(ex.getMessage());
+        }
+    }
+    
+    public void Table_LoadInventory(JTable t)
+    {
+        try {
+            DefaultTableModel modelo;
+            modelo = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+            };
+            t.setModel(modelo);
+            
+            modelo.addColumn("CODIGO DE BARRA");
+            modelo.addColumn("PRODUCTO");
+            modelo.addColumn("PRECIO");
+            modelo.addColumn("PROVEDOR");
+            modelo.addColumn("STOCK");
+            modelo.addColumn("VENDIDOS");
+            modelo.addColumn("TOTAL");
+            
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT p.codebar, p.nombre, p.precio, pp.empresa, p.existencia, p.vendidos from provedores pp, products p where pp.id = p.id_provedor order by p.nombre asc");
+            Object [] file = new Object[7];
+
+            while (rs.next())
+            {
+                file[0] = rs.getString(1);
+                file[1] = rs.getString(2);
+                file[2] = rs.getString(3);
+                file[3] = rs.getString(4);
+                file[4] = rs.getString(5);
+                file[5] = rs.getString(6);
+                file[6] = rs.getInt(5) + rs.getInt(6);
                 
                 modelo.addRow(file);
             }
@@ -490,12 +643,52 @@ public class Funciones {
         return r;
     }
     
+    public boolean Product_LoadValuesEdit(JTable t, JTextField codebar, JTextField nombre, JTextField descripcion, JTextField precio, JTextField existencia, JComboBox c) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        boolean r = false;
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT * from products where codebar = '"+(String)t.getValueAt(t.getSelectedRow(), 0)+"' ");
+
+        if (rs.next())
+        {
+            r= true;
+            codebar.setText(rs.getString(1));
+            nombre.setText(rs.getString(2));
+            descripcion.setText(rs.getString(3));
+            precio.setText(rs.getString(4));
+            existencia.setText(rs.getString(5));
+            Combo_LoadProvedores(c);
+            for (Object item : ListProvedores) 
+            {
+                if (rs.getInt(7) == Integer.parseInt((String) item))
+                {
+                    c.setSelectedIndex(ListProvedores.indexOf(item));
+                    break;
+                }
+            }
+        }
+        return r;
+    }
+    
     public boolean Vehiculo_Update (JTextField placas, JTextField color, JTextField departamento, JTextField mtp, JTextField kilometros, JComboBox c) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
     {
         if (!"".equals(Placas.replace(" ", "")) && c.getSelectedIndex() > 0 && Get_Permiso(Funciones.PermisoVehiculos_edit))
         {
             coneccion = new Conexion();
             return coneccion.ejecutar("update vehiculos set placas = '"+placas.getText().toUpperCase()+"', color = '"+color.getText().toUpperCase()+"', departamento = '"+departamento.getText().toUpperCase()+"', mtp = '"+mtp.getText().toUpperCase()+"', kilometros = '"+kilometros.getText().toUpperCase()+"', id_client = "+Integer.parseInt((String) ListClients.get(c.getSelectedIndex()))+" where placas = '"+Placas+"' ");
+        }else
+        {
+            return false;
+        }
+    }
+    
+    public boolean Product_Update (String code, JTextField codebar, JTextField nombre, JTextField descripcion, JTextField precio, JTextField existencia, JComboBox c) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (c.getSelectedIndex() > 0 && Get_Permiso(Funciones.PermisoStock_edit))
+        {
+            coneccion = new Conexion();
+            return coneccion.ejecutar("update products set codebar = '"+codebar.getText().toUpperCase()+"', nombre = '"+nombre.getText().toUpperCase()+"', descripcion = '"+descripcion.getText().toUpperCase()+"', precio = '"+precio.getText().toUpperCase()+"', existencia = '"+existencia.getText().toUpperCase()+"', id_provedor = "+Integer.parseInt((String) ListProvedores.get(c.getSelectedIndex()))+" where codebar = '"+code+"' ");
         }else
         {
             return false;
@@ -726,12 +919,12 @@ public class Funciones {
         return Cadena.toUpperCase();
     }
     
-    public boolean AddProvedor (JTextField TxtEmpresa, JTextField TxtTelEmpresa, JTextField TxtTelResponsable, JTextField TxtResponsable, JTextField TxtDireccion) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException
+    public boolean AddProvedor (JTextField TxtEmpresa, JTextField TxtTelEmpresa, JTextField TxtMail, JTextField TxtResponsable, JTextField TxtDireccion) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException
     {
         if (TxtEmpresa.getText().replace(" ", "").length() > 0)
         {
             coneccion = new Conexion();
-            return coneccion.ejecutar("insert into provedores (empresa, direccion, telefono_empresa, responsable, telefono_responsable) values ('"+TxtEmpresa.getText().toUpperCase()+"', '"+TxtDireccion.getText().toUpperCase()+"', '"+TxtTelEmpresa.getText().toUpperCase()+"', '"+TxtResponsable.getText().toUpperCase()+"', '"+TxtTelResponsable.getText().toUpperCase()+"' ) ");
+            return coneccion.ejecutar("insert into provedores (empresa, direccion, telefono_empresa, responsable, mail) values ('"+TxtEmpresa.getText().toUpperCase()+"', '"+TxtDireccion.getText().toUpperCase()+"', '"+TxtTelEmpresa.getText().toUpperCase()+"', '"+TxtResponsable.getText().toUpperCase()+"', '"+TxtMail.getText().toUpperCase()+"' ) ");
         }else
         {
             return false;
@@ -807,6 +1000,42 @@ public class Funciones {
         }
     }
     
+    public void Table_LoadProductsSearch(JTable t, JTextField txt)
+    {
+        try {
+            DefaultTableModel modelo;
+            modelo = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+            };
+            t.setModel(modelo);
+            
+            modelo.addColumn("CODIGO DE BARRA");
+            modelo.addColumn("PRODUCTO");
+            modelo.addColumn("PRECIO");
+            modelo.addColumn("STOCK");
+            modelo.addColumn("PROVEDOR");
+            
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT p.codebar, p.nombre, p.precio, p.existencia, p.vendidos, pp.empresa from provedores pp, products p where pp.id = p.id_provedor and codebar LIKE '%"+txt.getText()+"%' or pp.id = p.id_provedor and nombre LIKE '%"+txt.getText()+"%' or pp.id = p.id_provedor and descripcion LIKE '%"+txt.getText()+"%' or pp.id = p.id_provedor and pp.empresa LIKE '%"+txt.getText()+"%' order by p.nombre asc");
+            Object [] file = new Object[5];
+
+            while (rs.next())
+            {
+                file[0] = rs.getString(1);
+                file[1] = rs.getString(2);
+                file[2] = rs.getString(3);
+                file[3] = rs.getString(4);
+                file[4] = rs.getString(6);
+                
+                modelo.addRow(file);
+            }
+            StyleJtable(t);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Alert(ex.getMessage());
+        }
+    }
+    
     public String Detalles_TableProvedores(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
     {
         String r = "";
@@ -820,7 +1049,7 @@ public class Funciones {
             r += "DIRECCION:" + "\n" + rs.getString(3) + "\n" + "\n";
             r += "TELEFONO EMPRESA:" + "\n" + rs.getString(4) + "\n" + "\n";
             r += "RESPONDABLE:" + "\n" + rs.getString(5) + "\n" + "\n";
-            r += "TELEFONO RESPONSABLE:" + "\n" + rs.getString(6) + "\n" + "\n";
+            r += "CORREO ELECTRONICO:" + "\n" + rs.getString(6) + "\n" + "\n";
         }
         return r;
     }
@@ -850,7 +1079,7 @@ public class Funciones {
         if (Get_Permiso(Funciones.PermisoProvedores_edit))
         {
             coneccion = new Conexion();
-            return coneccion.ejecutar("update provedores set empresa     = '"+TxtEmpresa.getText().toUpperCase()+"', direccion = '"+TxtDireccion.getText().toUpperCase()+"', telefono_empresa = '"+TxtTelEmpresa.getText().toUpperCase()+"', responsable = '"+TxtResponsable.getText().toUpperCase()+"', telefono_responsable = '"+TxtTelResponsable.getText().toUpperCase()+"' where id = "+idProvedor+" ");
+            return coneccion.ejecutar("update provedores set empresa     = '"+TxtEmpresa.getText().toUpperCase()+"', direccion = '"+TxtDireccion.getText().toUpperCase()+"', telefono_empresa = '"+TxtTelEmpresa.getText().toUpperCase()+"', responsable = '"+TxtResponsable.getText().toUpperCase()+"', mail = '"+TxtTelResponsable.getText().toUpperCase()+"' where id = "+idProvedor+" ");
         }else
         {
             return false;
@@ -880,4 +1109,19 @@ public class Funciones {
         }
         return r;
     }
+    
+    public boolean ExistProduct (String code) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        boolean var = false;
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT '"+code+"' FROM products");
+        
+        if (rs.next())
+        {
+            var = true;
+        }
+        return var;
+    }
+    
 }

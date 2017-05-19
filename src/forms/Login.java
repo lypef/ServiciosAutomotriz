@@ -26,7 +26,6 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         
             initComponents();
-            f.SetImagenJLabel(f.p.ReturnPropiedad(f.p.Ruta_logo), Logo);
             f.SetModelForm(this);
             f.Jtext_SetModel(TxtUser);
             f.Jtext_SetModel(TxtPass);
@@ -42,43 +41,33 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Logo = new javax.swing.JLabel();
         TxtUser = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         TxtPass = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         Fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Logo.setText("logo");
-        getContentPane().add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 500, 210));
-
         TxtUser.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        TxtUser.setForeground(new java.awt.Color(98, 156, 202));
+        TxtUser.setBorder(null);
         TxtUser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TxtUserKeyPressed(evt);
             }
         });
-        getContentPane().add(TxtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 410, 44));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("CONTRASEÑA");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
+        getContentPane().add(TxtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 430, 44));
 
         TxtPass.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        TxtPass.setForeground(new java.awt.Color(98, 156, 202));
+        TxtPass.setBorder(null);
         TxtPass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TxtPassKeyPressed(evt);
             }
         });
-        getContentPane().add(TxtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, 410, 44));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("USUARIO");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
+        getContentPane().add(TxtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, 430, 44));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Loginform.jpg"))); // NOI18N
         jButton1.setBorder(null);
@@ -88,7 +77,7 @@ public class Login extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, 290, 50));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 500, 290, 50));
 
         Fondo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/LOGIN.jpg"))); // NOI18N
@@ -141,19 +130,16 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
-    private javax.swing.JLabel Logo;
     private javax.swing.JPasswordField TxtPass;
     private javax.swing.JTextField TxtUser;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 
     private void ShowManager() {
         if (f.Login(TxtUser, TxtPass))
         {
             this.dispose();
-            Manager form = new Manager();
+            ManagerControl form = new ManagerControl();
             form.show();
         }else
         {

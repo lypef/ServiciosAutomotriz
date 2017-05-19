@@ -35,15 +35,9 @@ public class Manager extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         Desktop = new javax.swing.JDesktopPane();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        BtnClientes = new javax.swing.JButton();
+        BtnClientes1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -68,8 +62,6 @@ public class Manager extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        Desktop.setBackground(new java.awt.Color(204, 204, 204));
-
         javax.swing.GroupLayout DesktopLayout = new javax.swing.GroupLayout(Desktop);
         Desktop.setLayout(DesktopLayout);
         DesktopLayout.setHorizontalGroup(
@@ -78,72 +70,24 @@ public class Manager extends javax.swing.JFrame {
         );
         DesktopLayout.setVerticalGroup(
             DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 373, Short.MAX_VALUE)
+            .addGap(0, 407, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Desktop)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Desktop)
-        );
-
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/BtnClientes.jpg"))); // NOI18N
-        jButton7.setBorder(null);
-        jButton7.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/BtnClientesEfc.jpg"))); // NOI18N
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        BtnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnControl.png"))); // NOI18N
+        BtnClientes.setBorder(null);
+        BtnClientes.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnControlEfc.png"))); // NOI18N
+        BtnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                BtnClientesActionPerformed(evt);
             }
         });
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/InventarioStock.jpg"))); // NOI18N
-        jButton8.setBorder(null);
-        jButton8.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/InventarioStockEFC.jpg"))); // NOI18N
-
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Proveedores.jpg"))); // NOI18N
-        jButton9.setBorder(null);
-        jButton9.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/ProveedoresEFC.jpg"))); // NOI18N
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        BtnClientes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnBack.png"))); // NOI18N
+        BtnClientes1.setBorder(null);
+        BtnClientes1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnBackEfc.png"))); // NOI18N
+        BtnClientes1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/ordenDeServicio.jpg"))); // NOI18N
-        jButton10.setBorder(null);
-        jButton10.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/ordenDeServicioEfc.jpg"))); // NOI18N
-
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bLOQUEAR.jpg"))); // NOI18N
-        jButton11.setBorder(null);
-        jButton11.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bLOQUEAREFC.jpg"))); // NOI18N
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/BtnSalir.jpg"))); // NOI18N
-        jButton12.setBorder(null);
-        jButton12.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/BtnSalirEfc.jpg"))); // NOI18N
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/back.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/backEfc.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BtnClientes1ActionPerformed(evt);
             }
         });
 
@@ -217,7 +161,7 @@ public class Manager extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/inventory.png"))); // NOI18N
-        jMenu4.setText("Inventario & Stock");
+        jMenu4.setText("Productos");
 
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
         jMenuItem5.setText("Nuevo");
@@ -240,6 +184,11 @@ public class Manager extends javax.swing.JFrame {
 
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
         jMenuItem9.setText("Inventario");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem9);
 
         jMenuBar1.add(jMenu4);
@@ -276,44 +225,24 @@ public class Manager extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addComponent(jButton8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton9)
-                        .addGap(12, 12, 12)
-                        .addComponent(jButton10))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton11)
-                        .addGap(229, 229, 229)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(216, 216, 216)
-                        .addComponent(jButton12)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 936, Short.MAX_VALUE)
+                        .addComponent(BtnClientes1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BtnClientes))
+                    .addComponent(Desktop))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton7)
-                    .addComponent(jButton8)
-                    .addComponent(jButton9)
-                    .addComponent(jButton10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Desktop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jButton11))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton12)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(BtnClientes1)
+                    .addComponent(BtnClientes))
+                .addContainerGap())
         );
 
         pack();
@@ -323,12 +252,6 @@ public class Manager extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        this.dispose();
-        Login form = new Login();
-        form.show();
-    }//GEN-LAST:event_jButton11ActionPerformed
-
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         ShowVehiculos_Consultar();
     }//GEN-LAST:event_jMenuItem12ActionPerformed
@@ -336,14 +259,6 @@ public class Manager extends javax.swing.JFrame {
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         ShowVehiculos_Agregar();
     }//GEN-LAST:event_jMenuItem11ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        back();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         ShowClientes_Agregar();
@@ -353,10 +268,6 @@ public class Manager extends javax.swing.JFrame {
         ShowClientes_Consultar();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        ShowClientes_Consultar();
-    }//GEN-LAST:event_jButton7ActionPerformed
-
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         ShowProvedores_Agregar();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
@@ -365,10 +276,6 @@ public class Manager extends javax.swing.JFrame {
         ShowProvedores_Consultar();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        ShowProvedores_Consultar();
-    }//GEN-LAST:event_jButton9ActionPerformed
-
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         ShowStock_Agregar();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
@@ -376,6 +283,20 @@ public class Manager extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         ShowStock_Consultar();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void BtnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClientesActionPerformed
+        this.dispose();
+        ManagerControl m = new ManagerControl();
+        m.show();
+    }//GEN-LAST:event_BtnClientesActionPerformed
+
+    private void BtnClientes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClientes1ActionPerformed
+        back();
+    }//GEN-LAST:event_BtnClientes1ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        Inventory();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -402,14 +323,9 @@ public class Manager extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnClientes;
+    private javax.swing.JButton BtnClientes1;
     private javax.swing.JDesktopPane Desktop;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -428,7 +344,6 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     // End of variables declaration//GEN-END:variables
@@ -559,7 +474,7 @@ public class Manager extends javax.swing.JFrame {
         }
     }
 
-    private void ShowStock_Agregar() {
+    public void ShowStock_Agregar() {
         if (f.Get_Permiso(Funciones.PermisoStocks_add))
         {
             Funciones.idBack = tmp;
@@ -572,12 +487,38 @@ public class Manager extends javax.swing.JFrame {
         }
     }
     
-    private void ShowStock_Consultar() {
+    public void ShowStock_Consultar() {
         if (f.Get_Permiso(Funciones.PermisoStock))
         {
             Funciones.idBack = tmp;
             ClearDesktop();
             StockConsultar form = new StockConsultar();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackStock_Consultar;
+        }
+    }
+    
+    public void ProductUpdate(String code) {
+        if (f.Get_Permiso(Funciones.PermisoStock))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            StockConsultar form = new StockConsultar();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackStock_Consultar;
+        }
+    }
+    
+    public void Inventory() {
+        if (f.Get_Permiso(Funciones.PermisoInventory))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            Inventory form = new Inventory();
             Desktop.add(form);
             form.setSize(Desktop.getWidth(), Desktop.getHeight());
             form.show();

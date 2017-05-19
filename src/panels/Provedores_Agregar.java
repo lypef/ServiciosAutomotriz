@@ -40,7 +40,7 @@ public class Provedores_Agregar extends javax.swing.JPanel {
         TxtResponsable = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        TxtTelResponsable = new javax.swing.JTextField();
+        TxtmAIL = new javax.swing.JTextField();
         TxtEmpresa = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         TxtDireccion = new javax.swing.JTextField();
@@ -66,15 +66,15 @@ public class Provedores_Agregar extends javax.swing.JPanel {
         jLabel4.setText("RESPONSABLE");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel5.setText("TELEFONO RESPONSABLE");
+        jLabel5.setText("CORREO ELECTRONICO");
 
-        TxtTelResponsable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        TxtTelResponsable.addKeyListener(new java.awt.event.KeyAdapter() {
+        TxtmAIL.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtmAIL.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                TxtTelResponsableKeyPressed(evt);
+                TxtmAILKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                TxtTelResponsableKeyReleased(evt);
+                TxtmAILKeyReleased(evt);
             }
         });
 
@@ -106,7 +106,7 @@ public class Provedores_Agregar extends javax.swing.JPanel {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("TELEFONO EMPRESA");
+        jLabel3.setText("TELEFONO");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,7 +116,7 @@ public class Provedores_Agregar extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(TxtTelResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtmAIL, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -159,11 +159,15 @@ public class Provedores_Agregar extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtTelResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtmAIL, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jButton1.setText("AGREGAR");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnBigAdd.png"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnBigAddEfc.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -174,25 +178,20 @@ public class Provedores_Agregar extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1218, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 373, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jButton1))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -203,19 +202,19 @@ public class Provedores_Agregar extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_TxtResponsableKeyReleased
 
-    private void TxtTelResponsableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtTelResponsableKeyPressed
+    private void TxtmAILKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtmAILKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER)
         {
 
         }
-    }//GEN-LAST:event_TxtTelResponsableKeyPressed
+    }//GEN-LAST:event_TxtmAILKeyPressed
 
-    private void TxtTelResponsableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtTelResponsableKeyReleased
+    private void TxtmAILKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtmAILKeyReleased
         if (evt.getKeyCode() != KeyEvent.VK_LEFT && evt.getKeyCode() != KeyEvent.VK_RIGHT && evt.getKeyCode() != KeyEvent.VK_END && evt.getKeyCode() != KeyEvent.VK_HOME && evt.getKeyCode() != KeyEvent.VK_SHIFT && evt.getKeyCode() != KeyEvent.VK_CUT && evt.getKeyCode() != KeyEvent.VK_COPY && evt.getKeyCode() != KeyEvent.VK_PASTE)
         {
-            f.SetUpercase_Jtextfield(TxtTelResponsable);
+            f.SetUpercase_Jtextfield(TxtmAIL);
         }
-    }//GEN-LAST:event_TxtTelResponsableKeyReleased
+    }//GEN-LAST:event_TxtmAILKeyReleased
 
     private void TxtEmpresaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtEmpresaKeyReleased
         if (evt.getKeyCode() != KeyEvent.VK_LEFT && evt.getKeyCode() != KeyEvent.VK_RIGHT && evt.getKeyCode() != KeyEvent.VK_END && evt.getKeyCode() != KeyEvent.VK_HOME && evt.getKeyCode() != KeyEvent.VK_SHIFT && evt.getKeyCode() != KeyEvent.VK_CUT && evt.getKeyCode() != KeyEvent.VK_COPY && evt.getKeyCode() != KeyEvent.VK_PASTE)
@@ -240,11 +239,11 @@ public class Provedores_Agregar extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            if (f.AddProvedor(TxtEmpresa, TxtTelEmpresa, TxtTelResponsable, TxtResponsable, TxtDireccion))
+            if (f.AddProvedor(TxtEmpresa, TxtTelEmpresa, TxtmAIL, TxtResponsable, TxtDireccion))
             {
                 f.JtextField_SetEmpty(TxtEmpresa);
                 f.JtextField_SetEmpty(TxtTelEmpresa);
-                f.JtextField_SetEmpty(TxtTelResponsable);
+                f.JtextField_SetEmpty(TxtmAIL);
                 f.JtextField_SetEmpty(TxtResponsable);
                 f.JtextField_SetEmpty(TxtDireccion);
                 f.Alert("Provedor agregado");
@@ -263,7 +262,7 @@ public class Provedores_Agregar extends javax.swing.JPanel {
     private javax.swing.JTextField TxtEmpresa;
     private javax.swing.JTextField TxtResponsable;
     private javax.swing.JTextField TxtTelEmpresa;
-    private javax.swing.JTextField TxtTelResponsable;
+    private javax.swing.JTextField TxtmAIL;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
