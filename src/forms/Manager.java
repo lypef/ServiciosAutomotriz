@@ -525,4 +525,18 @@ public class Manager extends javax.swing.JFrame {
             tmp = Funciones.BackStock_Consultar;
         }
     }
+    
+    public void Users() {
+        if (f.Get_Permiso(Funciones.PermisoUsers))
+        {
+            Funciones.idBack = tmp;
+            ClearDesktop();
+            Users form = new Users();
+            Desktop.add(form);
+            form.setSize(Desktop.getWidth(), Desktop.getHeight());
+            form.show();
+            tmp = Funciones.BackStock_Consultar;
+        }
+    }
+    
 }

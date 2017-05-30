@@ -95,7 +95,9 @@ public class Funciones {
     public static final String PermisoStock_edit = "stock_editar";
     public static final String PermisoStock_delete = "stock_eliminar";
     public static final String PermisoInventory = "inventario";
-    
+    public static final String PermisoUsers = "users";
+    public static final String PermisoUsers_add = "user_add";
+    public static final String PermisoUsers_edit = "user_update";
     
     public void SetModelForm (JFrame f)
     {
@@ -454,6 +456,25 @@ public class Funciones {
         }else
         {
             return false;
+        }
+    }
+    
+    public boolean Add_User (JTextField TxtUsername, JTextField Contraseña, JTextField Nombre, JTextField Direccion, JTextField telefonos) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException
+    {
+        if (!"".equals(TxtUsername.getText().replace(" ","")) && !"".equals(Contraseña.getText().replace(" ","")))
+        {
+            coneccion = new Conexion();
+            if (Get_Permiso(Funciones.PermisoUsers_add))
+            {
+                return coneccion.ejecutar("insert into users (username, password, nombre, direccion, telefono) values ('"+TxtUsername.getText()+"', '"+Contraseña.getText()+"', '"+Nombre.getText()+"', '"+Direccion.getText()+"', '"+telefonos.getText()+"')");
+            }else
+            {
+                return  false;
+            }
+        }else
+        {
+            Alert("Ingrese almenos usuario y una contraseña");
+            return  false;
         }
     }
     
@@ -949,6 +970,40 @@ public class Funciones {
             
             coneccion = new Conexion();
             ResultSet rs = coneccion.Consulta("SELECT * FROM provedores order by id desc");
+            Object [] file = new Object[4];
+
+            while (rs.next())
+            {
+                file[0] = rs.getString(1);
+                file[1] = rs.getString(2);
+                file[2] = rs.getString(3);
+                file[3] = rs.getString(5);
+                
+                modelo.addRow(file);
+            }
+            StyleJtable(t);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Alert(ex.getMessage());
+        }
+    }
+    
+    public void Table_LoadUsers(JTable t)
+    {
+        try {
+            DefaultTableModel modelo;
+            modelo = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+            };
+            t.setModel(modelo);
+            
+            modelo.addColumn("ID");
+            modelo.addColumn("NOMBRE");
+            modelo.addColumn("DIRECCION");
+            modelo.addColumn("TELEFONO");
+            
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT * FROM users order by nombre desc");
             Object [] file = new Object[4];
 
             while (rs.next())

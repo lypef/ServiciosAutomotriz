@@ -1,6 +1,7 @@
 package panels;
 
 import clases.Funciones;
+import java.sql.SQLException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,14 +13,14 @@ import clases.Funciones;
  *
  * @author Cybercafe
  */
-public class boceto extends javax.swing.JPanel {
+public class Boceto extends javax.swing.JPanel {
 
     /**
      * Creates new form boceto
      */
     Funciones f = new Funciones ();
     
-    public boceto() {
+    public Boceto() {
         initComponents();
     }
 

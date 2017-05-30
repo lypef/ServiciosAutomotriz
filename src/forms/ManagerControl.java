@@ -384,11 +384,11 @@ public class ManagerControl extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnClientes5ActionPerformed
 
     private void BtnClientes6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClientes6ActionPerformed
-        // TODO add your handling code here:
+        ShowUsers();
     }//GEN-LAST:event_BtnClientes6ActionPerformed
 
     private void BtnClientes7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClientes7ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_BtnClientes7ActionPerformed
 
     /**
@@ -508,6 +508,12 @@ public class ManagerControl extends javax.swing.JFrame {
     private void Inventory() {
         this.dispose();
         m.Inventory();
+        m.show();
+    }
+
+    private void ShowUsers() {
+        this.dispose();
+        m.Users();
         m.show();
     }
 }
