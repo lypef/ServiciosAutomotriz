@@ -13,6 +13,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Checkbox;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Image;
@@ -25,11 +26,14 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -98,7 +102,9 @@ public class Funciones {
     public static final String PermisoUsers = "users";
     public static final String PermisoUsers_add = "user_add";
     public static final String PermisoUsers_edit = "user_update";
+    public static final String PermisoUsers_delete = "user_delete";
     
+            
     public void SetModelForm (JFrame f)
     {
             //Insertamos titulo, imagen y centramos frame
@@ -1009,9 +1015,9 @@ public class Funciones {
             while (rs.next())
             {
                 file[0] = rs.getString(1);
-                file[1] = rs.getString(2);
-                file[2] = rs.getString(3);
-                file[3] = rs.getString(5);
+                file[1] = rs.getString(4);
+                file[2] = rs.getString(5);
+                file[3] = rs.getString(6);
                 
                 modelo.addRow(file);
             }
@@ -1178,5 +1184,250 @@ public class Funciones {
         }
         return var;
     }
+
+    public void setvaluesUser(int id, JTextField TxtUsername, JTextField Contraseña, JTextField Nombre, JTextField Direccion, JTextField telefonos) {
+        if (ValidarUserPermisos(id) == false)
+        {
+            User_AddFirstPermisos(id);
+        };
+        try {
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT * FROM users where id = "+id+" ");
+            
+            if (rs.next())
+            {
+                TxtUsername.setText(rs.getString(2));
+                Contraseña.setText(rs.getString(3));
+                Nombre.setText(rs.getString(4));
+                Direccion.setText(rs.getString(5));
+                telefonos.setText(rs.getString(6));
+            }
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Alert(ex.getMessage());
+        }
+    }
     
+    public boolean Update_valuesUser(int id, JTextField TxtUsername, JTextField Contraseña, JTextField Nombre, JTextField Direccion, JTextField telefonos) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+        if (Get_Permiso(Funciones.PermisoUsers_edit) && id > 0)
+        {
+            coneccion = new Conexion();
+            return coneccion.ejecutar("update users set username = '"+TxtUsername.getText().toUpperCase()+"', password = '"+Contraseña.getText()+"', nombre = '"+Nombre.getText().toUpperCase()+"', direccion = '"+Direccion.getText().toUpperCase()+"', telefono = '"+telefonos.getText().toUpperCase()+"' where id = "+id+" ");
+        }else
+        {
+            return false;
+        }
+    }
+
+    public boolean Delete_User(int id) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+        if (Get_Permiso(Funciones.PermisoUsers_delete))
+        {
+            coneccion = new Conexion();
+            return coneccion.ejecutar("delete from users where id = "+id+" ");
+        }else
+        {
+            return false;
+        }
+    }
+    
+    public boolean ValidarUserPermisos(int id) {
+        boolean r = false;
+        
+        try {
+            coneccion = new Conexion();
+            try (ResultSet rs = coneccion.Consulta("SELECT * FROM permisos where id_user = "+id+" ")) {
+                if (rs.next())
+                {
+                    r = true;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException  ex) {
+            Alert(ex.getMessage());
+        }
+         
+        return r;
+    }
+    
+    public boolean User_AddFirstPermisos (int id)
+    {
+        boolean respuesta = false;
+        try {
+            respuesta = coneccion.ejecutar("INSERT INTO `permisos` (`id_user`, `clientes`, `clientes_agregar`, `clientes_editar`, `clientes_eliminar`, `vehiculos`, `vehiculos_agregar`, `vehiculos_editar`, `vehiculos_eliminar`, `provedores`, `provedores_agregar`, `provedores_editar`, `provedores_eliminar`, `stock`, `stock_agregar`, `stock_editar`, `stock_eliminar`, `inventario`, `users`, `user_add`, `user_update`, `user_delete`) VALUES ("+id+", '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0')");
+        } catch (SQLException ex) {
+            Alert(ex.getMessage());
+        }
+        return respuesta;
+    }
+    public void SetPermisosUsuario(
+            int id,
+            Checkbox clientes,
+            Checkbox clientes_agregar,
+            Checkbox clientes_editar,
+            Checkbox clientes_eliminar,
+            Checkbox vehiculos,
+            Checkbox vehiculos_agregar,
+            Checkbox vehiculos_editar,
+            Checkbox vehiculos_eliminar,
+            Checkbox provedores,
+            Checkbox provedores_agregar,
+            Checkbox provedores_editar,
+            Checkbox provedores_eliminar,
+            Checkbox stock,
+            Checkbox stock_agregar,
+            Checkbox stock_editar,
+            Checkbox stock_eliminar,
+            Checkbox inventario,
+            Checkbox users,
+            Checkbox user_add,
+            Checkbox user_update,
+            Checkbox user_delete
+    )
+    {
+        
+        if (id != 0)
+        {
+            try {
+                coneccion = new Conexion();
+                ResultSet rs = coneccion.Consulta("SELECT * FROM permisos WHERE id_user = "+id+" ");
+                if (rs.next())
+                {
+                    clientes.setState(ReturnState(rs.getInt(2)));
+                    clientes_agregar.setState(ReturnState(rs.getInt(3)));
+                    clientes_editar.setState(ReturnState(rs.getInt(4)));
+                    clientes_eliminar.setState(ReturnState(rs.getInt(5)));
+                    vehiculos.setState(ReturnState(rs.getInt(6)));
+                    vehiculos_agregar.setState(ReturnState(rs.getInt(7)));
+                    vehiculos_editar.setState(ReturnState(rs.getInt(8)));
+                    vehiculos_eliminar.setState(ReturnState(rs.getInt(9)));
+                    provedores.setState(ReturnState(rs.getInt(10)));
+                    provedores_agregar.setState(ReturnState(rs.getInt(11)));
+                    provedores_editar.setState(ReturnState(rs.getInt(12)));
+                    provedores_eliminar.setState(ReturnState(rs.getInt(13)));
+                    stock.setState(ReturnState(rs.getInt(14)));
+                    stock_agregar.setState(ReturnState(rs.getInt(15)));
+                    stock_editar.setState(ReturnState(rs.getInt(16)));
+                    stock_eliminar.setState(ReturnState(rs.getInt(17)));
+                    inventario.setState(ReturnState(rs.getInt(18)));
+                    users.setState(ReturnState(rs.getInt(19)));
+                    user_add.setState(ReturnState(rs.getInt(20)));
+                    user_update.setState(ReturnState(rs.getInt(21)));
+                    user_delete.setState(ReturnState(rs.getInt(22)));
+                }
+            } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+                Alert(ex.getMessage());
+            }
+        }
+    }
+    
+    private boolean ReturnState (int num)
+    {
+        boolean r = false;
+        
+        if (num > 0)
+        {
+            r = true;
+        }
+        
+        return r;
+    }
+    
+    private boolean ReturnStateChecbox (Checkbox c)
+    {
+        boolean r = false;
+        
+        if (c.getState() == true)
+        {
+            r = true;
+        }
+        
+        return r;
+    }
+    
+    public boolean UpdatePermisosYacceso (
+            int id,
+            Checkbox clientes,
+            Checkbox clientes_agregar,
+            Checkbox clientes_editar,
+            Checkbox clientes_eliminar,
+            Checkbox vehiculos,
+            Checkbox vehiculos_agregar,
+            Checkbox vehiculos_editar,
+            Checkbox vehiculos_eliminar,
+            Checkbox provedores,
+            Checkbox provedores_agregar,
+            Checkbox provedores_editar,
+            Checkbox provedores_eliminar,
+            Checkbox stock,
+            Checkbox stock_agregar,
+            Checkbox stock_editar,
+            Checkbox stock_eliminar,
+            Checkbox inventario,
+            Checkbox users,
+            Checkbox user_add,
+            Checkbox user_update,
+            Checkbox user_delete
+    )
+    {
+        boolean r = false;
+        try {
+                r = coneccion.ejecutar("update permisos set clientes = "+ReturnStateChecbox(clientes)+","
+                        + " clientes_agregar = "+ReturnStateChecbox(clientes_agregar)+", "
+                        + " clientes_editar = "+ReturnStateChecbox(clientes_editar)+", "
+                        + " clientes_eliminar = "+ReturnStateChecbox(clientes_eliminar)+", "
+                        + " vehiculos = "+ReturnStateChecbox(vehiculos)+", "
+                        + " vehiculos_agregar = "+ReturnStateChecbox(vehiculos_agregar)+", "
+                        + " vehiculos_editar = "+ReturnStateChecbox(vehiculos_editar)+", "
+                        + " vehiculos_eliminar = "+ReturnStateChecbox(vehiculos_eliminar)+", "
+                        + " provedores = "+ReturnStateChecbox(provedores)+", "
+                        + " provedores_agregar = "+ReturnStateChecbox(provedores_agregar)+", "
+                        + " provedores_editar = "+ReturnStateChecbox(provedores_editar)+", "
+                        + " provedores_eliminar = "+ReturnStateChecbox(provedores_eliminar)+", "
+                        + " stock = "+ReturnStateChecbox(stock)+", "
+                        + " stock_agregar = "+ReturnStateChecbox(stock_agregar)+", "
+                        + " stock_editar = "+ReturnStateChecbox(stock_editar)+", "
+                        + " stock_eliminar = "+ReturnStateChecbox(stock_eliminar)+", "
+                        + " inventario = "+ReturnStateChecbox(inventario)+", "
+                        + " users = "+ReturnStateChecbox(users)+", "
+                        + " user_add = "+ReturnStateChecbox(user_add)+", "
+                        + " user_update = "+ReturnStateChecbox(user_update)+", "
+                        + " user_delete = "+ReturnStateChecbox(user_delete)+"  where id_user = "+id+" ");
+                        
+        } catch (SQLException ex) {
+            Alert(ex.getMessage());
+        }
+        return r;
+    }
+    
+    public void Table_LoadUsersSearch(JTable t, JTextField txt)
+    {
+        try {
+            DefaultTableModel modelo;
+            modelo = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+            };
+            t.setModel(modelo);
+            
+            modelo.addColumn("ID");
+            modelo.addColumn("NOMBRE");
+            modelo.addColumn("DIRECCION");
+            modelo.addColumn("TELEFONO");
+            
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT * FROM users where username like '%"+txt.getText()+"%' or nombre like '%"+txt.getText()+"%' order by nombre desc");
+            Object [] file = new Object[4];
+
+            while (rs.next())
+            {
+                file[0] = rs.getString(1);
+                file[1] = rs.getString(4);
+                file[2] = rs.getString(5);
+                file[3] = rs.getString(6);
+                
+                modelo.addRow(file);
+            }
+            StyleJtable(t);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Alert(ex.getMessage());
+        }
+    }
 }

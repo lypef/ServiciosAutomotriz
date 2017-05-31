@@ -44,6 +44,7 @@ public class ManagerControl extends javax.swing.JFrame {
         BtnClientes7 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -65,9 +66,7 @@ public class ManagerControl extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximizedBounds(new java.awt.Rectangle(940, 380, 360, 360));
-        setMaximumSize(new java.awt.Dimension(940, 380));
         setMinimumSize(new java.awt.Dimension(940, 380));
-        setPreferredSize(new java.awt.Dimension(940, 380));
 
         BtnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnClientes.png"))); // NOI18N
         BtnClientes.setBorder(null);
@@ -138,6 +137,16 @@ public class ManagerControl extends javax.swing.JFrame {
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/file.png"))); // NOI18N
         jMenu1.setText("Archivo");
+
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
+        jMenuItem10.setText("Bloquear");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem10);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/clients.png"))); // NOI18N
@@ -391,6 +400,10 @@ public class ManagerControl extends javax.swing.JFrame {
         
     }//GEN-LAST:event_BtnClientes7ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        Bloquear();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -443,6 +456,7 @@ public class ManagerControl extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
@@ -515,5 +529,11 @@ public class ManagerControl extends javax.swing.JFrame {
         this.dispose();
         m.Users();
         m.show();
+    }
+
+    private void Bloquear() {
+        this.dispose();
+        Login form = new Login();
+        form.show();
     }
 }
