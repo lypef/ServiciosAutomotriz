@@ -564,6 +564,16 @@ public class Manager extends javax.swing.JFrame {
         }
     }
     
+    public void ShowAjustes() {
+        Funciones.idBack = tmp;
+        ClearDesktop();
+        Ajustes form = new Ajustes();
+        Desktop.add(form);
+        form.setSize(Desktop.getWidth(), Desktop.getHeight());
+        form.show();
+        tmp = Funciones.BackStock_Consultar;
+    }
+    
     private void Bloquear() {
         this.dispose();
         Login form = new Login();

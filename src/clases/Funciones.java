@@ -21,22 +21,24 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Properties;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -103,14 +105,14 @@ public class Funciones {
     public static final String PermisoUsers_add = "user_add";
     public static final String PermisoUsers_edit = "user_update";
     public static final String PermisoUsers_delete = "user_delete";
+    public static final String PermisoUpdate_datos = "update_dates";
     
             
     public void SetModelForm (JFrame f)
     {
-            //Insertamos titulo, imagen y centramos frame
-            f.setTitle("FLETES LEMARGO");
-            f.setLocationRelativeTo(null);
-            f.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/icon.png")));
+        f.setTitle(this.ReturnDatosFisicos(this.Datos_Nombre) + ", " + this.ReturnDatosFisicos(this.Datos_Direccion) + " - RFC: "+ this.ReturnDatosFisicos(this.Datos_Rfc));
+        f.setLocationRelativeTo(null);
+        f.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/icon.png")));
     }
 
     public void SetUpercase_Jtextfield (JTextField t)
@@ -1279,7 +1281,8 @@ public class Funciones {
             Checkbox users,
             Checkbox user_add,
             Checkbox user_update,
-            Checkbox user_delete
+            Checkbox user_delete,
+            Checkbox update_dates
     )
     {
         
@@ -1311,6 +1314,7 @@ public class Funciones {
                     user_add.setState(ReturnState(rs.getInt(20)));
                     user_update.setState(ReturnState(rs.getInt(21)));
                     user_delete.setState(ReturnState(rs.getInt(22)));
+                    update_dates.setState(ReturnState(rs.getInt(23)));
                 }
             } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
                 Alert(ex.getMessage());
@@ -1364,7 +1368,8 @@ public class Funciones {
             Checkbox users,
             Checkbox user_add,
             Checkbox user_update,
-            Checkbox user_delete
+            Checkbox user_delete,
+            Checkbox update_dates
     )
     {
         boolean r = false;
@@ -1389,7 +1394,8 @@ public class Funciones {
                         + " users = "+ReturnStateChecbox(users)+", "
                         + " user_add = "+ReturnStateChecbox(user_add)+", "
                         + " user_update = "+ReturnStateChecbox(user_update)+", "
-                        + " user_delete = "+ReturnStateChecbox(user_delete)+"  where id_user = "+id+" ");
+                        + " user_delete = "+ReturnStateChecbox(user_delete)+", "
+                        + " update_dates = "+ReturnStateChecbox(update_dates)+"  where id_user = "+id+" ");
                         
         } catch (SQLException ex) {
             Alert(ex.getMessage());
@@ -1428,6 +1434,232 @@ public class Funciones {
             StyleJtable(t);
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             Alert(ex.getMessage());
+        }
+    }
+    
+    public String GetRutaImagenJdataChooser ()
+    {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG & GIF","jpg","png","gif");
+        chooser.setFileFilter(filtroImagen);
+        chooser.showOpenDialog(null);
+        return String.valueOf(chooser.getSelectedFile().getAbsoluteFile()).replace("\\", "/");
+    }
+    
+    public String GetRutaFolderJdataChooser ()
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fileChooser.showSaveDialog(null);
+        return String.valueOf(fileChooser.getSelectedFile()).replace("\\", "/");
+    }
+    
+    public void AjustesGetProperties 
+    (
+        JTextField TxtRuta_db,
+        JTextField usuario_db,
+        JTextField passwors_db,
+        JTextField nombre_db,
+        JTextField puerto_db,
+        JTextField ruta_logo,
+        JTextField ruta_savereports,
+        JTextField TableFonfHeader,
+        JTextField TableFondBody,
+        JTextField TableFondZiseBody,
+        JTextField TableFondZiseHeader,
+        JRadioButton TableFondBodyBold,
+        JRadioButton TableFondHeaderBold
+    )
+    {
+        try {
+            TxtRuta_db.setText(p.ReturnPropiedad(p.ruta_db));
+            usuario_db.setText(p.ReturnPropiedad(p.usuario_db));
+            passwors_db.setText(p.ReturnPropiedad(p.passwors_db));
+            nombre_db.setText(p.ReturnPropiedad(p.nombre_db));
+            puerto_db.setText(p.ReturnPropiedad(p.puerto_db));
+            ruta_logo.setText(p.ReturnPropiedad(p.Ruta_logo));
+            ruta_savereports.setText(p.ReturnPropiedad(p.Ruta_SaveReports));
+            TableFonfHeader.setText(p.ReturnPropiedad(p.Table_FondHeader));
+            TableFondBody.setText(p.ReturnPropiedad(p.Table_FondBody));
+            TableFondZiseBody.setText(p.ReturnPropiedad(p.Table_FondZiseBody));
+            TableFondZiseHeader.setText(p.ReturnPropiedad(p.Table_FondZiseHeader));
+            
+            if ("yes".equals(p.ReturnMinuscula(p.Table_BodyBold)))
+            {
+                TableFondBodyBold.setSelected(true);
+            }
+            
+            if ("yes".equals(p.ReturnMinuscula(p.Table_HeaderBold)))
+            {
+                TableFondHeaderBold.setSelected(true);
+            }
+        } catch (IOException ex) {
+            Alert(ex.getMessage());
+        }
+            
+    }
+    
+    public void LoadValuesPyme(JTextField TxtNombre, JTextField TxtDireccion, JTextField TxtRfc, JTextField TxtTelefonos)
+    {
+        
+        try {
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT * FROM datos where id = 1 ");
+            
+            if (rs.next())
+            {
+                TxtNombre.setText(rs.getString(2).toUpperCase());
+                TxtDireccion.setText(rs.getString(3).toUpperCase());
+                TxtRfc.setText(rs.getString(4).toUpperCase());
+                TxtTelefonos.setText(rs.getString(5).toUpperCase());
+                if (!Get_Permiso(Funciones.PermisoUpdate_datos))
+                {
+                    TxtNombre.enable(false);
+                    TxtDireccion.enable(false);
+                    TxtRfc.enable(false);
+                    TxtTelefonos.enable(false);
+                }
+            }
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Alert(ex.getMessage());
+        }
+    }
+    
+    public boolean AjustesSetProperties
+    (
+        JTextField TxtRuta_db,
+        JTextField usuario_db,
+        JTextField passwors_db,
+        JTextField nombre_db,
+        JTextField puerto_db,
+        JTextField ruta_logo,
+        JTextField ruta_savereports,
+        JTextField TableFonfHeader,
+        JTextField TableFondBody,
+        JTextField TableFondZiseBody,
+        JTextField TableFondZiseHeader,
+        JRadioButton TableFondBodyBold,
+        JRadioButton TableFondHeaderBold
+    )
+    {
+        boolean r = true;
+        File path = new File (".");
+        Properties propiedades = new Properties();
+        OutputStream salida = null;
+
+        try {
+            
+            salida = new FileOutputStream(path.getCanonicalPath() + "/config.properties");
+
+            // asignamos los valores a las propiedades
+            
+            propiedades.setProperty(p.ruta_db,TxtRuta_db.getText() );
+            propiedades.setProperty(p.usuario_db,usuario_db.getText() );
+            propiedades.setProperty(p.passwors_db,passwors_db.getText() );
+            propiedades.setProperty(p.nombre_db,nombre_db.getText() );
+            propiedades.setProperty(p.puerto_db,puerto_db.getText() );
+            propiedades.setProperty(p.Ruta_logo,ruta_logo.getText() );
+            propiedades.setProperty(p.Ruta_SaveReports,ruta_savereports.getText() );
+            propiedades.setProperty(p.Table_FondHeader,TableFonfHeader.getText() );
+            propiedades.setProperty(p.Table_FondBody,TableFondBody.getText() );
+            propiedades.setProperty(p.Table_FondZiseBody,TableFondZiseBody.getText() );
+            propiedades.setProperty(p.Table_FondZiseHeader,TableFondZiseHeader.getText() );
+            
+            
+            if (TableFondBodyBold.isSelected())
+            {
+                propiedades.setProperty(p.Table_BodyBold,"yes");
+            }else
+            {
+                propiedades.setProperty(p.Table_BodyBold,"no");
+            }
+            
+            if (TableFondHeaderBold.isSelected())
+            {
+                propiedades.setProperty(p.Table_HeaderBold,"yes");
+            }else
+            {
+                propiedades.setProperty(p.Table_HeaderBold,"no");
+            }
+            
+            // guardamos el archivo de propiedades en la carpeta de aplicación
+            propiedades.store(salida, null);
+
+        } catch (IOException io) {
+            r = false;
+            Alert(io.getMessage());
+        } finally {
+            if (salida != null) {
+                try {
+                    salida.close();
+                } catch (IOException e) {
+                    r = false;
+                    Alert(e.getMessage());
+                }
+            }
+
+        }
+        return r;
+    }
+    
+    public boolean AjustesRestoreProperties ()
+    {
+        boolean r = true;
+        File path = new File (".");
+        Properties propiedades = new Properties();
+        OutputStream salida = null;
+
+        try {
+            
+            salida = new FileOutputStream(path.getCanonicalPath() + "/config.properties");
+
+            // asignamos los valores a las propiedades
+            
+            propiedades.setProperty(p.ruta_db,"//server");
+            propiedades.setProperty(p.usuario_db,"username");
+            propiedades.setProperty(p.passwors_db,"***");
+            propiedades.setProperty(p.nombre_db,"nombre_db");
+            propiedades.setProperty(p.puerto_db,"3306");
+            propiedades.setProperty(p.Ruta_logo,"/logo.jpg");
+            propiedades.setProperty(p.Ruta_SaveReports,"/");
+            propiedades.setProperty(p.Table_FondHeader,"arial");
+            propiedades.setProperty(p.Table_FondBody,"arial");
+            propiedades.setProperty(p.Table_FondZiseBody,"12");
+            propiedades.setProperty(p.Table_FondZiseHeader,"16");
+            propiedades.setProperty(p.Table_BodyBold,"no");
+            propiedades.setProperty(p.Table_HeaderBold,"yes");
+            
+            // guardamos el archivo de propiedades en la carpeta de aplicación
+            propiedades.store(salida, null);
+
+        } catch (IOException io) {
+            r = false;
+            Alert(io.getMessage());
+        } finally {
+            if (salida != null) {
+                try {
+                    salida.close();
+                } catch (IOException e) {
+                    r = false;
+                    Alert(e.getMessage());
+                }
+            }
+
+        }
+        return r;
+    }
+    
+    
+    public void UpdateDatosEmpresa (JTextField TxtNombre, JTextField TxtDireccion, JTextField TxtRfc, JTextField TxtTelefonos )
+    {
+        if (Get_Permiso(Funciones.PermisoUpdate_datos))
+        {
+            try {
+                coneccion = new Conexion();
+                coneccion.ejecutar("update datos set nombre = '"+TxtNombre.getText().toUpperCase()+"', direccion = '"+TxtDireccion.getText().toUpperCase()+"', rfc = '"+TxtRfc.getText().toUpperCase()+"', telefono = '"+TxtTelefonos.getText().toUpperCase()+"' where id = 1 ");
+            } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+                Alert(ex.getMessage());
+            }
         }
     }
 }

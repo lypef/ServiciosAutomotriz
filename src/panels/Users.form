@@ -690,7 +690,12 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jButton8" min="-2" pref="191" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jButton9" min="-2" pref="191" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="vehiculos_agregar" alignment="0" max="32767" attributes="0"/>
@@ -704,30 +709,24 @@
                                           <Component id="vehiculos" min="-2" max="-2" attributes="0"/>
                                           <Component id="provedores" min="-2" max="-2" attributes="0"/>
                                           <Component id="provedores_agregar" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="provedores_editar" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="user_update" min="-2" max="-2" attributes="0"/>
-                                          <Component id="provedores_eliminar" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="stock_editar" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="update_dates" min="-2" pref="142" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="user_update" min="-2" max="-2" attributes="0"/>
+                                              <Component id="provedores_eliminar" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="stock_editar" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="stock_eliminar" alignment="0" pref="0" max="32767" attributes="0"/>
                                               <Component id="stock_agregar" alignment="0" pref="0" max="32767" attributes="0"/>
                                               <Component id="stock" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                               <Component id="users" alignment="0" max="32767" attributes="0"/>
                                               <Component id="inventario" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="user_add" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="user_delete" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="user_add" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="user_delete" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
                                       </Group>
-                                  </Group>
-                                  <Component id="provedores_editar" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jButton8" min="-2" pref="191" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButton9" min="-2" pref="191" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace pref="88" max="32767" attributes="0"/>
@@ -789,7 +788,10 @@
                                   <Component id="user_delete" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="provedores_editar" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="provedores_editar" min="-2" max="-2" attributes="0"/>
+                                  <Component id="update_dates" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -944,6 +946,11 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
                       </Events>
+                    </Component>
+                    <Component class="java.awt.Checkbox" name="update_dates">
+                      <Properties>
+                        <Property name="label" type="java.lang.String" value="Datos de empresa"/>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>

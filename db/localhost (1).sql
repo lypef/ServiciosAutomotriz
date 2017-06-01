@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 31-05-2017 a las 07:56:12
+-- Tiempo de generación: 01-06-2017 a las 07:08:11
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -71,7 +71,7 @@ CREATE TABLE `datos` (
 --
 
 INSERT INTO `datos` (`id`, `nombre`, `direccion`, `rfc`, `telefono`) VALUES
-(1, 'nombre fisico', 'direccion fisica', 'rfc fisico', 'telefono fisico');
+(1, 'FLETES LEMARGO', 'AV. DIAZ MIRON', 'AGRS945128F53', '018001232222');
 
 -- --------------------------------------------------------
 
@@ -101,17 +101,18 @@ CREATE TABLE `permisos` (
   `users` tinyint(1) NOT NULL,
   `user_add` tinyint(1) NOT NULL,
   `user_update` tinyint(1) NOT NULL,
-  `user_delete` tinyint(1) NOT NULL
+  `user_delete` tinyint(1) NOT NULL,
+  `update_dates` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `permisos`
 --
 
-INSERT INTO `permisos` (`id_user`, `clientes`, `clientes_agregar`, `clientes_editar`, `clientes_eliminar`, `vehiculos`, `vehiculos_agregar`, `vehiculos_editar`, `vehiculos_eliminar`, `provedores`, `provedores_agregar`, `provedores_editar`, `provedores_eliminar`, `stock`, `stock_agregar`, `stock_editar`, `stock_eliminar`, `inventario`, `users`, `user_add`, `user_update`, `user_delete`) VALUES
-(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `permisos` (`id_user`, `clientes`, `clientes_agregar`, `clientes_editar`, `clientes_eliminar`, `vehiculos`, `vehiculos_agregar`, `vehiculos_editar`, `vehiculos_eliminar`, `provedores`, `provedores_agregar`, `provedores_editar`, `provedores_eliminar`, `stock`, `stock_agregar`, `stock_editar`, `stock_eliminar`, `inventario`, `users`, `user_add`, `user_update`, `user_delete`, `update_dates`) VALUES
+(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -188,7 +189,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `nombre`, `direccion`, `telefono`) VALUES
-(1, 'ROOT', 'root', 'lypef', 'DIRECCION', '9231200505'),
+(1, 'ROOT', 'root', 'LYPEF', 'DIRECCION', '9231200505'),
 (3, 'ADMIN', 'admin', 'ADMINISTRADOR', 'DIRECCION', '00000'),
 (4, 'USERNAME', 'username', 'MI NOMBRE ES MIO', 'DIRECCION FICTICIA', '9231200505');
 

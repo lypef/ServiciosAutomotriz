@@ -397,7 +397,7 @@ public class ManagerControl extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnClientes6ActionPerformed
 
     private void BtnClientes7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClientes7ActionPerformed
-        
+        ShowAjustes();
     }//GEN-LAST:event_BtnClientes7ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
@@ -535,5 +535,11 @@ public class ManagerControl extends javax.swing.JFrame {
         this.dispose();
         Login form = new Login();
         form.show();
+    }
+
+    private void ShowAjustes() {
+        this.dispose();
+        m.ShowAjustes();
+        m.show();
     }
 }
