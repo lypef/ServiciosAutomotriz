@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 01-06-2017 a las 07:08:11
+-- Tiempo de generación: 02-06-2017 a las 07:54:52
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -50,7 +50,8 @@ INSERT INTO `clients` (`id`, `nombre`, `direccion`, `telefono`, `rfc`, `mail`) V
 (19, 'FLORINDA MESA', 'DIRECCION', 'H', 'RFC', 'HJ'),
 (20, 'NARCIZO RAYO', ' NUEVA DIRECCION ', 'TELEFONO', 'RFC NUEV', 'CORREO ELECTRONICO'),
 (21, 'FRANCISCO EDUARDO ASCENCIO GARCIA', 'DIRECCION', 'TELEFONOS', 'AEGF17105G4', 'CORRE@AA.COM'),
-(22, 'SORIBEL ASCENCIO GARCIA', 'NO SABEMOS ', '222', 'SORIANACUESTAMENOS', 'OJOIJ@HOTMAI.COM');
+(22, 'SORIBEL ASCENCIO GARCIA', 'NO SABEMOS ', '222', 'SORIANACUESTAMENOS', 'OJOIJ@HOTMAI.COM'),
+(23, 'ARLENE GARAGY', 'NO TIENE', '524646', 'GARA5454545', 'KJKJK');
 
 -- --------------------------------------------------------
 
@@ -110,9 +111,7 @@ CREATE TABLE `permisos` (
 --
 
 INSERT INTO `permisos` (`id_user`, `clientes`, `clientes_agregar`, `clientes_editar`, `clientes_eliminar`, `vehiculos`, `vehiculos_agregar`, `vehiculos_editar`, `vehiculos_eliminar`, `provedores`, `provedores_agregar`, `provedores_editar`, `provedores_eliminar`, `stock`, `stock_agregar`, `stock_editar`, `stock_eliminar`, `inventario`, `users`, `user_add`, `user_update`, `user_delete`, `update_dates`) VALUES
-(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -135,16 +134,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`codebar`, `nombre`, `descripcion`, `precio`, `existencia`, `vendidos`, `id_provedor`) VALUES
-('AAAA', 'AAAA', 'AAA', 14144, 4, 0, 1),
-('AAAS', 'AA', 'AAA', 1, 1, 0, 3),
-('AEDF', 'CCCC', 'DDDD', 10, 100, 0, 3),
-('DDD', 'DD', 'DDD', 1, 1, 0, 3),
-('DDDD', 'DDDD', 'DDD', 1111, 5, 0, 2),
-('DQWWWD', 'WDWDWD', 'DWW', 5555, 5555, 0, 2),
-('DWDW', '5', '55', 5, 5, 4, 1),
-('DWWDW', 'DWDWDW', 'DW', 2, 2, 0, 2),
-('SQSQQ', 'QSQSQ', 'SQSQ', 10, 10, 0, 2),
-('WDWDWDW', '56565', '6565656', 565656, 65656, 0, 2);
+('CC', 'REMPLAZO DE CLUTH', 'SERVICIO DE REEMPLAZO DE CLUTH', 500, 1000000, 0, 1),
+('RVM', 'REACTIVADO DE VOLANTE MATRIZ', 'SE REACTIVA VOLANTE MATRIZ', 900, 1000000, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -189,9 +180,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `nombre`, `direccion`, `telefono`) VALUES
-(1, 'ROOT', 'root', 'LYPEF', 'DIRECCION', '9231200505'),
-(3, 'ADMIN', 'admin', 'ADMINISTRADOR', 'DIRECCION', '00000'),
-(4, 'USERNAME', 'username', 'MI NOMBRE ES MIO', 'DIRECCION FICTICIA', '9231200505');
+(1, 'ROOT', 'root', 'ROOT', 'DIRECCION', '9231200505');
 
 -- --------------------------------------------------------
 
@@ -215,7 +204,9 @@ CREATE TABLE `vehiculos` (
 INSERT INTO `vehiculos` (`placas`, `color`, `departamento`, `mtp`, `kilometros`, `id_client`) VALUES
 ('AAAAA', 'AAAAA', 'NO SE ', 'FORD F150', 150000, 22),
 ('AEDF', 'AAAAA', 'AAA', 'AAAA', 123, 17),
-('AXEDF-A55', 'VERDE', 'SONIDO', 'MICOOPER, EPORTIVO MODELO 99', 158999, 20),
+('AXEDF-A55', 'VERDE', 'SONIDO', 'MICOOPER, DEPORTIVO MODELO 99', 158999, 20),
+('JHGBJHJHHJG', 'VERDE', 'NO SE ', 'FORD F150 MOD, 1980', 315000, 23),
+('XAE56565', 'AZUL', 'CASCABEL', 'CHEVROLET, CHEVY 2010', 110000, 23),
 ('Y99T-65', 'ROJO VINO', 'AFINACION', 'CAMIONETA NISSAN NP300, MOD-2014', 189000, 21);
 
 --
@@ -244,7 +235,8 @@ ALTER TABLE `permisos`
 -- Indices de la tabla `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`codebar`);
+  ADD PRIMARY KEY (`codebar`),
+  ADD KEY `provedor` (`id_provedor`);
 
 --
 -- Indices de la tabla `provedores`
@@ -273,7 +265,7 @@ ALTER TABLE `vehiculos`
 -- AUTO_INCREMENT de la tabla `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT de la tabla `datos`
 --
@@ -298,6 +290,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `permisos`
   ADD CONSTRAINT `user_permiso` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `provedor` FOREIGN KEY (`id_provedor`) REFERENCES `provedores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `vehiculos`

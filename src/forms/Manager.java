@@ -40,6 +40,7 @@ public class Manager extends javax.swing.JFrame {
         BtnClientes1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -94,6 +95,15 @@ public class Manager extends javax.swing.JFrame {
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/file.png"))); // NOI18N
         jMenu1.setText("Archivo");
+
+        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
+        jMenuItem13.setText("Servicio");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem13);
 
         jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
         jMenuItem10.setText("Bloquear");
@@ -322,6 +332,12 @@ public class Manager extends javax.swing.JFrame {
         ShowProvedores_Consultar();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        this.dispose();
+        Service form = new Service();
+        form.show();
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -361,6 +377,7 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

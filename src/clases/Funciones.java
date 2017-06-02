@@ -65,6 +65,9 @@ public class Funciones {
     
     public final ArrayList ListClients = new ArrayList();
     public final ArrayList ListProvedores = new ArrayList();
+    public final ArrayList ListVehiculos = new ArrayList();
+    public final ArrayList ListProducts = new ArrayList();
+    
     Conexion coneccion;
     
     //IdGlobal username
@@ -447,7 +450,7 @@ public class Funciones {
         if (placas.getText().replace(" ", "").length() > 0 && c.getSelectedIndex() > 0)
         {
             coneccion = new Conexion();
-            return coneccion.ejecutar("insert into vehiculos (placas, color, departamento, mtp, kilometros, id_client) values ('"+placas.getText().toUpperCase()+"', '"+placas.getText().toUpperCase()+"', '"+departamento.getText().toUpperCase()+"', '"+mtp.getText().toUpperCase()+"', '"+kilometros.getText().toUpperCase()+"', '"+ListClients.get(c.getSelectedIndex())+"')");
+            return coneccion.ejecutar("insert into vehiculos (placas, color, departamento, mtp, kilometros, id_client) values ('"+placas.getText().toUpperCase()+"', '"+color.getText().toUpperCase()+"', '"+departamento.getText().toUpperCase()+"', '"+mtp.getText().toUpperCase()+"', '"+kilometros.getText().toUpperCase()+"', '"+ListClients.get(c.getSelectedIndex())+"')");
         }else
         {
             return false;
@@ -1253,7 +1256,7 @@ public class Funciones {
     {
         boolean respuesta = false;
         try {
-            respuesta = coneccion.ejecutar("INSERT INTO `permisos` (`id_user`, `clientes`, `clientes_agregar`, `clientes_editar`, `clientes_eliminar`, `vehiculos`, `vehiculos_agregar`, `vehiculos_editar`, `vehiculos_eliminar`, `provedores`, `provedores_agregar`, `provedores_editar`, `provedores_eliminar`, `stock`, `stock_agregar`, `stock_editar`, `stock_eliminar`, `inventario`, `users`, `user_add`, `user_update`, `user_delete`) VALUES ("+id+", '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0')");
+            respuesta = coneccion.ejecutar("INSERT INTO `permisos` (`id_user`, `clientes`, `clientes_agregar`, `clientes_editar`, `clientes_eliminar`, `vehiculos`, `vehiculos_agregar`, `vehiculos_editar`, `vehiculos_eliminar`, `provedores`, `provedores_agregar`, `provedores_editar`, `provedores_eliminar`, `stock`, `stock_agregar`, `stock_editar`, `stock_eliminar`, `inventario`, `users`, `user_add`, `user_update`, `user_delete`, `update_dates`) VALUES ("+id+", '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0')");
         } catch (SQLException ex) {
             Alert(ex.getMessage());
         }
@@ -1659,6 +1662,96 @@ public class Funciones {
                 coneccion.ejecutar("update datos set nombre = '"+TxtNombre.getText().toUpperCase()+"', direccion = '"+TxtDireccion.getText().toUpperCase()+"', rfc = '"+TxtRfc.getText().toUpperCase()+"', telefono = '"+TxtTelefonos.getText().toUpperCase()+"' where id = 1 ");
             } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
                 Alert(ex.getMessage());
+            }
+        }
+    }
+    
+    public void Combo_LoadVehiculos (JComboBox combo, JComboBox combocli) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (combocli.getSelectedIndex() > 0)
+        {
+            combo.removeAllItems();
+            ListVehiculos.clear();
+
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT placas, mtp FROM vehiculos where id_client = "+ListClients.get(combocli.getSelectedIndex())+" order by mtp asc");
+
+            combo.addItem("VEHICULOS");
+            ListVehiculos.add("0");
+
+            while (rs.next())
+            {
+                ListVehiculos.add(rs.getString(1));
+                combo.addItem(rs.getString(2));
+            }
+        }
+    }
+    
+    public void Combo_LoadValuesVehiculos (JComboBox c ,JLabel TxtPlacas, JLabel TxtColor, JLabel TxtDepartamento, JLabel TxtKilometraje) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (c.getSelectedIndex() > 0)
+        {
+            
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT placas, color, departamento, kilometros FROM vehiculos where placas = '"+ListVehiculos.get(c.getSelectedIndex())+"' ");
+
+            if (rs.next())
+            {
+                TxtPlacas.setText(rs.getString(1));
+                TxtColor.setText(rs.getString(2));
+                TxtDepartamento.setText(rs.getString(3));
+                TxtKilometraje.setText(rs.getString(4));
+            }
+        }
+    }
+    
+    public void Combo_LoadProductos (JComboBox combo) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        combo.removeAllItems();
+        ListProducts.clear();
+
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT codebar, nombre FROM products order by nombre asc");
+
+        combo.addItem("PRODUCTOS & SERVICIOS");
+        ListProducts.add("0");
+
+        while (rs.next())
+        {
+            ListProducts.add(rs.getString(1));
+            combo.addItem(rs.getString(2));
+        }
+    }
+    
+    public void Table_LoadProductsServicio(JTable t)
+    {
+        DefaultTableModel modelo;
+        modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+        };
+        t.setModel(modelo);
+
+        modelo.addColumn("CODEBAR");
+        modelo.addColumn("NOMBRE");
+        modelo.addColumn("PRECIO");
+
+        StyleJtable(t);
+    }
+    
+    public void Table_AddProductsServicio(JTable t, JComboBox c, JLabel total) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (c.getSelectedIndex() > 0)
+        {
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT codebar, nombre, precio FROM products where codebar = '"+ListProducts.get(c.getSelectedIndex())+"' ");
+
+            if (rs.next())
+            {
+                DefaultTableModel temp = (DefaultTableModel) t.getModel();
+                Object nuevo[]= {rs.getString(1),rs.getString(2),rs.getDouble(3)};
+                total.setText(String.valueOf(Double.parseDouble(total.getText()) + rs.getDouble(3)));
+                temp.addRow(nuevo);
             }
         }
     }

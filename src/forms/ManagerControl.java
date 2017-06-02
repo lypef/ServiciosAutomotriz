@@ -89,6 +89,11 @@ public class ManagerControl extends javax.swing.JFrame {
         BtnClientes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnServicios.png"))); // NOI18N
         BtnClientes2.setBorder(null);
         BtnClientes2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnServiciosEfc.png"))); // NOI18N
+        BtnClientes2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnClientes2ActionPerformed(evt);
+            }
+        });
 
         BtnClientes3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnStock.png"))); // NOI18N
         BtnClientes3.setBorder(null);
@@ -403,6 +408,12 @@ public class ManagerControl extends javax.swing.JFrame {
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         Bloquear();
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void BtnClientes2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClientes2ActionPerformed
+        this.dispose();
+        Service form = new Service();
+        form.show();
+    }//GEN-LAST:event_BtnClientes2ActionPerformed
 
     /**
      * @param args the command line arguments
