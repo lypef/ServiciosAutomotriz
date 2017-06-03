@@ -9,6 +9,7 @@ import clases.Funciones;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 
 /**
  *
@@ -29,7 +30,7 @@ public class Service extends javax.swing.JFrame {
             f.SetModelForm(this);
             f.Combo_LoadCients(ComboClientes);
             f.Combo_LoadProductos(ComboProductos);
-            f.Table_LoadProductsServicio(Tabla);
+            f.Table_LoadProductsServicio(TxtProducts);
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             f.Alert(ex.getMessage());
         }
@@ -58,17 +59,17 @@ public class Service extends javax.swing.JFrame {
         TxtColor = new javax.swing.JLabel();
         TxtKilometraje = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        Prioridad_Urgente = new javax.swing.JRadioButton();
+        Prioridad_Programar = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        TxtS_solicitado = new javax.swing.JTextArea();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        TxtS_Realizado = new javax.swing.JTextArea();
         ComboProductos = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        Tabla = new javax.swing.JTable();
+        TxtProducts = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         TxtTotal = new javax.swing.JLabel();
@@ -99,9 +100,7 @@ public class Service extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximizedBounds(new java.awt.Rectangle(1085, 560, 360, 360));
-        setMaximumSize(new java.awt.Dimension(1085, 560));
         setMinimumSize(new java.awt.Dimension(1085, 560));
-        setPreferredSize(new java.awt.Dimension(1085, 560));
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
@@ -152,26 +151,27 @@ public class Service extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("PRIORIDAD");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Urgente");
+        buttonGroup1.add(Prioridad_Urgente);
+        Prioridad_Urgente.setSelected(true);
+        Prioridad_Urgente.setText("Urgente");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Programar");
+        buttonGroup1.add(Prioridad_Programar);
+        Prioridad_Programar.setText("Programar");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "DESCRIBA EL SERVICIO SOLICITADO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
-        jScrollPane2.setViewportView(jTextArea1);
+        TxtS_solicitado.setColumns(20);
+        TxtS_solicitado.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        TxtS_solicitado.setLineWrap(true);
+        TxtS_solicitado.setRows(5);
+        TxtS_solicitado.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "DESCRIBA EL SERVICIO SOLICITADO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jScrollPane2.setViewportView(TxtS_solicitado);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "SERVICIO REALIZADO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setLineWrap(true);
-        jTextArea2.setRows(5);
-        jTextArea2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TRABAJO REALIZADO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-        jScrollPane1.setViewportView(jTextArea2);
+        TxtS_Realizado.setColumns(20);
+        TxtS_Realizado.setLineWrap(true);
+        TxtS_Realizado.setRows(5);
+        TxtS_Realizado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TRABAJO REALIZADO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jScrollPane1.setViewportView(TxtS_Realizado);
 
         ComboProductos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         ComboProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PRODUCTOS" }));
@@ -192,7 +192,7 @@ public class Service extends javax.swing.JFrame {
             }
         });
 
-        Tabla.setModel(new javax.swing.table.DefaultTableModel(
+        TxtProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -203,12 +203,12 @@ public class Service extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        Tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+        TxtProducts.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TablaMouseClicked(evt);
+                TxtProductsMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(Tabla);
+        jScrollPane3.setViewportView(TxtProducts);
 
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnPurple.png"))); // NOI18N
@@ -307,8 +307,8 @@ public class Service extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))
+                            .addComponent(Prioridad_Urgente)
+                            .addComponent(Prioridad_Programar))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -346,9 +346,9 @@ public class Service extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton1)
+                        .addComponent(Prioridad_Urgente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2))
+                        .addComponent(Prioridad_Programar))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -629,16 +629,31 @@ public class Service extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboProductosItemStateChanged
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        JTable t_client = new JTable();
+        f.Table_LoadClient(t_client, ComboClientes);
         
+        JTable t_vehiculos = new JTable();
+        f.Table_LoadCar(t_vehiculos, ComboVehiculos);
+        
+        String Prioridad = null;
+        if (Prioridad_Urgente.isSelected())
+        {
+            Prioridad = "URGENTE";
+        }else
+        {
+            Prioridad = "PROGRAMAR";
+        }
+        
+        f.GenerateReporte_Service(t_client, t_vehiculos, 1, TxtS_solicitado.getText(), TxtS_Realizado.getText(),TxtProducts, TxtTotal.getText(), Prioridad);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
+    private void TxtProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProductsMouseClicked
         
-    }//GEN-LAST:event_TablaMouseClicked
+    }//GEN-LAST:event_TxtProductsMouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
-            f.Table_AddProductsServicio(Tabla, ComboProductos, TxtTotal);
+            f.Table_AddProductsServicio(TxtProducts, ComboProductos, TxtTotal);
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             f.Alert(ex.getMessage());
         }
@@ -684,11 +699,15 @@ public class Service extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboClientes;
     private javax.swing.JComboBox<String> ComboProductos;
     private javax.swing.JComboBox<String> ComboVehiculos;
-    private javax.swing.JTable Tabla;
+    private javax.swing.JRadioButton Prioridad_Programar;
+    private javax.swing.JRadioButton Prioridad_Urgente;
     private javax.swing.JLabel TxtColor;
     private javax.swing.JLabel TxtDepartamento;
     private javax.swing.JLabel TxtKilometraje;
     private javax.swing.JLabel TxtPlacas;
+    private javax.swing.JTable TxtProducts;
+    private javax.swing.JTextArea TxtS_Realizado;
+    private javax.swing.JTextArea TxtS_solicitado;
     private javax.swing.JLabel TxtTotal;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton4;
@@ -723,16 +742,12 @@ public class Service extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 
     private void ShowClientes_Agregar() {
