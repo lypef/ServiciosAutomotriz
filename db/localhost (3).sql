@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 02-06-2017 a las 07:54:52
+-- Tiempo de generación: 04-06-2017 a las 06:47:19
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -134,8 +134,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`codebar`, `nombre`, `descripcion`, `precio`, `existencia`, `vendidos`, `id_provedor`) VALUES
-('CC', 'REMPLAZO DE CLUTH', 'SERVICIO DE REEMPLAZO DE CLUTH', 500, 1000000, 0, 1),
-('RVM', 'REACTIVADO DE VOLANTE MATRIZ', 'SE REACTIVA VOLANTE MATRIZ', 900, 1000000, 0, 1);
+('CC', 'REMPLAZO DE CLUTH', 'SERVICIO DE REEMPLAZO DE CLUTH', 500, 999990, 10, 1),
+('RVM', 'REACTIVADO DE VOLANTE MATRIZ', 'SE REACTIVA VOLANTE MATRIZ', 900, 999988, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -159,6 +159,52 @@ CREATE TABLE `provedores` (
 INSERT INTO `provedores` (`id`, `empresa`, `direccion`, `telefono_empresa`, `responsable`, `mail`) VALUES
 (1, 'FORD', 'DIRECCION FICTICIA', '018001232222', 'JAIMITO', '92355545'),
 (5, 'SSSS', 'GHJGHJGHJG', 'HJGHJGHJGHJGHJGHJ', 'GJGJHGHJGHJGJ', 'MAIL NUEVO');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `services`
+--
+
+CREATE TABLE `services` (
+  `id` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `id_vehiculo` varchar(254) NOT NULL,
+  `s_solicitado` varchar(254) NOT NULL,
+  `s_realizado` varchar(254) NOT NULL,
+  `productos` varchar(254) NOT NULL,
+  `total` double NOT NULL,
+  `p_urgente` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `services`
+--
+
+INSERT INTO `services` (`id`, `id_cliente`, `id_vehiculo`, `s_solicitado`, `s_realizado`, `productos`, `total`, `p_urgente`) VALUES
+(1, 22, 'AAAAA', 'VGHGFGF', 'VGHGFGF', ':=', 900, 1),
+(2, 22, 'AAAAA', 'KJJJH', 'KJJJH', 'nullRVMCC', 1400, 1),
+(3, 22, 'AAAAA', 'SERVICIO DE GRUA PARA ARRASTRE', 'SERVICIO DE GRUA PARA ARRASTRE', 'RVM,RVM,CC,CC,', 2800, 1),
+(4, 22, 'AAAAA', 'SERVICIO DE GRUA PARA ARRASTRE', 'SERVICIO DE GRUA PARA ARRASTRE', 'RVM,RVM,CC,CC,CC,', 3300, 0),
+(6, 21, 'Y99T-65', '', '', '', 0, 1),
+(7, 21, 'Y99T-65', 'SSSS', 'SSSS', '', 0, 1),
+(9, 23, 'JHGBJHJHHJG', '', '', '', 0, 1),
+(11, 22, 'AAAAA', '', '', '', 0, 1),
+(12, 22, 'AAAAA', 'VSDVSDV', 'VSDVSDV', 'RVM,CC,', 1400, 0),
+(13, 22, 'AAAAA', 'VBDFBDFRB', 'VBDFBDFRB', 'RVM,RVM,CC,CC,', 2800, 1),
+(14, 22, 'AAAAA', 'FDHFDFD', 'FDHFDFD', 'RVM,CC,', 1400, 1),
+(15, 22, 'AAAAA', 'FDRTHERFDHE', 'FDRTHERFDHE', 'RVM,CC,', 1400, 1),
+(16, 22, 'AAAAA', 'CNDFNBDF', 'CNDFNBDF', 'RVM,', 900, 1),
+(17, 22, 'AAAAA', 'DFGBDFGBDFSV', 'DFGBDFGBDFSV', 'RVM,RVM,CC,CC,CC,', 3300, 0),
+(18, 22, 'AAAAA', 'DXFBDFBD', 'DXFBDFBD', 'RVM,RVM,', 1800, 0),
+(22, 22, 'AAAAA', '', '', '', 0, 1),
+(23, 22, 'AAAAA', '', '', '', 0, 1),
+(24, 22, 'AAAAA', 'RFTJTFGDJN', 'RFTJTFGDJN', 'CC,', 500, 1),
+(25, 21, 'Y99T-65', '', '', '', 500, 1),
+(26, 21, 'Y99T-65', '', '', '', 500, 1),
+(27, 21, 'Y99T-65', '', '', '', 0, 1),
+(28, 21, 'Y99T-65', '', '', 'RVM,', 900, 1),
+(29, 23, 'XAE56565', 'GRUA', 'GRUA', 'RVM,CC,', 1400, 1);
 
 -- --------------------------------------------------------
 
@@ -202,12 +248,12 @@ CREATE TABLE `vehiculos` (
 --
 
 INSERT INTO `vehiculos` (`placas`, `color`, `departamento`, `mtp`, `kilometros`, `id_client`) VALUES
-('AAAAA', 'AAAAA', 'NO SE ', 'FORD F150', 150000, 22),
+('AAAAA', 'AAAAA', 'NO SE ', 'FORD F150', 15, 22),
 ('AEDF', 'AAAAA', 'AAA', 'AAAA', 123, 17),
 ('AXEDF-A55', 'VERDE', 'SONIDO', 'MICOOPER, DEPORTIVO MODELO 99', 158999, 20),
 ('JHGBJHJHHJG', 'VERDE', 'NO SE ', 'FORD F150 MOD, 1980', 315000, 23),
-('XAE56565', 'AZUL', 'CASCABEL', 'CHEVROLET, CHEVY 2010', 110000, 23),
-('Y99T-65', 'ROJO VINO', 'AFINACION', 'CAMIONETA NISSAN NP300, MOD-2014', 189000, 21);
+('XAE56565', 'AZUL', 'CASCABEL', 'CHEVROLET, CHEVY 2010', 50000, 23),
+('Y99T-65', 'ROJO VINO', 'AFINACION', 'CAMIONETA NISSAN NP300, MOD-2014', 9, 21);
 
 --
 -- Índices para tablas volcadas
@@ -245,6 +291,14 @@ ALTER TABLE `provedores`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cliente` (`id_cliente`),
+  ADD KEY `vehiculos` (`id_vehiculo`);
+
+--
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
@@ -277,10 +331,15 @@ ALTER TABLE `datos`
 ALTER TABLE `provedores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT de la tabla `services`
+--
+ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+--
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Restricciones para tablas volcadas
 --
@@ -296,6 +355,13 @@ ALTER TABLE `permisos`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `provedor` FOREIGN KEY (`id_provedor`) REFERENCES `provedores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `services`
+--
+ALTER TABLE `services`
+  ADD CONSTRAINT `cliente` FOREIGN KEY (`id_cliente`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `vehiculos` FOREIGN KEY (`id_vehiculo`) REFERENCES `vehiculos` (`placas`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `vehiculos`

@@ -7,8 +7,6 @@ package forms;
 
 import clases.Funciones;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTable;
 
 /**
@@ -46,7 +44,7 @@ public class Service extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        Tab = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         ComboVehiculos = new javax.swing.JComboBox<>();
@@ -57,7 +55,6 @@ public class Service extends javax.swing.JFrame {
         TxtPlacas = new javax.swing.JLabel();
         TxtDepartamento = new javax.swing.JLabel();
         TxtColor = new javax.swing.JLabel();
-        TxtKilometraje = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         Prioridad_Urgente = new javax.swing.JRadioButton();
         Prioridad_Programar = new javax.swing.JRadioButton();
@@ -73,7 +70,15 @@ public class Service extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         TxtTotal = new javax.swing.JLabel();
+        TxtKilometraje = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        TableServices = new javax.swing.JTable();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -102,7 +107,12 @@ public class Service extends javax.swing.JFrame {
         setMaximizedBounds(new java.awt.Rectangle(1085, 560, 360, 360));
         setMinimumSize(new java.awt.Dimension(1085, 560));
 
-        jTabbedPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        Tab.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        Tab.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                TabStateChanged(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("PLACAS:");
@@ -144,10 +154,6 @@ public class Service extends javax.swing.JFrame {
         TxtColor.setForeground(new java.awt.Color(102, 102, 102));
         TxtColor.setText(".");
 
-        TxtKilometraje.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        TxtKilometraje.setForeground(new java.awt.Color(102, 102, 102));
-        TxtKilometraje.setText(".");
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("PRIORIDAD");
 
@@ -168,6 +174,7 @@ public class Service extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "SERVICIO REALIZADO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
 
         TxtS_Realizado.setColumns(20);
+        TxtS_Realizado.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         TxtS_Realizado.setLineWrap(true);
         TxtS_Realizado.setRows(5);
         TxtS_Realizado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TRABAJO REALIZADO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
@@ -269,6 +276,9 @@ public class Service extends javax.swing.JFrame {
                     .addComponent(TxtTotal)))
         );
 
+        TxtKilometraje.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        TxtKilometraje.setForeground(new java.awt.Color(0, 0, 204));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -295,8 +305,8 @@ public class Service extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(TxtKilometraje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TxtKilometraje))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -335,7 +345,7 @@ public class Service extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(TxtKilometraje))
+                            .addComponent(TxtKilometraje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -355,20 +365,123 @@ public class Service extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("NUEVO SERVICIO", jPanel1);
+        Tab.addTab("NUEVO SERVICIO", jPanel1);
+
+        TableServices.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(TableServices);
+
+        jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnPurple.png"))); // NOI18N
+        jButton6.setText("RECARGAR");
+        jButton6.setBorder(null);
+        jButton6.setBorderPainted(false);
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnPurpleEfc.png"))); // NOI18N
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnBlue.png"))); // NOI18N
+        jButton7.setText("REPORTE");
+        jButton7.setBorder(null);
+        jButton7.setBorderPainted(false);
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton7.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnBlueEfc.png"))); // NOI18N
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnOrange.png"))); // NOI18N
+        jButton3.setText("R - REPORTE");
+        jButton3.setBorder(null);
+        jButton3.setBorderPainted(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnOrangeEfc.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnPurple.png"))); // NOI18N
+        jButton8.setText("EDITAR");
+        jButton8.setBorder(null);
+        jButton8.setBorderPainted(false);
+        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton8.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnPurpleEfc.png"))); // NOI18N
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnBlue.png"))); // NOI18N
+        jButton9.setText("ELIMINAR");
+        jButton9.setBorder(null);
+        jButton9.setBorderPainted(false);
+        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton9.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnBlueEfc.png"))); // NOI18N
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1050, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jButton6)
+                    .addComponent(jButton7)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8)
+                    .addComponent(jButton9))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 452, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        jTabbedPane1.addTab("CONSULTAR", jPanel2);
+        Tab.addTab("CONSULTAR", jPanel2);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -381,7 +494,7 @@ public class Service extends javax.swing.JFrame {
             .addGap(0, 452, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("MODIFICAR", jPanel3);
+        Tab.addTab("MODIFICAR", jPanel3);
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/file.png"))); // NOI18N
         jMenu1.setText("Archivo");
@@ -540,13 +653,13 @@ public class Service extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(Tab)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1)
+                .addComponent(Tab)
                 .addContainerGap())
         );
 
@@ -630,10 +743,7 @@ public class Service extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         JTable t_client = new JTable();
-        f.Table_LoadClient(t_client, ComboClientes);
-        
         JTable t_vehiculos = new JTable();
-        f.Table_LoadCar(t_vehiculos, ComboVehiculos);
         
         String Prioridad = null;
         if (Prioridad_Urgente.isSelected())
@@ -644,7 +754,10 @@ public class Service extends javax.swing.JFrame {
             Prioridad = "PROGRAMAR";
         }
         
-        f.GenerateReporte_Service(t_client, t_vehiculos, 1, TxtS_solicitado.getText(), TxtS_Realizado.getText(),TxtProducts, TxtTotal.getText(), Prioridad);
+        if (f.GenerateReporte_Service(t_client, t_vehiculos, 1, TxtS_solicitado.getText(), TxtS_Realizado.getText(),TxtProducts, TxtTotal.getText(), Prioridad, ComboClientes, ComboVehiculos, Double.parseDouble(TxtKilometraje.getText())))
+        {
+            Reset();
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void TxtProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProductsMouseClicked
@@ -658,6 +771,37 @@ public class Service extends javax.swing.JFrame {
             f.Alert(ex.getMessage());
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        f.Table_LoadServices(TableServices);        
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        f.GenerateReport(TableServices, "Listado de servicios", 1);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void TabStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabStateChanged
+        if (Tab.getSelectedIndex() != 0)
+        {
+            Reset();
+        }
+        if (Tab.getSelectedIndex() == 1)
+        {
+            f.Table_LoadServices(TableServices);
+        }
+    }//GEN-LAST:event_TabStateChanged
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -701,17 +845,24 @@ public class Service extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboVehiculos;
     private javax.swing.JRadioButton Prioridad_Programar;
     private javax.swing.JRadioButton Prioridad_Urgente;
+    private javax.swing.JTabbedPane Tab;
+    private javax.swing.JTable TableServices;
     private javax.swing.JLabel TxtColor;
     private javax.swing.JLabel TxtDepartamento;
-    private javax.swing.JLabel TxtKilometraje;
+    private javax.swing.JTextField TxtKilometraje;
     private javax.swing.JLabel TxtPlacas;
     private javax.swing.JTable TxtProducts;
     private javax.swing.JTextArea TxtS_Realizado;
     private javax.swing.JTextArea TxtS_solicitado;
     private javax.swing.JLabel TxtTotal;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -745,9 +896,9 @@ public class Service extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 
     private void ShowClientes_Agregar() {
@@ -827,5 +978,22 @@ public class Service extends javax.swing.JFrame {
         TxtColor.setText("");
         TxtKilometraje.setText("");
         TxtDepartamento.setText("");
+    }
+
+    private void Reset() {
+        try {
+            f.SetModelForm(this);
+            f.Combo_LoadCients(ComboClientes);
+            f.Combo_LoadProductos(ComboProductos);
+            f.Table_LoadProductsServicio(TxtProducts);
+            Clean();
+            ComboVehiculos.removeAllItems();
+            ComboVehiculos.addItem("VEHICULOS");
+            TxtS_solicitado.setText("");
+            TxtS_Realizado.setText("");
+            Prioridad_Urgente.setSelected(true);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            f.Alert(ex.getMessage());
+        }
     }
 }
