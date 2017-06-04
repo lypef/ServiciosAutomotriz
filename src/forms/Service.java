@@ -7,6 +7,9 @@ package forms;
 
 import clases.Funciones;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -21,6 +24,9 @@ public class Service extends javax.swing.JFrame {
     
     Funciones f = new Funciones();
     Manager m = new Manager();
+    private boolean edit = false;
+    private int id_service = 0, id_cliente = 0;
+    private String id_vehiculo = "";
     
     public Service() {
         try {
@@ -28,7 +34,7 @@ public class Service extends javax.swing.JFrame {
             f.SetModelForm(this);
             f.Combo_LoadCients(ComboClientes);
             f.Combo_LoadProductos(ComboProductos);
-            f.Table_LoadProductsServicio(TxtProducts);
+            f.Table_LoadProductsServicio(TableProducts);
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             f.Alert(ex.getMessage());
         }
@@ -44,6 +50,7 @@ public class Service extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         Tab = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -66,9 +73,10 @@ public class Service extends javax.swing.JFrame {
         ComboProductos = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        TxtProducts = new javax.swing.JTable();
+        TableProducts = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        jButton12 = new javax.swing.JButton();
         TxtTotal = new javax.swing.JLabel();
         TxtKilometraje = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -79,7 +87,33 @@ public class Service extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        BtnClientes = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        ComboClientes1 = new javax.swing.JComboBox<>();
+        ComboVehiculos1 = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        TxtPlacas1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        TxtColor1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        TxtKilometraje1 = new javax.swing.JTextField();
+        TxtDepartamento1 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        TxtS_solicitado1 = new javax.swing.JTextArea();
+        jLabel11 = new javax.swing.JLabel();
+        Prioridad_Urgente1 = new javax.swing.JRadioButton();
+        Prioridad_Programar1 = new javax.swing.JRadioButton();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        TxtS_Realizado1 = new javax.swing.JTextArea();
+        ComboProductos1 = new javax.swing.JComboBox<>();
+        jButton10 = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        TableProducts1 = new javax.swing.JTable();
+        jButton11 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        TxtTotal1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
@@ -158,7 +192,6 @@ public class Service extends javax.swing.JFrame {
         jLabel5.setText("PRIORIDAD");
 
         buttonGroup1.add(Prioridad_Urgente);
-        Prioridad_Urgente.setSelected(true);
         Prioridad_Urgente.setText("Urgente");
 
         buttonGroup1.add(Prioridad_Programar);
@@ -199,7 +232,7 @@ public class Service extends javax.swing.JFrame {
             }
         });
 
-        TxtProducts.setModel(new javax.swing.table.DefaultTableModel(
+        TableProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -210,12 +243,12 @@ public class Service extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        TxtProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+        TableProducts.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TxtProductsMouseClicked(evt);
+                TableProductsMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(TxtProducts);
+        jScrollPane3.setViewportView(TableProducts);
 
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnPurple.png"))); // NOI18N
@@ -233,6 +266,18 @@ public class Service extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 255));
         jLabel6.setText("TOTAL $");
+
+        jButton12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnOrangeMini.png"))); // NOI18N
+        jButton12.setBorder(null);
+        jButton12.setBorderPainted(false);
+        jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton12.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnOrangeMiniEfc.png"))); // NOI18N
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
 
         TxtTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         TxtTotal.setForeground(new java.awt.Color(0, 0, 255));
@@ -257,7 +302,9 @@ public class Service extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TxtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(TxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton12)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -273,7 +320,8 @@ public class Service extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(TxtTotal)))
+                    .addComponent(TxtTotal)
+                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         TxtKilometraje.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -445,6 +493,15 @@ public class Service extends javax.swing.JFrame {
             }
         });
 
+        BtnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnControl.png"))); // NOI18N
+        BtnClientes.setBorder(null);
+        BtnClientes.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnControlEfc.png"))); // NOI18N
+        BtnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnClientesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -458,7 +515,8 @@ public class Service extends javax.swing.JFrame {
                     .addComponent(jButton7)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton8)
-                    .addComponent(jButton9))
+                    .addComponent(jButton9)
+                    .addComponent(BtnClientes))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -476,6 +534,8 @@ public class Service extends javax.swing.JFrame {
                         .addComponent(jButton8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnClientes)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE))
                 .addContainerGap())
@@ -483,15 +543,254 @@ public class Service extends javax.swing.JFrame {
 
         Tab.addTab("CONSULTAR", jPanel2);
 
+        ComboClientes1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboClientes1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CLIENTES" }));
+        ComboClientes1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ComboClientes1ItemStateChanged(evt);
+            }
+        });
+
+        ComboVehiculos1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboVehiculos1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VEHICULOS" }));
+        ComboVehiculos1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ComboVehiculos1ItemStateChanged(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setText("PLACAS:");
+
+        TxtPlacas1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtPlacas1.setForeground(new java.awt.Color(102, 102, 102));
+        TxtPlacas1.setText(".");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel8.setText("COLOR:");
+
+        TxtColor1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtColor1.setForeground(new java.awt.Color(102, 102, 102));
+        TxtColor1.setText(".");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel9.setText("KILOMETRAJE:");
+
+        TxtKilometraje1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        TxtKilometraje1.setForeground(new java.awt.Color(0, 0, 204));
+
+        TxtDepartamento1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtDepartamento1.setForeground(new java.awt.Color(102, 102, 102));
+        TxtDepartamento1.setText(".");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel10.setText("DEPARTAMENTO:");
+
+        TxtS_solicitado1.setColumns(20);
+        TxtS_solicitado1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        TxtS_solicitado1.setLineWrap(true);
+        TxtS_solicitado1.setRows(5);
+        TxtS_solicitado1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "DESCRIBA EL SERVICIO SOLICITADO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jScrollPane5.setViewportView(TxtS_solicitado1);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel11.setText("PRIORIDAD");
+
+        buttonGroup2.add(Prioridad_Urgente1);
+        Prioridad_Urgente1.setText("Urgente");
+
+        buttonGroup2.add(Prioridad_Programar1);
+        Prioridad_Programar1.setText("Programar");
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "SERVICIO REALIZADO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+
+        TxtS_Realizado1.setColumns(20);
+        TxtS_Realizado1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        TxtS_Realizado1.setLineWrap(true);
+        TxtS_Realizado1.setRows(5);
+        TxtS_Realizado1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TRABAJO REALIZADO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jScrollPane6.setViewportView(TxtS_Realizado1);
+
+        ComboProductos1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboProductos1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PRODUCTOS" }));
+        ComboProductos1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ComboProductos1ItemStateChanged(evt);
+            }
+        });
+
+        jButton10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnBlue.png"))); // NOI18N
+        jButton10.setText("ACTUALIZAR");
+        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton10.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnBlueEfc.png"))); // NOI18N
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        TableProducts1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        TableProducts1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableProducts1MouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(TableProducts1);
+
+        jButton11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnPurple.png"))); // NOI18N
+        jButton11.setText("AGREGAR");
+        jButton11.setBorder(null);
+        jButton11.setBorderPainted(false);
+        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton11.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnPurpleEfc.png"))); // NOI18N
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel12.setText("TOTAL $");
+
+        TxtTotal1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtTotal1.setForeground(new java.awt.Color(0, 0, 255));
+        TxtTotal1.setText("0.0");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(ComboProductos1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton11))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TxtTotal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ComboProductos1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(TxtTotal1)))
+        );
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1050, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(ComboClientes1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TxtColor1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TxtPlacas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(ComboVehiculos1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TxtKilometraje1))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TxtDepartamento1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(Prioridad_Urgente1)
+                            .addComponent(Prioridad_Programar1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 452, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(TxtPlacas1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(TxtColor1)))
+                    .addComponent(ComboClientes1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(TxtKilometraje1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(TxtDepartamento1)))
+                    .addComponent(ComboVehiculos1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Prioridad_Urgente1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Prioridad_Programar1))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         Tab.addTab("MODIFICAR", jPanel3);
@@ -753,20 +1052,30 @@ public class Service extends javax.swing.JFrame {
         {
             Prioridad = "PROGRAMAR";
         }
-        
-        if (f.GenerateReporte_Service(t_client, t_vehiculos, 1, TxtS_solicitado.getText(), TxtS_Realizado.getText(),TxtProducts, TxtTotal.getText(), Prioridad, ComboClientes, ComboVehiculos, Double.parseDouble(TxtKilometraje.getText())))
+        if (ComboVehiculos.getSelectedIndex() > 0 && TableProducts.getRowCount() > 0)
         {
-            Reset();
+            if (f.GenerateReporte_Service(t_client, t_vehiculos, 1, TxtS_solicitado.getText(), TxtS_Realizado.getText(),TableProducts, TxtTotal.getText(), Prioridad, ComboClientes, ComboVehiculos, Double.parseDouble(TxtKilometraje.getText())))
+            {
+                Reset();
+            }
+        }else
+        {
+            f.Alert("Verifique su informacion");
         }
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void TxtProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtProductsMouseClicked
-        
-    }//GEN-LAST:event_TxtProductsMouseClicked
+    private void TableProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProductsMouseClicked
+        if (evt.getClickCount() > 1)
+        {
+            f.RemoveItemSelectedJtable(TableProducts);
+            f.Service_Total(TableProducts, TxtTotal);
+        }
+    }//GEN-LAST:event_TableProductsMouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
-            f.Table_AddProductsServicio(TxtProducts, ComboProductos, TxtTotal);
+            f.Table_AddProductsServicio(TableProducts, ComboProductos, TxtTotal);
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             f.Alert(ex.getMessage());
         }
@@ -781,7 +1090,13 @@ public class Service extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+        if (TableServices.getSelectedRow() >= 0)
+        {
+            f.ReGenerateReporte_Service(TableServices);
+        }else
+        {
+            f.Alert("Seleccione un item");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void TabStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabStateChanged
@@ -789,19 +1104,143 @@ public class Service extends javax.swing.JFrame {
         {
             Reset();
         }
+        
         if (Tab.getSelectedIndex() == 1)
         {
             f.Table_LoadServices(TableServices);
         }
+        
+        if (Tab.getSelectedIndex() == 2)
+        {
+            if (edit == true)
+            {
+                try {
+                    f.Combo_LoadCients(ComboClientes1, id_cliente);
+                    f.Combo_LoadProductos(ComboProductos1);
+                    f.Table_LoadProductsServicio(TableProducts1);
+                    f.LoadValues_EditService (id_service , TxtS_solicitado1, TxtS_Realizado1, TableProducts1, TxtTotal1, Prioridad_Urgente1, Prioridad_Programar1);
+                } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+                    f.Alert(ex.getMessage());
+                }
+            }
+            else
+            {
+                Tab.setSelectedIndex(1);
+            }
+        }
     }//GEN-LAST:event_TabStateChanged
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        if (f.Get_Permiso(Funciones.PermisoService_Edit))
+        {
+            try {
+                edit = true;
+                id_service = Integer.parseInt((String) TableServices.getValueAt(TableServices.getSelectedRow(), 0));
+                id_cliente = f.Return_IdClient(id_service);
+                id_vehiculo = f.Return_IdVehiculo(id_service);
+                Tab.setSelectedIndex(2);
+            } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+                f.Alert(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        if (TableServices.getSelectedRow() >= 0)
+        {
+            try {
+            
+                if (JOptionPane.showConfirmDialog(this,"¿Elimnar item seleccionado? No sera encontrado en el sistema en adelante","Elimnar",JOptionPane.YES_NO_OPTION) == 0)
+                {
+                    f.Delete_TableService(TableServices);
+                    f.Table_LoadServices(TableServices);
+                    f.Alert("Item eliminado");
+                }else
+                {
+                    f.Alert("Item NO eliminado");
+                }
+            } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+                f.Alert(ex.getMessage());
+            }
+        }else
+        {
+            f.Alert("Seleccione un item");
+        }
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void ComboClientes1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboClientes1ItemStateChanged
+        try {
+            f.Combo_LoadVehiculos(ComboVehiculos1, ComboClientes1, id_vehiculo);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            f.Alert(ex.getMessage());
+        }
+    }//GEN-LAST:event_ComboClientes1ItemStateChanged
+
+    private void ComboProductos1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboProductos1ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboProductos1ItemStateChanged
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        if (JOptionPane.showConfirmDialog(this,"¿ACTUALIZAR SERVICIO ?","Actualizar",JOptionPane.YES_NO_OPTION) == 0)
+        {
+            boolean Prioridad = false;
+            if (Prioridad_Urgente1.isSelected())
+            {
+                Prioridad = true;
+            }else
+            {
+                Prioridad = true;
+            }
+        
+            if (f.UpdateService(id_service, ComboClientes1, ComboVehiculos1, TxtS_solicitado1.getText(), TxtS_Realizado1.getText(), TableProducts1, Double.parseDouble(TxtTotal1.getText()), Prioridad, Double.parseDouble(TxtKilometraje1.getText())))
+            {
+                f.ReGenerateReporte_Service(id_service);
+                Reset();
+                CompletUpdate();
+                f.Alert("Item actualizado");
+            }
+        }else
+        {
+            f.Alert("Item NO actualizado");
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void TableProducts1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProducts1MouseClicked
+        if (evt.getClickCount() > 1)
+        {
+            f.RemoveItemSelectedJtable(TableProducts1);
+            f.Service_Total(TableProducts1, TxtTotal1);
+        }
+    }//GEN-LAST:event_TableProducts1MouseClicked
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        try {
+            f.Table_AddProductsServicio(TableProducts1, ComboProductos1, TxtTotal1);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            f.Alert(ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void ComboVehiculos1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboVehiculos1ItemStateChanged
+        try {
+            Clean();
+            f.Combo_LoadValuesVehiculos(ComboVehiculos1, TxtPlacas1,  TxtColor1,  TxtDepartamento1,  TxtKilometraje1);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            f.Alert(ex.getMessage());
+        }
+    }//GEN-LAST:event_ComboVehiculos1ItemStateChanged
+
+    private void BtnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClientesActionPerformed
+        this.dispose();
+        ManagerControl m = new ManagerControl();
+        m.show();
+    }//GEN-LAST:event_BtnClientesActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        this.dispose();
+        ManagerControl m = new ManagerControl();
+        m.show();
+    }//GEN-LAST:event_jButton12ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -840,22 +1279,40 @@ public class Service extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnClientes;
     private javax.swing.JComboBox<String> ComboClientes;
+    private javax.swing.JComboBox<String> ComboClientes1;
     private javax.swing.JComboBox<String> ComboProductos;
+    private javax.swing.JComboBox<String> ComboProductos1;
     private javax.swing.JComboBox<String> ComboVehiculos;
+    private javax.swing.JComboBox<String> ComboVehiculos1;
     private javax.swing.JRadioButton Prioridad_Programar;
+    private javax.swing.JRadioButton Prioridad_Programar1;
     private javax.swing.JRadioButton Prioridad_Urgente;
+    private javax.swing.JRadioButton Prioridad_Urgente1;
     private javax.swing.JTabbedPane Tab;
+    private javax.swing.JTable TableProducts;
+    private javax.swing.JTable TableProducts1;
     private javax.swing.JTable TableServices;
     private javax.swing.JLabel TxtColor;
+    private javax.swing.JLabel TxtColor1;
     private javax.swing.JLabel TxtDepartamento;
+    private javax.swing.JLabel TxtDepartamento1;
     private javax.swing.JTextField TxtKilometraje;
+    private javax.swing.JTextField TxtKilometraje1;
     private javax.swing.JLabel TxtPlacas;
-    private javax.swing.JTable TxtProducts;
+    private javax.swing.JLabel TxtPlacas1;
     private javax.swing.JTextArea TxtS_Realizado;
+    private javax.swing.JTextArea TxtS_Realizado1;
     private javax.swing.JTextArea TxtS_solicitado;
+    private javax.swing.JTextArea TxtS_solicitado1;
     private javax.swing.JLabel TxtTotal;
+    private javax.swing.JLabel TxtTotal1;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -864,11 +1321,17 @@ public class Service extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -893,10 +1356,14 @@ public class Service extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     // End of variables declaration//GEN-END:variables
@@ -985,15 +1452,34 @@ public class Service extends javax.swing.JFrame {
             f.SetModelForm(this);
             f.Combo_LoadCients(ComboClientes);
             f.Combo_LoadProductos(ComboProductos);
-            f.Table_LoadProductsServicio(TxtProducts);
+            f.Table_LoadProductsServicio(TableProducts);
             Clean();
             ComboVehiculos.removeAllItems();
             ComboVehiculos.addItem("VEHICULOS");
             TxtS_solicitado.setText("");
             TxtS_Realizado.setText("");
             Prioridad_Urgente.setSelected(true);
+            //
+            ComboClientes1.removeAllItems();
+            ComboProductos1.removeAllItems();
+            f.Table_LoadProductsServicio(TableProducts1);
+            ComboVehiculos1.removeAllItems();
+            ComboVehiculos1.addItem("VEHICULOS");
+            TxtS_solicitado1.setText("");
+            TxtS_Realizado1.setText("");
+            TxtKilometraje.setText("");
+            TxtKilometraje1.setText("");
+            Prioridad_Urgente1.setSelected(true);
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             f.Alert(ex.getMessage());
         }
+    }
+
+    private void CompletUpdate() {
+        edit = false;
+        id_service = 0;
+        id_cliente = 0;
+        id_vehiculo = "";
+        Tab.setSelectedIndex(1);
     }
 }

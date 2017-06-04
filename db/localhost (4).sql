@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-06-2017 a las 06:47:19
+-- Tiempo de generación: 04-06-2017 a las 20:25:32
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -103,15 +103,17 @@ CREATE TABLE `permisos` (
   `user_add` tinyint(1) NOT NULL,
   `user_update` tinyint(1) NOT NULL,
   `user_delete` tinyint(1) NOT NULL,
-  `update_dates` tinyint(1) NOT NULL
+  `update_dates` tinyint(1) NOT NULL,
+  `service_edit` tinyint(1) NOT NULL,
+  `servcice_delete` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `permisos`
 --
 
-INSERT INTO `permisos` (`id_user`, `clientes`, `clientes_agregar`, `clientes_editar`, `clientes_eliminar`, `vehiculos`, `vehiculos_agregar`, `vehiculos_editar`, `vehiculos_eliminar`, `provedores`, `provedores_agregar`, `provedores_editar`, `provedores_eliminar`, `stock`, `stock_agregar`, `stock_editar`, `stock_eliminar`, `inventario`, `users`, `user_add`, `user_update`, `user_delete`, `update_dates`) VALUES
-(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `permisos` (`id_user`, `clientes`, `clientes_agregar`, `clientes_editar`, `clientes_eliminar`, `vehiculos`, `vehiculos_agregar`, `vehiculos_editar`, `vehiculos_eliminar`, `provedores`, `provedores_agregar`, `provedores_editar`, `provedores_eliminar`, `stock`, `stock_agregar`, `stock_editar`, `stock_eliminar`, `inventario`, `users`, `user_add`, `user_update`, `user_delete`, `update_dates`, `service_edit`, `servcice_delete`) VALUES
+(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -134,8 +136,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`codebar`, `nombre`, `descripcion`, `precio`, `existencia`, `vendidos`, `id_provedor`) VALUES
-('CC', 'REMPLAZO DE CLUTH', 'SERVICIO DE REEMPLAZO DE CLUTH', 500, 999990, 10, 1),
-('RVM', 'REACTIVADO DE VOLANTE MATRIZ', 'SE REACTIVA VOLANTE MATRIZ', 900, 999988, 12, 1);
+('CC', 'REMPLAZO DE CLUTH', 'SERVICIO DE REEMPLAZO DE CLUTH', 500, 999982, 18, 1),
+('RVM', 'REACTIVADO DE VOLANTE MATRIZ', 'SE REACTIVA VOLANTE MATRIZ', 900, 999981, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -193,10 +195,10 @@ INSERT INTO `services` (`id`, `id_cliente`, `id_vehiculo`, `s_solicitado`, `s_re
 (12, 22, 'AAAAA', 'VSDVSDV', 'VSDVSDV', 'RVM,CC,', 1400, 0),
 (13, 22, 'AAAAA', 'VBDFBDFRB', 'VBDFBDFRB', 'RVM,RVM,CC,CC,', 2800, 1),
 (14, 22, 'AAAAA', 'FDHFDFD', 'FDHFDFD', 'RVM,CC,', 1400, 1),
-(15, 22, 'AAAAA', 'FDRTHERFDHE', 'FDRTHERFDHE', 'RVM,CC,', 1400, 1),
+(15, 22, 'AAAAA', 'FDRTHERFDHE', 'FDRTHERFDHE', 'RVM,RVM,RVM,CC,CC,', 3700, 1),
 (16, 22, 'AAAAA', 'CNDFNBDF', 'CNDFNBDF', 'RVM,', 900, 1),
-(17, 22, 'AAAAA', 'DFGBDFGBDFSV', 'DFGBDFGBDFSV', 'RVM,RVM,CC,CC,CC,', 3300, 0),
-(18, 22, 'AAAAA', 'DXFBDFBD', 'DXFBDFBD', 'RVM,RVM,', 1800, 0),
+(17, 22, 'AAAAA', 'DFGBDFGBDFSV', 'DFGBDFGBDFSV', 'RVM,RVM,CC,CC,CC,', 3300, 1),
+(18, 21, 'Y99T-65', 'DXFBDFBD', 'DXFBDFBD', 'RVM,', 900, 1),
 (22, 22, 'AAAAA', '', '', '', 0, 1),
 (23, 22, 'AAAAA', '', '', '', 0, 1),
 (24, 22, 'AAAAA', 'RFTJTFGDJN', 'RFTJTFGDJN', 'CC,', 500, 1),
@@ -204,7 +206,9 @@ INSERT INTO `services` (`id`, `id_cliente`, `id_vehiculo`, `s_solicitado`, `s_re
 (26, 21, 'Y99T-65', '', '', '', 500, 1),
 (27, 21, 'Y99T-65', '', '', '', 0, 1),
 (28, 21, 'Y99T-65', '', '', 'RVM,', 900, 1),
-(29, 23, 'XAE56565', 'GRUA', 'GRUA', 'RVM,CC,', 1400, 1);
+(29, 22, 'AAAAA', 'GRUA', 'GRUA', 'RVM,CC,', 1400, 1),
+(31, 22, 'AAAAA', '', '', '', 0, 0),
+(32, 22, 'AAAAA', '', '', 'RVM,', 900, 0);
 
 -- --------------------------------------------------------
 
@@ -248,12 +252,12 @@ CREATE TABLE `vehiculos` (
 --
 
 INSERT INTO `vehiculos` (`placas`, `color`, `departamento`, `mtp`, `kilometros`, `id_client`) VALUES
-('AAAAA', 'AAAAA', 'NO SE ', 'FORD F150', 15, 22),
+('AAAAA', 'AAAAA', 'NO SE ', 'FORD F150', 150000, 22),
 ('AEDF', 'AAAAA', 'AAA', 'AAAA', 123, 17),
 ('AXEDF-A55', 'VERDE', 'SONIDO', 'MICOOPER, DEPORTIVO MODELO 99', 158999, 20),
 ('JHGBJHJHHJG', 'VERDE', 'NO SE ', 'FORD F150 MOD, 1980', 315000, 23),
 ('XAE56565', 'AZUL', 'CASCABEL', 'CHEVROLET, CHEVY 2010', 50000, 23),
-('Y99T-65', 'ROJO VINO', 'AFINACION', 'CAMIONETA NISSAN NP300, MOD-2014', 9, 21);
+('Y99T-65', 'ROJO VINO', 'AFINACION', 'CAMIONETA NISSAN NP300, MOD-2014', 45000, 21);
 
 --
 -- Índices para tablas volcadas
@@ -334,7 +338,7 @@ ALTER TABLE `provedores`
 -- AUTO_INCREMENT de la tabla `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --

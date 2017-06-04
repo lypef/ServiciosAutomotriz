@@ -687,7 +687,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
@@ -695,41 +695,48 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jButton9" min="-2" pref="191" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="vehiculos_agregar" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="clientes" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="clientes_agregar" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="clientes_editar" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="clientes_eliminar" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="vehiculos_editar" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="vehiculos_eliminar" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="vehiculos" min="-2" max="-2" attributes="0"/>
-                                          <Component id="provedores" min="-2" max="-2" attributes="0"/>
-                                          <Component id="provedores_agregar" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="provedores_editar" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="service_edit" min="-2" pref="159" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="servcice_delete" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="update_dates" min="-2" pref="142" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="user_update" min="-2" max="-2" attributes="0"/>
-                                              <Component id="provedores_eliminar" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="stock_editar" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="stock_eliminar" alignment="0" pref="0" max="32767" attributes="0"/>
-                                              <Component id="stock_agregar" alignment="0" pref="0" max="32767" attributes="0"/>
-                                              <Component id="stock" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="users" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="inventario" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="user_add" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="user_delete" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="vehiculos_agregar" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="clientes" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="clientes_agregar" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="clientes_editar" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="clientes_eliminar" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="vehiculos_editar" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="vehiculos_eliminar" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="vehiculos" min="-2" max="-2" attributes="0"/>
+                                              <Component id="provedores" min="-2" max="-2" attributes="0"/>
+                                              <Component id="provedores_agregar" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="provedores_editar" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="update_dates" min="-2" pref="142" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="user_update" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="provedores_eliminar" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="stock_editar" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="stock_eliminar" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                  <Component id="stock_agregar" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                  <Component id="stock" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="users" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="inventario" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="user_add" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="user_delete" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="88" max="32767" attributes="0"/>
+                              <EmptySpace pref="17" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -742,6 +749,11 @@
                                   <Component id="jButton9" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="19" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="service_edit" min="-2" max="-2" attributes="0"/>
+                                  <Component id="servcice_delete" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="provedores_eliminar" min="-2" max="-2" attributes="0"/>
@@ -950,6 +962,16 @@
                     <Component class="java.awt.Checkbox" name="update_dates">
                       <Properties>
                         <Property name="label" type="java.lang.String" value="Datos de empresa"/>
+                      </Properties>
+                    </Component>
+                    <Component class="java.awt.Checkbox" name="service_edit">
+                      <Properties>
+                        <Property name="label" type="java.lang.String" value="Editar Servicios"/>
+                      </Properties>
+                    </Component>
+                    <Component class="java.awt.Checkbox" name="servcice_delete">
+                      <Properties>
+                        <Property name="label" type="java.lang.String" value="Eliminar Servicios"/>
                       </Properties>
                     </Component>
                   </SubComponents>

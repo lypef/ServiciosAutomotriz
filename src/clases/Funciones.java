@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -36,6 +38,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -109,6 +112,8 @@ public class Funciones {
     public static final String PermisoUsers_edit = "user_update";
     public static final String PermisoUsers_delete = "user_delete";
     public static final String PermisoUpdate_datos = "update_dates";
+    public static final String PermisoService_Edit = "service_edit";
+    public static final String PermisoService_Delete = "servcice_delete";
     
             
     public void SetModelForm (JFrame f)
@@ -324,6 +329,17 @@ public class Funciones {
         }
     }
     
+    public boolean Delete_TableService(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (Get_Permiso(Funciones.PermisoService_Delete))
+        {
+            return coneccion.ejecutar("delete from services where id = "+Integer.parseInt((String) t.getValueAt(t.getSelectedRow(), 0))+" ");
+        }else
+        {
+            return false;
+        }
+    }
+    
     public boolean Delete_ItemVehiculo(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
     {
         if (Get_Permiso(Funciones.PermisoVehiculos_delete))
@@ -424,6 +440,32 @@ public class Funciones {
             combo.addItem(rs.getString(2));
         }
         
+    }
+    
+    public void Combo_LoadCients (JComboBox combo, int client) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        combo.removeAllItems();
+        ListClients.clear();
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT id, nombre FROM clients order by nombre asc");
+        
+        combo.addItem("CLIENTES");
+        ListClients.add("0");
+        
+        while (rs.next())
+        {
+            ListClients.add(rs.getString(1));
+            combo.addItem(rs.getString(2));
+        }
+        for (Object item : ListClients) 
+        {
+            if (client == Integer.parseInt((String) item))
+            {
+                combo.setSelectedIndex(ListClients.indexOf(item));
+                break;
+            }
+        }
     }
     
     public void Combo_LoadProvedores (JComboBox combo) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
@@ -1256,7 +1298,7 @@ public class Funciones {
     {
         boolean respuesta = false;
         try {
-            respuesta = coneccion.ejecutar("INSERT INTO `permisos` (`id_user`, `clientes`, `clientes_agregar`, `clientes_editar`, `clientes_eliminar`, `vehiculos`, `vehiculos_agregar`, `vehiculos_editar`, `vehiculos_eliminar`, `provedores`, `provedores_agregar`, `provedores_editar`, `provedores_eliminar`, `stock`, `stock_agregar`, `stock_editar`, `stock_eliminar`, `inventario`, `users`, `user_add`, `user_update`, `user_delete`, `update_dates`) VALUES ("+id+", '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0')");
+            respuesta = coneccion.ejecutar("INSERT INTO `permisos` (`id_user`, `clientes`, `clientes_agregar`, `clientes_editar`, `clientes_eliminar`, `vehiculos`, `vehiculos_agregar`, `vehiculos_editar`, `vehiculos_eliminar`, `provedores`, `provedores_agregar`, `provedores_editar`, `provedores_eliminar`, `stock`, `stock_agregar`, `stock_editar`, `stock_eliminar`, `inventario`, `users`, `user_add`, `user_update`, `user_delete`, `update_dates`, `service_edit`, `servcice_delete`) VALUES ("+id+", '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0')");
         } catch (SQLException ex) {
             Alert(ex.getMessage());
         }
@@ -1285,7 +1327,9 @@ public class Funciones {
             Checkbox user_add,
             Checkbox user_update,
             Checkbox user_delete,
-            Checkbox update_dates
+            Checkbox update_dates,
+            Checkbox service_edit,
+            Checkbox servcice_delete
     )
     {
         
@@ -1318,6 +1362,8 @@ public class Funciones {
                     user_update.setState(ReturnState(rs.getInt(21)));
                     user_delete.setState(ReturnState(rs.getInt(22)));
                     update_dates.setState(ReturnState(rs.getInt(23)));
+                    service_edit.setState(ReturnState(rs.getInt(24)));
+                    servcice_delete.setState(ReturnState(rs.getInt(25)));
                 }
             } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
                 Alert(ex.getMessage());
@@ -1372,7 +1418,9 @@ public class Funciones {
             Checkbox user_add,
             Checkbox user_update,
             Checkbox user_delete,
-            Checkbox update_dates
+            Checkbox update_dates,
+            Checkbox service_edit,
+            Checkbox servcice_delete
     )
     {
         boolean r = false;
@@ -1398,8 +1446,9 @@ public class Funciones {
                         + " user_add = "+ReturnStateChecbox(user_add)+", "
                         + " user_update = "+ReturnStateChecbox(user_update)+", "
                         + " user_delete = "+ReturnStateChecbox(user_delete)+", "
+                        + " service_edit = "+ReturnStateChecbox(service_edit)+", "
+                        + " servcice_delete = "+ReturnStateChecbox(servcice_delete)+", "
                         + " update_dates = "+ReturnStateChecbox(update_dates)+"  where id_user = "+id+" ");
-                        
         } catch (SQLException ex) {
             Alert(ex.getMessage());
         }
@@ -1685,6 +1734,37 @@ public class Funciones {
                 combo.addItem(rs.getString(2));
             }
         }
+        
+    }
+    
+    public void Combo_LoadVehiculos (JComboBox combo, JComboBox combocli, String Id_vehiculo) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        if (combocli.getSelectedIndex() > 0)
+        {
+            combo.removeAllItems();
+            ListVehiculos.clear();
+
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT placas, mtp FROM vehiculos where id_client = "+ListClients.get(combocli.getSelectedIndex())+" order by mtp asc");
+
+            combo.addItem("VEHICULOS");
+            ListVehiculos.add("0");
+
+            while (rs.next())
+            {
+                ListVehiculos.add(rs.getString(1));
+                combo.addItem(rs.getString(2));
+            }
+            for (Object item : ListVehiculos) 
+            {
+                if (Id_vehiculo.equals((String) item))
+                {
+                    combo.setSelectedIndex(ListVehiculos.indexOf(item));
+                    break;
+                }
+            }
+        }
+        
     }
     
     public void Combo_LoadValuesVehiculos (JComboBox c ,JLabel TxtPlacas, JLabel TxtColor, JLabel TxtDepartamento, JTextField TxtKilometraje) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
@@ -1703,6 +1783,42 @@ public class Funciones {
                 TxtKilometraje.setText(rs.getString(4));
             }
         }
+    }
+    
+    public void LoadValues_EditService (int id , JTextArea s_sol, JTextArea s_rea, JTable productos, JLabel total, JRadioButton urgente, JRadioButton programar) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT s_solicitado, s_realizado, productos, total, p_urgente FROM services where id = "+id+" ");
+
+            if (rs.next())
+            {
+                s_sol.setText(rs.getString(1));
+                s_rea.setText(rs.getString(2));
+                Table_LoadProductsServicio(productos);
+                String[] result = rs.getString(3).replace("+", ",").split(",");
+        
+                if (result.length >= 1)
+                {
+                    for (String r : result) {
+                        if (!r.equalsIgnoreCase("") || !r.isEmpty())
+                        {
+                             if (ExistProduct(r))
+                             {
+                                 Table_AddProductsServicio(productos, r);
+                             }
+                        }
+                    }
+                }
+                total.setText(rs.getString(4));
+                
+                if (rs.getBoolean(5))
+                {
+                    urgente.setSelected(true);
+                }else
+                {
+                    programar.setSelected(true);
+                }
+            }
     }
     
     public void Combo_LoadProductos (JComboBox combo) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
@@ -1753,6 +1869,19 @@ public class Funciones {
                 total.setText(String.valueOf(Double.parseDouble(total.getText()) + rs.getDouble(3)));
                 temp.addRow(nuevo);
             }
+        }
+    }
+    
+    public void Table_AddProductsServicio(JTable t, String code) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT codebar, nombre, precio FROM products where codebar = '"+code+"' ");
+
+        if (rs.next())
+        {
+            DefaultTableModel temp = (DefaultTableModel) t.getModel();
+            Object nuevo[]= {rs.getString(1),rs.getString(2),rs.getDouble(3)};
+            temp.addRow(nuevo);
         }
     }
     
@@ -2021,6 +2150,74 @@ public class Funciones {
         }
     }
     
+    public void Table_LoadClient(JTable t, int id)
+    {
+        try {
+            DefaultTableModel modelo;
+            modelo = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+            };
+            t.setModel(modelo);
+            
+            modelo.addColumn("NOMBRE");
+            modelo.addColumn("DIRECCION");
+            modelo.addColumn("TELEFONO");
+            modelo.addColumn("RFC");
+            
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT nombre, direccion, telefono, rfc FROM clients where id = "+id+" ");
+            Object [] file = new Object[4];
+
+            while (rs.next())
+            {
+                file[0] = rs.getString(1);
+                file[1] = rs.getString(2);
+                file[2] = rs.getString(3);
+                file[3] = rs.getString(4);
+                
+                modelo.addRow(file);
+            }
+            StyleJtable(t);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Alert(ex.getMessage());
+        }
+    }
+    
+    public void Table_LoadCar(JTable t, String placa)
+    {
+        try {
+            DefaultTableModel modelo;
+            modelo = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+            };
+            t.setModel(modelo);
+            
+            modelo.addColumn("MODELO");
+            modelo.addColumn("COLOR");
+            modelo.addColumn("PLACAS");
+            modelo.addColumn("KILOMETRAJE");
+            
+            coneccion = new Conexion();
+            ResultSet rs = coneccion.Consulta("SELECT mtp, color, placas, kilometros FROM vehiculos where placas = '"+placa+"' ");
+            Object [] file = new Object[4];
+
+            while (rs.next())
+            {
+                file[0] = rs.getString(1);
+                file[1] = rs.getString(2);
+                file[2] = rs.getString(3);
+                file[3] = rs.getString(4);
+                
+                modelo.addRow(file);
+            }
+            StyleJtable(t);
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Alert(ex.getMessage());
+        }
+    }
+    
     private int GenerateFolioService ()
     {
         int respuesta = 0;
@@ -2119,6 +2316,567 @@ public class Funciones {
             StyleJtable(t);
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             Alert(ex.getMessage());
+        }
+    }
+    
+    public void RemoveItemSelectedJtable(JTable t) {
+        int item = t.getSelectedRow();
+        if (item == -1 )
+        {
+            Alert("Accion no permitida");
+        }else
+        {
+            DefaultTableModel model = (DefaultTableModel) t.getModel();
+            model.removeRow(item);
+        }
+        
+    }
+    
+    public void Service_Total (JTable t ,JLabel l)
+    {
+        double d = 0;
+        for (int i = 0; i < t.getRowCount(); i++)
+        {
+            d += Double.parseDouble(String.valueOf(t.getValueAt(i, 2)));
+        }
+        l.setText(String.valueOf(d));
+    }
+    
+    public void ReGenerateReporte_Service (JTable t)
+    {
+        int id = 0, id_cliente = 0;
+        double total = 0;
+        String id_vehiculo = "", s_solicitado = "", s_realizado = "", productos = "";
+        boolean p_urgente = false;
+        
+        try {
+            coneccion = new Conexion();
+            try (ResultSet rs = coneccion.Consulta("SELECT id, id_cliente, id_vehiculo, s_solicitado, s_realizado, productos, total, p_urgente FROM services where id = "+Integer.parseInt((String) t.getValueAt(t.getSelectedRow(), 0))+" ")) {
+
+                if (rs.next())
+                {
+                    id = rs.getInt(1);
+                    id_cliente = rs.getInt(2);
+                    id_vehiculo = rs.getString(3);
+                    s_solicitado = rs.getString(4);
+                    s_realizado = rs.getString(5);
+                    productos = rs.getString(6);
+                    total = rs.getDouble(7);
+                    p_urgente = rs.getBoolean(8);
+                }
+
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Alert(ex.getMessage());
+        }
+        
+        
+        int Folio = id;
+        
+            JTable t_client = new JTable();
+            JTable t_vehiculos = new JTable();
+        
+            Table_LoadClient(t_client, id_cliente);
+            Table_LoadCar(t_vehiculos, id_vehiculo);
+            
+            Document documento = new Document(PageSize.LETTER,10,10,10,10);  
+            FileOutputStream ficheroPdf;
+            File ruta = null;
+            com.itextpdf.text.Image imagen = null;
+            try {
+                imagen = com.itextpdf.text.Image.getInstance(p.ReturnPropiedad(p.Ruta_logo));
+
+                char rt = p.ReturnPropiedad(p.Ruta_SaveReports).charAt(p.ReturnPropiedad(p.Ruta_SaveReports).length() -1 );
+
+                if ("/".equalsIgnoreCase(String.valueOf(rt)))
+                {
+                    ruta = new File (p.ReturnPropiedad(p.Ruta_SaveReports)+ReturnNombreUsuario().replace(" ","_")+"_"+GetFechaAndHourActual().replace(" ", "_").replace(":", "_").replace("-", "_")+".pdf");
+                }else
+                {
+                    ruta = new File (p.ReturnPropiedad(p.Ruta_SaveReports)+"/"+ReturnNombreUsuario().replace(" ","_")+"_"+GetFechaAndHourActual().replace(" ", "_").replace(":", "_").replace("-", "_")+".pdf");
+                }
+
+                ficheroPdf = new FileOutputStream(ruta);
+                PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(20);
+            } catch (DocumentException | IOException ex) {
+                Alert("Verifique las rutas de guardado de reportes y logo.");
+            }
+
+
+            try{
+                documento.open();
+
+
+                imagen.setAlignment(Element.ALIGN_CENTER);
+                imagen.scaleToFit(200, 100);
+
+                String membrete = "REPORTE DE SERVICIO NO: "+ Folio +"\n\n";
+                membrete += ReturnDatosFisicos(this.Datos_Nombre) + "\n";
+                membrete += "DIRECCION: " + ReturnDatosFisicos(this.Datos_Direccion) + "\n";
+                membrete += "RFC: " + ReturnDatosFisicos(this.Datos_Rfc)+"\n";
+                membrete += "TELEFONO: " + ReturnDatosFisicos(this.Datos_Telefono) + "\n";
+                membrete += "GENERO DOCUMENTO: " + ReturnNombreUsuario()+ "\n";
+                membrete += "GENERADO: " + GetFechaAndHourActual()+ "\n";
+
+                PdfPTable HeaderDatos = new PdfPTable(2);
+                HeaderDatos.setWidthPercentage(100);
+
+                documento.add(new Paragraph("\n"));
+
+                PdfPCell cell = new PdfPCell(new Phrase(membrete));
+                cell.setBorder(0);
+                HeaderDatos.addCell(cell);
+                cell = new PdfPCell(imagen);
+                cell.setBorder(0);
+                cell.setHorizontalAlignment(1);
+                cell.setVerticalAlignment(1);
+                HeaderDatos.addCell(cell);
+
+                documento.add(HeaderDatos);
+                documento.add(new Paragraph("\n"));
+                /////////
+
+                //Tabla_Clientes
+                String Client_header = "CLIENTE";
+                Paragraph Title = new Paragraph(Client_header.toUpperCase());
+                Title.setAlignment(1);
+                documento.add(Title);
+                documento.add(new Paragraph(" "));
+
+                PdfPTable tabla = new PdfPTable(t_client.getColumnCount());
+
+                tabla.setWidthPercentage(100);
+
+                for (int i = 0; i < t_client.getColumnCount(); i++)
+                {
+                    Paragraph header = new Paragraph(t_client.getColumnName(i));
+                    header.setAlignment(1);
+                    tabla.addCell(header);
+                }
+
+                for (int i = 0; i < t_client.getRowCount(); i++)
+                {
+                    for (int a = 0; a < t_client.getColumnCount(); a++)
+                    {
+
+                        Paragraph campo = new Paragraph(String.valueOf(t_client.getValueAt(i, a)));
+                        campo.setAlignment(1);
+                        tabla.addCell(campo);
+                    }
+                }
+
+                documento.add(tabla);
+                documento.add(new Paragraph(" "));
+
+                //Tabla_Vehiculos
+                String Vehiculos_header = "VEHICULO";
+
+                Paragraph Title1 = new Paragraph(Vehiculos_header.toUpperCase());
+                Title1.setAlignment(1);
+                documento.add(Title1);
+                documento.add(new Paragraph(" "));
+
+                PdfPTable tabla_vehiculos = new PdfPTable(t_vehiculos.getColumnCount());
+
+                tabla_vehiculos.setWidthPercentage(100);
+
+                for (int i = 0; i < t_vehiculos.getColumnCount(); i++)
+                {
+                    Paragraph header = new Paragraph(t_vehiculos.getColumnName(i));
+                    header.setAlignment(1);
+                    tabla_vehiculos.addCell(header);
+                }
+
+                for (int i = 0; i < t_vehiculos.getRowCount(); i++)
+                {
+                    for (int a = 0; a < t_vehiculos.getColumnCount(); a++)
+                    {
+
+                        Paragraph campo = new Paragraph(String.valueOf(t_vehiculos.getValueAt(i, a)));
+                        campo.setAlignment(1);
+                        tabla_vehiculos.addCell(campo);
+                    }
+                }
+
+                documento.add(tabla_vehiculos);
+                documento.add(new Paragraph("SERVICIO SOLICITADO: " + s_solicitado.toUpperCase()));
+                documento.add(new Paragraph("SERVICIO REALIZADO: "+ s_realizado.toUpperCase()));
+                String var = "";
+                if (p_urgente)
+                {
+                    var = "URGENTE";
+                }else
+                {
+                    var = "PROGRAMAR";
+                }
+                documento.add(new Paragraph("PRIORIDAD: "+ var));
+
+                //Tabla de servicios y productos
+                String Service_header = "\nSERVICIOS Y PRODUCTOS UTILIZADOS";
+
+                Paragraph Title2 = new Paragraph(Service_header.toUpperCase());
+                Title2.setAlignment(1);
+                documento.add(Title2);
+                documento.add(new Paragraph(" "));
+            
+                JTable t_productos = new JTable();
+                
+                Table_LoadProductsServicio(t_productos);
+                
+                String[] result = productos.replace("+", ",").split(",");
+        
+                if (result.length >= 1)
+                {
+                    for (String r : result) {
+                        if (!r.equalsIgnoreCase("") || !r.isEmpty())
+                        {
+                             if (ExistProduct(r))
+                             {
+                                 Table_AddProductsServicio(t_productos, r);
+                             }
+                        }
+                    }
+                }
+                
+                PdfPTable tabla_PRODUCTS = new PdfPTable(t_productos.getColumnCount());
+
+                tabla_PRODUCTS.setWidthPercentage(100);
+
+                for (int i = 0; i < t_productos.getColumnCount(); i++)
+                {
+                    Paragraph header = new Paragraph(t_productos.getColumnName(i));
+                    header.setAlignment(1);
+                    tabla_PRODUCTS.addCell(header);
+                }
+
+                for (int i = 0; i < t_productos.getRowCount(); i++)
+                {
+                    for (int a = 0; a < t_productos.getColumnCount(); a++)
+                    {
+
+                        Paragraph campo = new Paragraph(String.valueOf(t_productos.getValueAt(i, a)));
+                        campo.setAlignment(1);
+                        tabla_PRODUCTS.addCell(campo);
+                    }
+                }
+
+                documento.add(tabla_PRODUCTS);
+                documento.add(new Paragraph(""));
+                //
+
+                documento.add(new Paragraph("COSTO TOTAL DE SERVICIO $ "+ total));
+                documento.add(new Paragraph("FECHA Y HORA DE ENTREGA: ____________________________________________________"));
+                documento.add(new Paragraph("NOMBRE Y FIRMA DEL QUE REALIZA: _____________________________________________"));
+                documento.add(new Paragraph("CONFORMIDAD, NOMBRE Y FIRMA DE QUIEN RECIBE: _______________________________"));
+                documento.add(new Paragraph("PROXIMO SERVICIO: ___________________________________________________________"));
+
+                Paragraph footer = new Paragraph("SOFTWARE Y MAS!"+"\n"+"WWW.CYBERCHOAPAS.COM");
+                footer.setAlignment(1);
+                documento.add(footer);
+
+                documento.close();
+                Desktop.getDesktop().open(ruta);
+            }catch(IOException | DocumentException ex){
+                Alert(ex.getMessage());
+            } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+                Alert(ex.getMessage());
+            }
+    }
+    
+    public void ReGenerateReporte_Service (int id_service)
+    {
+        int id = 0, id_cliente = 0;
+        double total = 0;
+        String id_vehiculo = "", s_solicitado = "", s_realizado = "", productos = "";
+        boolean p_urgente = false;
+        
+        try {
+            coneccion = new Conexion();
+            try (ResultSet rs = coneccion.Consulta("SELECT id, id_cliente, id_vehiculo, s_solicitado, s_realizado, productos, total, p_urgente FROM services where id = "+id_service+" ")) {
+
+                if (rs.next())
+                {
+                    id = rs.getInt(1);
+                    id_cliente = rs.getInt(2);
+                    id_vehiculo = rs.getString(3);
+                    s_solicitado = rs.getString(4);
+                    s_realizado = rs.getString(5);
+                    productos = rs.getString(6);
+                    total = rs.getDouble(7);
+                    p_urgente = rs.getBoolean(8);
+                }
+
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Alert(ex.getMessage());
+        }
+        
+        
+        int Folio = id;
+        
+            JTable t_client = new JTable();
+            JTable t_vehiculos = new JTable();
+        
+            Table_LoadClient(t_client, id_cliente);
+            Table_LoadCar(t_vehiculos, id_vehiculo);
+            
+            Document documento = new Document(PageSize.LETTER,10,10,10,10);  
+            FileOutputStream ficheroPdf;
+            File ruta = null;
+            com.itextpdf.text.Image imagen = null;
+            try {
+                imagen = com.itextpdf.text.Image.getInstance(p.ReturnPropiedad(p.Ruta_logo));
+
+                char rt = p.ReturnPropiedad(p.Ruta_SaveReports).charAt(p.ReturnPropiedad(p.Ruta_SaveReports).length() -1 );
+
+                if ("/".equalsIgnoreCase(String.valueOf(rt)))
+                {
+                    ruta = new File (p.ReturnPropiedad(p.Ruta_SaveReports)+ReturnNombreUsuario().replace(" ","_")+"_"+GetFechaAndHourActual().replace(" ", "_").replace(":", "_").replace("-", "_")+".pdf");
+                }else
+                {
+                    ruta = new File (p.ReturnPropiedad(p.Ruta_SaveReports)+"/"+ReturnNombreUsuario().replace(" ","_")+"_"+GetFechaAndHourActual().replace(" ", "_").replace(":", "_").replace("-", "_")+".pdf");
+                }
+
+                ficheroPdf = new FileOutputStream(ruta);
+                PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(20);
+            } catch (DocumentException | IOException ex) {
+                Alert("Verifique las rutas de guardado de reportes y logo.");
+            }
+
+
+            try{
+                documento.open();
+
+
+                imagen.setAlignment(Element.ALIGN_CENTER);
+                imagen.scaleToFit(200, 100);
+
+                String membrete = "REPORTE DE SERVICIO NO: "+ Folio +"\n\n";
+                membrete += ReturnDatosFisicos(this.Datos_Nombre) + "\n";
+                membrete += "DIRECCION: " + ReturnDatosFisicos(this.Datos_Direccion) + "\n";
+                membrete += "RFC: " + ReturnDatosFisicos(this.Datos_Rfc)+"\n";
+                membrete += "TELEFONO: " + ReturnDatosFisicos(this.Datos_Telefono) + "\n";
+                membrete += "GENERO DOCUMENTO: " + ReturnNombreUsuario()+ "\n";
+                membrete += "GENERADO: " + GetFechaAndHourActual()+ "\n";
+
+                PdfPTable HeaderDatos = new PdfPTable(2);
+                HeaderDatos.setWidthPercentage(100);
+
+                documento.add(new Paragraph("\n"));
+
+                PdfPCell cell = new PdfPCell(new Phrase(membrete));
+                cell.setBorder(0);
+                HeaderDatos.addCell(cell);
+                cell = new PdfPCell(imagen);
+                cell.setBorder(0);
+                cell.setHorizontalAlignment(1);
+                cell.setVerticalAlignment(1);
+                HeaderDatos.addCell(cell);
+
+                documento.add(HeaderDatos);
+                documento.add(new Paragraph("\n"));
+                /////////
+
+                //Tabla_Clientes
+                String Client_header = "CLIENTE";
+                Paragraph Title = new Paragraph(Client_header.toUpperCase());
+                Title.setAlignment(1);
+                documento.add(Title);
+                documento.add(new Paragraph(" "));
+
+                PdfPTable tabla = new PdfPTable(t_client.getColumnCount());
+
+                tabla.setWidthPercentage(100);
+
+                for (int i = 0; i < t_client.getColumnCount(); i++)
+                {
+                    Paragraph header = new Paragraph(t_client.getColumnName(i));
+                    header.setAlignment(1);
+                    tabla.addCell(header);
+                }
+
+                for (int i = 0; i < t_client.getRowCount(); i++)
+                {
+                    for (int a = 0; a < t_client.getColumnCount(); a++)
+                    {
+
+                        Paragraph campo = new Paragraph(String.valueOf(t_client.getValueAt(i, a)));
+                        campo.setAlignment(1);
+                        tabla.addCell(campo);
+                    }
+                }
+
+                documento.add(tabla);
+                documento.add(new Paragraph(" "));
+
+                //Tabla_Vehiculos
+                String Vehiculos_header = "VEHICULO";
+
+                Paragraph Title1 = new Paragraph(Vehiculos_header.toUpperCase());
+                Title1.setAlignment(1);
+                documento.add(Title1);
+                documento.add(new Paragraph(" "));
+
+                PdfPTable tabla_vehiculos = new PdfPTable(t_vehiculos.getColumnCount());
+
+                tabla_vehiculos.setWidthPercentage(100);
+
+                for (int i = 0; i < t_vehiculos.getColumnCount(); i++)
+                {
+                    Paragraph header = new Paragraph(t_vehiculos.getColumnName(i));
+                    header.setAlignment(1);
+                    tabla_vehiculos.addCell(header);
+                }
+
+                for (int i = 0; i < t_vehiculos.getRowCount(); i++)
+                {
+                    for (int a = 0; a < t_vehiculos.getColumnCount(); a++)
+                    {
+
+                        Paragraph campo = new Paragraph(String.valueOf(t_vehiculos.getValueAt(i, a)));
+                        campo.setAlignment(1);
+                        tabla_vehiculos.addCell(campo);
+                    }
+                }
+
+                documento.add(tabla_vehiculos);
+                documento.add(new Paragraph("SERVICIO SOLICITADO: " + s_solicitado.toUpperCase()));
+                documento.add(new Paragraph("SERVICIO REALIZADO: "+ s_realizado.toUpperCase()));
+                String var = "";
+                if (p_urgente)
+                {
+                    var = "URGENTE";
+                }else
+                {
+                    var = "PROGRAMAR";
+                }
+                documento.add(new Paragraph("PRIORIDAD: "+ var));
+
+                //Tabla de servicios y productos
+                String Service_header = "\nSERVICIOS Y PRODUCTOS UTILIZADOS";
+
+                Paragraph Title2 = new Paragraph(Service_header.toUpperCase());
+                Title2.setAlignment(1);
+                documento.add(Title2);
+                documento.add(new Paragraph(" "));
+            
+                JTable t_productos = new JTable();
+                
+                Table_LoadProductsServicio(t_productos);
+                
+                String[] result = productos.replace("+", ",").split(",");
+        
+                if (result.length >= 1)
+                {
+                    for (String r : result) {
+                        if (!r.equalsIgnoreCase("") || !r.isEmpty())
+                        {
+                             if (ExistProduct(r))
+                             {
+                                 Table_AddProductsServicio(t_productos, r);
+                             }
+                        }
+                    }
+                }
+                
+                PdfPTable tabla_PRODUCTS = new PdfPTable(t_productos.getColumnCount());
+
+                tabla_PRODUCTS.setWidthPercentage(100);
+
+                for (int i = 0; i < t_productos.getColumnCount(); i++)
+                {
+                    Paragraph header = new Paragraph(t_productos.getColumnName(i));
+                    header.setAlignment(1);
+                    tabla_PRODUCTS.addCell(header);
+                }
+
+                for (int i = 0; i < t_productos.getRowCount(); i++)
+                {
+                    for (int a = 0; a < t_productos.getColumnCount(); a++)
+                    {
+
+                        Paragraph campo = new Paragraph(String.valueOf(t_productos.getValueAt(i, a)));
+                        campo.setAlignment(1);
+                        tabla_PRODUCTS.addCell(campo);
+                    }
+                }
+
+                documento.add(tabla_PRODUCTS);
+                documento.add(new Paragraph(""));
+                //
+
+                documento.add(new Paragraph("COSTO TOTAL DE SERVICIO $ "+ total));
+                documento.add(new Paragraph("FECHA Y HORA DE ENTREGA: ____________________________________________________"));
+                documento.add(new Paragraph("NOMBRE Y FIRMA DEL QUE REALIZA: _____________________________________________"));
+                documento.add(new Paragraph("CONFORMIDAD, NOMBRE Y FIRMA DE QUIEN RECIBE: _______________________________"));
+                documento.add(new Paragraph("PROXIMO SERVICIO: ___________________________________________________________"));
+
+                Paragraph footer = new Paragraph("SOFTWARE Y MAS!"+"\n"+"WWW.CYBERCHOAPAS.COM");
+                footer.setAlignment(1);
+                documento.add(footer);
+
+                documento.close();
+                Desktop.getDesktop().open(ruta);
+            }catch(IOException | DocumentException ex){
+                Alert(ex.getMessage());
+            } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+                Alert(ex.getMessage());
+            }
+    }
+    
+    public int Return_IdClient(int id) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        int r = 0;
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT id_cliente from services where id = "+id+" ");
+
+        if (rs.next())
+        {
+            r = rs.getInt(1);
+        }
+        return r;
+    }
+    
+    public String Return_IdVehiculo(int id) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        String r = "";
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT id_vehiculo from services where id = "+id+" ");
+
+        if (rs.next())
+        {
+            r = rs.getString(1);
+        }
+        return r;
+    }
+    
+    public boolean UpdateService (int id, JComboBox Client, JComboBox Vehiculo, String S_solicitado, String S_realizado, JTable productos, Double Total, boolean P_urgente, Double km)
+    {
+        if (Get_Permiso(Funciones.PermisoService_Edit))
+        {
+            UpdateKilometraje((String) ListVehiculos.get(Vehiculo.getSelectedIndex()), km);
+            try {
+                coneccion = new Conexion();
+                String p = "";
+
+                for (int i = 0; i < productos.getRowCount(); i++)
+                {
+                    if (ExistProduct((String) productos.getValueAt(i, 0)))
+                    {
+                        p += productos.getValueAt(i, 0) + ",";
+                    }
+                }
+
+                return coneccion.ejecutar("update services set id_cliente = "+ListClients.get(Client.getSelectedIndex())+", id_vehiculo = '"+ListVehiculos.get(Vehiculo.getSelectedIndex())+"', s_solicitado = '"+S_solicitado+"', s_realizado = '"+S_realizado+"', productos = '"+p+"', total = "+Total+", p_urgente =  "+P_urgente+" where id = "+id+" ");
+            } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+                Alert(ex.getMessage());
+                return false;
+            }
+        }else
+        {
+            return false;
         }
     }
 }
