@@ -53,8 +53,6 @@ public class ManagerControl extends javax.swing.JFrame {
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -203,25 +201,11 @@ public class ManagerControl extends javax.swing.JFrame {
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/service.png"))); // NOI18N
         jMenu3.setText("Servicios");
-
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
-        jMenuItem3.setText("Agregar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu3MousePressed(evt);
             }
         });
-        jMenu3.add(jMenuItem3);
-
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/point.png"))); // NOI18N
-        jMenuItem4.setText("Consultar");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem4);
-
         jMenuBar1.add(jMenu3);
 
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/inventory.png"))); // NOI18N
@@ -349,10 +333,6 @@ public class ManagerControl extends javax.swing.JFrame {
         ShowVehiculos_Consultar();
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         ShowStock_Agregar();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
@@ -376,10 +356,6 @@ public class ManagerControl extends javax.swing.JFrame {
     private void BtnClientes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClientes1ActionPerformed
         ShowVehiculos_Consultar();
     }//GEN-LAST:event_BtnClientes1ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void BtnClientes4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClientes4ActionPerformed
         ShowStock_Consultar();
@@ -414,6 +390,12 @@ public class ManagerControl extends javax.swing.JFrame {
         Service form = new Service();
         form.show();
     }//GEN-LAST:event_BtnClientes2ActionPerformed
+
+    private void jMenu3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MousePressed
+        this.dispose();
+        Service form = new Service();
+        form.show();
+    }//GEN-LAST:event_jMenu3MousePressed
 
     /**
      * @param args the command line arguments
@@ -471,8 +453,6 @@ public class ManagerControl extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;

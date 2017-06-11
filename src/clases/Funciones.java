@@ -143,7 +143,7 @@ public class Funciones {
     public void Alert (String msg)
     {
         //Se muestra notificaciones
-        System.out.println(msg.toUpperCase());
+        JOptionPane.showMessageDialog(null, msg.toUpperCase());
     }    
 
     public boolean Login (JTextField TxtUsername, JTextField TxtPassword)
@@ -881,7 +881,7 @@ public class Funciones {
             documento.add(tabla);
             documento.add(new Paragraph(" "));
             
-            Paragraph footer = new Paragraph("SOFTWARE Y MAS!"+"\n"+"WWW.CYBERCHOAPAS.COM");
+            Paragraph footer = new Paragraph("SOFTWARE Y MAS ! - WWW.CYBERCHOAPAS.COM");
             footer.setAlignment(1);
             documento.add(footer);
             
@@ -2062,7 +2062,7 @@ public class Funciones {
                 documento.add(new Paragraph("CONFORMIDAD, NOMBRE Y FIRMA DE QUIEN RECIBE: _______________________________"));
                 documento.add(new Paragraph("PROXIMO SERVICIO: ___________________________________________________________"));
 
-                Paragraph footer = new Paragraph("SOFTWARE Y MAS!"+"\n"+"WWW.CYBERCHOAPAS.COM");
+                Paragraph footer = new Paragraph("SOFTWARE Y MAS ! - WWW.CYBERCHOAPAS.COM");
                 footer.setAlignment(1);
                 documento.add(footer);
 
@@ -2570,7 +2570,7 @@ public class Funciones {
                 documento.add(new Paragraph("CONFORMIDAD, NOMBRE Y FIRMA DE QUIEN RECIBE: _______________________________"));
                 documento.add(new Paragraph("PROXIMO SERVICIO: ___________________________________________________________"));
 
-                Paragraph footer = new Paragraph("SOFTWARE Y MAS!"+"\n"+"WWW.CYBERCHOAPAS.COM");
+                Paragraph footer = new Paragraph("SOFTWARE Y MAS ! - WWW.CYBERCHOAPAS.COM");
                 footer.setAlignment(1);
                 documento.add(footer);
 
@@ -2811,7 +2811,7 @@ public class Funciones {
                 documento.add(new Paragraph("CONFORMIDAD, NOMBRE Y FIRMA DE QUIEN RECIBE: _______________________________"));
                 documento.add(new Paragraph("PROXIMO SERVICIO: ___________________________________________________________"));
 
-                Paragraph footer = new Paragraph("SOFTWARE Y MAS!"+"\n"+"WWW.CYBERCHOAPAS.COM");
+                Paragraph footer = new Paragraph("SOFTWARE Y MAS ! - WWW.CYBERCHOAPAS.COM");
                 footer.setAlignment(1);
                 documento.add(footer);
 
