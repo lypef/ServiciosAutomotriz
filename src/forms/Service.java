@@ -136,6 +136,7 @@ public class Service extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximizedBounds(new java.awt.Rectangle(1085, 560, 360, 360));
@@ -944,6 +945,15 @@ public class Service extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/about.png"))); // NOI18N
+        jMenu8.setText("Acerca de");
+        jMenu8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu8MousePressed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu8);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1242,6 +1252,11 @@ public class Service extends javax.swing.JFrame {
         m.show();
     }//GEN-LAST:event_jButton12ActionPerformed
 
+    private void jMenu8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu8MousePressed
+        AcercaDe form = new AcercaDe();
+        form.show();
+    }//GEN-LAST:event_jMenu8MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -1338,6 +1353,8 @@ public class Service extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
