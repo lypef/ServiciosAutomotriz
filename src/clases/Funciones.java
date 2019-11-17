@@ -1667,10 +1667,10 @@ public class Funciones {
 
             // asignamos los valores a las propiedades
             
-            propiedades.setProperty(p.ruta_db,"//server");
-            propiedades.setProperty(p.usuario_db,"username");
-            propiedades.setProperty(p.passwors_db,"***");
-            propiedades.setProperty(p.nombre_db,"nombre_db");
+            propiedades.setProperty(p.ruta_db,"127.0.0.1");
+            propiedades.setProperty(p.usuario_db,"root");
+            propiedades.setProperty(p.passwors_db,"");
+            propiedades.setProperty(p.nombre_db,"autoserv");
             propiedades.setProperty(p.puerto_db,"3306");
             propiedades.setProperty(p.Ruta_logo,"/logo.jpg");
             propiedades.setProperty(p.Ruta_SaveReports,"/");

@@ -78,7 +78,7 @@
     <Component class="javax.swing.JLabel" name="LabelInformacion">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="ISC.FRANCISCO EDUARDO ASCENCIO DOMINGUEZ"/>
+        <Property name="text" type="java.lang.String" value="CLTA D &amp; D"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
     </Component>

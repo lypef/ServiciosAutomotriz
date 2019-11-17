@@ -56,7 +56,7 @@ public class AcercaDe extends javax.swing.JFrame {
         });
 
         LabelInformacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelInformacion.setText("ISC.FRANCISCO EDUARDO ASCENCIO DOMINGUEZ");
+        LabelInformacion.setText("CLTA D & D");
         LabelInformacion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
