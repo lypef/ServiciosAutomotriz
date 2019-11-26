@@ -318,6 +318,21 @@ public class Funciones {
         return r;
     }
     
+    public String Detalles_Servicios(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
+    {
+        String r = "";
+        
+        coneccion = new Conexion();
+        ResultSet rs = coneccion.Consulta("SELECT s.id, c.nombre, v.mtp, s.s_realizado, s.total, s.fecha FROM services s, clients c, vehiculos v WHERE s.id_cliente = c.id and s.id_vehiculo = v.placas and s.id_cliente = (SELECT id_cliente FROM services WHERE id = "+Integer.parseInt((String) t.getValueAt(t.getSelectedRow(), 0))+")");
+
+        while (rs.next())
+        {
+            r += "NOMBRE: " + rs.getString(2) + ", VEHICULO: " + rs.getString(3) + ", TOTAL: " + rs.getString(5) + ", FECHA: " + rs.getString(6) + "\n";
+        }
+        
+        return r;
+    }
+    
     public boolean Delete_TableClient(JTable t) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException
     {
         if (Get_Permiso(Funciones.PermisoClients_delete))
@@ -2283,7 +2298,7 @@ public class Funciones {
         }
     }
     
-    public void Table_LoadServices(JTable t)
+    public void Table_LoadServices(String sql, JTable t)
     {
         try {
             DefaultTableModel modelo;
@@ -2298,10 +2313,11 @@ public class Funciones {
             modelo.addColumn("VEHICULO");
             modelo.addColumn("SERVICIO");
             modelo.addColumn("COSTO");
+            modelo.addColumn("FECHA");
             
             coneccion = new Conexion();
-            ResultSet rs = coneccion.Consulta("SELECT s.id, c.nombre, v.mtp, s.s_realizado, s.total FROM services s, clients c, vehiculos v WHERE s.id_cliente = c.id and s.id_vehiculo = v.placas order by s.id desc");
-            Object [] file = new Object[5];
+            ResultSet rs = coneccion.Consulta(sql);
+            Object [] file = new Object[6];
 
             while (rs.next())
             {
@@ -2310,6 +2326,7 @@ public class Funciones {
                 file[2] = rs.getString(3);
                 file[3] = rs.getString(4);
                 file[4] = rs.getString(5);
+                file[5] = rs.getString(6);
                 
                 modelo.addRow(file);
             }

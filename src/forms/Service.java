@@ -6,6 +6,7 @@
 package forms;
 
 import clases.Funciones;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,6 +89,8 @@ public class Service extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         BtnClientes = new javax.swing.JButton();
+        TxtSearch = new javax.swing.JTextField();
+        jButton13 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         ComboClientes1 = new javax.swing.JComboBox<>();
         ComboVehiculos1 = new javax.swing.JComboBox<>();
@@ -427,6 +430,11 @@ public class Service extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        TableServices.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableServicesMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(TableServices);
 
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -503,28 +511,61 @@ public class Service extends javax.swing.JFrame {
             }
         });
 
+        TxtSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TxtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TxtSearchKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtSearchKeyReleased(evt);
+            }
+        });
+
+        jButton13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnPurple.png"))); // NOI18N
+        jButton13.setText("BUSCAR");
+        jButton13.setBorder(null);
+        jButton13.setBorderPainted(false);
+        jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton13.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/ImgBtns/BtnPurpleEfc.png"))); // NOI18N
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8)
-                    .addComponent(jButton9)
-                    .addComponent(BtnClientes))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
+                    .addComponent(TxtSearch))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jButton8, javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jButton9, javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(BtnClientes, javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jButton13))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -536,10 +577,7 @@ public class Service extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(BtnClientes)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(BtnClientes))))
         );
 
         Tab.addTab("CONSULTAR", jPanel2);
@@ -1092,7 +1130,7 @@ public class Service extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        f.Table_LoadServices(TableServices);        
+        f.Table_LoadServices("SELECT s.id, c.nombre, v.mtp, s.s_realizado, s.total, s.fecha FROM services s, clients c, vehiculos v WHERE s.id_cliente = c.id and s.id_vehiculo = v.placas order by s.id desc", TableServices);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -1117,7 +1155,7 @@ public class Service extends javax.swing.JFrame {
         
         if (Tab.getSelectedIndex() == 1)
         {
-            f.Table_LoadServices(TableServices);
+            f.Table_LoadServices("SELECT s.id, c.nombre, v.mtp, s.s_realizado, s.total, s.fecha FROM services s, clients c, vehiculos v WHERE s.id_cliente = c.id and s.id_vehiculo = v.placas order by s.id desc", TableServices);
         }
         
         if (Tab.getSelectedIndex() == 2)
@@ -1163,7 +1201,7 @@ public class Service extends javax.swing.JFrame {
                 if (JOptionPane.showConfirmDialog(this,"¿Elimnar item seleccionado? No sera encontrado en el sistema en adelante","Elimnar",JOptionPane.YES_NO_OPTION) == 0)
                 {
                     f.Delete_TableService(TableServices);
-                    f.Table_LoadServices(TableServices);
+                    f.Table_LoadServices("SELECT s.id, c.nombre, v.mtp, s.s_realizado, s.total, s.fecha FROM services s, clients c, vehiculos v WHERE s.id_cliente = c.id and s.id_vehiculo = v.placas order by s.id desc", TableServices);
                     f.Alert("Item eliminado");
                 }else
                 {
@@ -1257,6 +1295,28 @@ public class Service extends javax.swing.JFrame {
         form.show();
     }//GEN-LAST:event_jMenu8MousePressed
 
+    private void TxtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtSearchKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            ShowSearch();
+        }
+    }//GEN-LAST:event_TxtSearchKeyPressed
+
+    private void TxtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtSearchKeyReleased
+        
+    }//GEN-LAST:event_TxtSearchKeyReleased
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        ShowSearch();
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void TableServicesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableServicesMouseClicked
+        if (evt.getClickCount() > 1)
+        {
+            ShowDetalles();
+        }
+    }//GEN-LAST:event_TableServicesMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1321,6 +1381,7 @@ public class Service extends javax.swing.JFrame {
     private javax.swing.JTextArea TxtS_Realizado1;
     private javax.swing.JTextArea TxtS_solicitado;
     private javax.swing.JTextArea TxtS_solicitado1;
+    private javax.swing.JTextField TxtSearch;
     private javax.swing.JLabel TxtTotal;
     private javax.swing.JLabel TxtTotal1;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -1328,6 +1389,7 @@ public class Service extends javax.swing.JFrame {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -1353,7 +1415,6 @@ public class Service extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -1498,5 +1559,17 @@ public class Service extends javax.swing.JFrame {
         id_cliente = 0;
         id_vehiculo = "";
         Tab.setSelectedIndex(1);
+    }
+
+    private void ShowSearch() {
+        f.Table_LoadServices("SELECT s.id, c.nombre, v.mtp, s.s_realizado, s.total, s.fecha FROM services s, clients c, vehiculos v WHERE s.id_cliente = c.id and s.id_vehiculo = v.placas  and c.nombre like '%"+TxtSearch.getText()+"%' or s.id_cliente = c.id and s.id_vehiculo = v.placas  and v.placas like '%"+TxtSearch.getText()+"%' or s.id_cliente = c.id and s.id_vehiculo = v.placas  and v.mtp like '%"+TxtSearch.getText()+"%' order by s.id desc", TableServices);
+    }
+
+    private void ShowDetalles() {
+        try {
+            JOptionPane.showMessageDialog(this,f.Detalles_Servicios(TableServices));
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            f.Alert(ex.getMessage());
+        }
     }
 }
