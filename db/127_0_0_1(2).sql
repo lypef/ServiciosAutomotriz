@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 04-06-2017 a las 20:25:32
--- Versión del servidor: 10.1.21-MariaDB
--- Versión de PHP: 7.1.1
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 26-11-2019 a las 23:44:52
+-- Versión del servidor: 10.1.36-MariaDB
+-- Versión de PHP: 5.6.38
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -42,16 +44,9 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`id`, `nombre`, `direccion`, `telefono`, `rfc`, `mail`) VALUES
-(4, 'ALFREDO', '20 DE NOVIEMBRE 306', '9231200505', 'AEDF9201245G3', 'CONTACTO@CYBERCHOAPAS.COM'),
-(7, 'DOÑA CLEOTILDE', 'DIRECCION', '018001232222', 'RFC', 'EMAIL'),
-(16, 'RAMON VALDEZ', 'AAAA', 'AAA', 'AAAAAAAAAAA', 'AA'),
-(17, 'CLIENTE SIN NOMBRE', 'AAAAAA', 'AAAAAAAAAA', 'AAAAAAAA', 'AAAAAAA'),
-(18, 'ALBERTO GOMES BOLAÑOS', 'AAAAAAAAA', 'AAAA', 'AAAAAAAAAA', 'AAAAAAAAAA'),
-(19, 'FLORINDA MESA', 'DIRECCION', 'H', 'RFC', 'HJ'),
-(20, 'NARCIZO RAYO', ' NUEVA DIRECCION ', 'TELEFONO', 'RFC NUEV', 'CORREO ELECTRONICO'),
-(21, 'FRANCISCO EDUARDO ASCENCIO GARCIA', 'DIRECCION', 'TELEFONOS', 'AEGF17105G4', 'CORRE@AA.COM'),
-(22, 'SORIBEL ASCENCIO GARCIA', 'NO SABEMOS ', '222', 'SORIANACUESTAMENOS', 'OJOIJ@HOTMAI.COM'),
-(23, 'ARLENE GARAGY', 'NO TIENE', '524646', 'GARA5454545', 'KJKJK');
+(1, 'NUEVO CLIENTE NUMERO 1', '', '', '', ''),
+(2, 'AURELIO', '', '', '', ''),
+(3, 'LAUREANO', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -136,8 +131,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`codebar`, `nombre`, `descripcion`, `precio`, `existencia`, `vendidos`, `id_provedor`) VALUES
-('CC', 'REMPLAZO DE CLUTH', 'SERVICIO DE REEMPLAZO DE CLUTH', 500, 999982, 18, 1),
-('RVM', 'REACTIVADO DE VOLANTE MATRIZ', 'SE REACTIVA VOLANTE MATRIZ', 900, 999981, 19, 1);
+('CC', 'REMPLAZO DE CLUTH', 'SERVICIO DE REEMPLAZO DE CLUTH', 500, 999980, 20, 1),
+('RVM', 'REACTIVADO DE VOLANTE MATRIZ', 'SE REACTIVA VOLANTE MATRIZ', 900, 999976, 24, 1);
 
 -- --------------------------------------------------------
 
@@ -176,39 +171,19 @@ CREATE TABLE `services` (
   `s_realizado` varchar(254) NOT NULL,
   `productos` varchar(254) NOT NULL,
   `total` double NOT NULL,
-  `p_urgente` tinyint(1) NOT NULL
+  `p_urgente` tinyint(1) NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `services`
 --
 
-INSERT INTO `services` (`id`, `id_cliente`, `id_vehiculo`, `s_solicitado`, `s_realizado`, `productos`, `total`, `p_urgente`) VALUES
-(1, 22, 'AAAAA', 'VGHGFGF', 'VGHGFGF', ':=', 900, 1),
-(2, 22, 'AAAAA', 'KJJJH', 'KJJJH', 'nullRVMCC', 1400, 1),
-(3, 22, 'AAAAA', 'SERVICIO DE GRUA PARA ARRASTRE', 'SERVICIO DE GRUA PARA ARRASTRE', 'RVM,RVM,CC,CC,', 2800, 1),
-(4, 22, 'AAAAA', 'SERVICIO DE GRUA PARA ARRASTRE', 'SERVICIO DE GRUA PARA ARRASTRE', 'RVM,RVM,CC,CC,CC,', 3300, 0),
-(6, 21, 'Y99T-65', '', '', '', 0, 1),
-(7, 21, 'Y99T-65', 'SSSS', 'SSSS', '', 0, 1),
-(9, 23, 'JHGBJHJHHJG', '', '', '', 0, 1),
-(11, 22, 'AAAAA', '', '', '', 0, 1),
-(12, 22, 'AAAAA', 'VSDVSDV', 'VSDVSDV', 'RVM,CC,', 1400, 0),
-(13, 22, 'AAAAA', 'VBDFBDFRB', 'VBDFBDFRB', 'RVM,RVM,CC,CC,', 2800, 1),
-(14, 22, 'AAAAA', 'FDHFDFD', 'FDHFDFD', 'RVM,CC,', 1400, 1),
-(15, 22, 'AAAAA', 'FDRTHERFDHE', 'FDRTHERFDHE', 'RVM,RVM,RVM,CC,CC,', 3700, 1),
-(16, 22, 'AAAAA', 'CNDFNBDF', 'CNDFNBDF', 'RVM,', 900, 1),
-(17, 22, 'AAAAA', 'DFGBDFGBDFSV', 'DFGBDFGBDFSV', 'RVM,RVM,CC,CC,CC,', 3300, 1),
-(18, 21, 'Y99T-65', 'DXFBDFBD', 'DXFBDFBD', 'RVM,', 900, 1),
-(22, 22, 'AAAAA', '', '', '', 0, 1),
-(23, 22, 'AAAAA', '', '', '', 0, 1),
-(24, 22, 'AAAAA', 'RFTJTFGDJN', 'RFTJTFGDJN', 'CC,', 500, 1),
-(25, 21, 'Y99T-65', '', '', '', 500, 1),
-(26, 21, 'Y99T-65', '', '', '', 500, 1),
-(27, 21, 'Y99T-65', '', '', '', 0, 1),
-(28, 21, 'Y99T-65', '', '', 'RVM,', 900, 1),
-(29, 22, 'AAAAA', 'GRUA', 'GRUA', 'RVM,CC,', 1400, 1),
-(31, 22, 'AAAAA', '', '', '', 0, 0),
-(32, 22, 'AAAAA', '', '', 'RVM,', 900, 0);
+INSERT INTO `services` (`id`, `id_cliente`, `id_vehiculo`, `s_solicitado`, `s_realizado`, `productos`, `total`, `p_urgente`, `fecha`) VALUES
+(1, 1, 'KLNLKJNJHJKNKJNJ', 'GBFDGBRFDBFDRBDRFBR', 'GBFDGBRFDBFDRBDRFBR', 'RVM,CC,', 1400, 0, '2019-11-26 15:15:33'),
+(2, 2, 'AAAA', '', '', 'RVM,', 900, 0, '2019-11-26 15:20:29'),
+(3, 3, 'EWQFDEWD', '', '', 'RVM,', 1800, 1, '2019-11-26 15:20:39'),
+(4, 1, 'KLNLKJNJHJKNKJNJ', '', '', 'RVM,', 2700, 1, '2019-11-26 15:20:46');
 
 -- --------------------------------------------------------
 
@@ -252,12 +227,9 @@ CREATE TABLE `vehiculos` (
 --
 
 INSERT INTO `vehiculos` (`placas`, `color`, `departamento`, `mtp`, `kilometros`, `id_client`) VALUES
-('AAAAA', 'AAAAA', 'NO SE ', 'FORD F150', 150000, 22),
-('AEDF', 'AAAAA', 'AAA', 'AAAA', 123, 17),
-('AXEDF-A55', 'VERDE', 'SONIDO', 'MICOOPER, DEPORTIVO MODELO 99', 158999, 20),
-('JHGBJHJHHJG', 'VERDE', 'NO SE ', 'FORD F150 MOD, 1980', 315000, 23),
-('XAE56565', 'AZUL', 'CASCABEL', 'CHEVROLET, CHEVY 2010', 50000, 23),
-('Y99T-65', 'ROJO VINO', 'AFINACION', 'CAMIONETA NISSAN NP300, MOD-2014', 45000, 21);
+('AAAA', 'ROJHO', 'AAA', 'AAA', 222, 2),
+('EWQFDEWD', '3WQDQDQWWQ', 'QWDQWD', 'DWQDWQD', 2222, 3),
+('KLNLKJNJHJKNKJNJ', 'JKNBJKNJKNJKNJK', 'NJKNJKNJKNKJN', 'JKNJKNJKNJKNJKN', 15151, 1);
 
 --
 -- Índices para tablas volcadas
@@ -323,27 +295,32 @@ ALTER TABLE `vehiculos`
 -- AUTO_INCREMENT de la tabla `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT de la tabla `datos`
 --
 ALTER TABLE `datos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT de la tabla `provedores`
 --
 ALTER TABLE `provedores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT de la tabla `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- Restricciones para tablas volcadas
 --
@@ -372,6 +349,7 @@ ALTER TABLE `services`
 --
 ALTER TABLE `vehiculos`
   ADD CONSTRAINT `client` FOREIGN KEY (`id_client`) REFERENCES `clients` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
